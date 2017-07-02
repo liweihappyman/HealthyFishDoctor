@@ -9,4 +9,8 @@ package com.healthyfish.healthyfishdoctor.model.register;
 
 // TODO: 2017/6/28 实现注册业务
 public class RegisterModel implements IRegisterModel{
+    @Override
+    public void Register(String username, String password, OnRegisterListener registerListener) {
+
+    }
 }

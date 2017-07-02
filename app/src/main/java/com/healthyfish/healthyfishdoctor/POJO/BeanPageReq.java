@@ -20,7 +20,7 @@ public class BeanPageReq extends BeanBaseReq {
 		this.refresh = refresh;
 	}
 
-	BeanPageReq(){super(BeanPageReq.class.getSimpleName());}
+	public BeanPageReq(){super(BeanPageReq.class.getSimpleName());}
 	
 	public String getPrefix() {return prefix;}
 	public void setPrefix(String prefix) {this.prefix = prefix;}

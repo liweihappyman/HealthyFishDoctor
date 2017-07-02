@@ -5,7 +5,7 @@ public class BeanUserSmsAuthReq extends BeanBaseReq {
 	private int		type; //短信验证类型：0-新用户注册；1-找回密码
 	private String mobileNo;
 
-    BeanUserSmsAuthReq(){super(BeanUserSmsVerifyReq.class.getSimpleName());}
+    public BeanUserSmsAuthReq(){super(BeanUserSmsVerifyReq.class.getSimpleName());}
 
     public int getType() {return type;}
 	public void setType(int type) {this.type = type;}
