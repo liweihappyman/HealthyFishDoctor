@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.healthyfish.healthyfishdoctor.ui.activity.Register">
+    tools:context="com.healthyfish.healthyfishdoctor.ui.activity.login_register.Register">
 
 </android.support.constraint.ConstraintLayout>

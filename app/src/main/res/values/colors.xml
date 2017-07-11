@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#019b79</color>
+    <color name="colorPrimaryDark">#019b79</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--普通信息字体/普通标题颜色-->
+    <!--主色调-深-->
+    <color name="color_primary">#019b79</color>
+    <color name="color_primary_dark">#019b79</color>
+    <!--主色调-浅-->
+    <color name="color_primary_light">#019b79</color>
+
+    <!--次要色调-深-->
+    <color name="color_secondary">#ec6941</color>
+    <!--次要色调-浅-->
+    <color name="color_secondary_light">#ee7785</color>
+
+    <!--第三色调-深-->
+    <color name="color_third">#c89ec4</color>
+    <!--第三色调-浅-->
+    <color name="color_third_light">#c89ec4</color>
+
+
+    <!--第四色调-深-->
+    <color name="color_forth">#84b1ed</color>
+    <!--第四色调-浅-->
+    <color name="color_forth_light">#84b1ed</color>
+
+    <!--强调色-->
+    <color name="color_accent">#FF4081</color>
+
+
+    <color name="color_general_and_title">#666666</color>
+    <!--辅助信息字体颜色-->
+    <color name="color_auxiliary_info">#888888</color>
+    <!--分割线颜色-->
+    <color name="color_divider">#cfcfcf</color>
+    <!--内容标题颜色/重要的文字信息-->
+    <color name="color_content_title">#333333</color>
+    <!--内容区底色-->
+    <color name="color_content_area_bg">#f4f4f4</color>
+    <!--用于分割模块标题栏底色、动态资源底色-->
+    <color name="color_titlebar_bg">#dbdbdb</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_red">@android:color/holo_red_light</color>
+
+    <color name="color_orange">#ec6941</color>
+    <color name="color_hint">#cccccc</color>
+    <color name="color_light_green">#51e7b3</color>
+    <color name="color_small_content">#999999</color>
+    <color name="color_blue">#0ec0ee</color>
+    <color name="color_blue_dark">#5095bf</color>
+    <color name="color_light_gray">#e7e7e7</color>
 </resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name = "options">   /数组资源名称为list 与layout中对应
+        <item>红外皮温</item>
+        <item>首诊</item>
+        <item>出院</item>
+        <item>复诊</item>
+        <item>入院</item>
+        <item>手术</item>
+        <item>影像</item>
+        <item>化验</item>
+        <item>体征</item>
+        <item>病历</item>
+        <item>处方医嘱</item>
+    </string-array>
+
+
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="145px"
+    android:background="@color/color_titlebar_bg"
+    android:orientation="horizontal">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ly_home"
+        style="@style/bottom_title_barlayout">
+
+        <ImageView
+            android:id="@+id/iv_home"
+            style="@style/bottom_title_bar_iv"
+            android:src="@mipmap/home" />
+
+        <TextView
+            android:id="@+id/tv_home"
+            style="@style/bottom_title_bar_tv"
+            android:text="@string/home" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ly_interrogation"
+        style="@style/bottom_title_barlayout">
+
+        <ImageView
+            android:id="@+id/iv_interrogation"
+            style="@style/bottom_title_bar_iv"
+            android:src="@mipmap/interrogation_unselect" />
+
+        <TextView
+            android:id="@+id/tv_interrogation"
+            style="@style/bottom_title_bar_tv"
+            android:text="@string/interrogation" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ly_pharmacopeia"
+        style="@style/bottom_title_barlayout">
+
+        <ImageView
+            android:id="@+id/iv_pharmacopeia"
+            style="@style/bottom_title_bar_iv"
+            android:src="@mipmap/pharmacopeia_unselected" />
+
+        <TextView
+            android:id="@+id/tv_pharmacopeia"
+            style="@style/bottom_title_bar_tv"
+            android:text="@string/pharmacopeia" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ly_training"
+        style="@style/bottom_title_barlayout">
+
+        <ImageView
+            android:id="@+id/iv_training"
+            style="@style/bottom_title_bar_iv"
+            android:src="@mipmap/training_unselected" />
+
+        <TextView
+            android:id="@+id/tv_training"
+            style="@style/bottom_title_bar_tv"
+            android:text="@string/training" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ly_personal_center"
+        style="@style/bottom_title_barlayout">
+
+        <ImageView
+            android:id="@+id/iv_personal_center"
+            style="@style/bottom_title_bar_iv"
+            android:src="@mipmap/personal_center_unselect" />
+
+        <TextView
+            android:id="@+id/tv_personal_center"
+            style="@style/bottom_title_bar_tv"
+            android:text="@string/personal_center" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

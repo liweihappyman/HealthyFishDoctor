@@ -1,192 +1,195 @@
 package com.healthyfish.healthyfishdoctor;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
-import com.healthyfish.healthyfishdoctor.POJO.BeanBaseReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanDoctorListReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanHomeImgSlideReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanHomeImgSlideResp;
-import com.healthyfish.healthyfishdoctor.POJO.BeanHomeImgSlideRespItem;
-import com.healthyfish.healthyfishdoctor.POJO.BeanPageReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanUserSmsAuthReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanWeChatNews_All;
-import com.healthyfish.healthyfishdoctor.api.IApiService;
-import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
+import com.healthyfish.healthyfishdoctor.adapter.MainVpAdapter;
+import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
+import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
+import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;
+import com.healthyfish.healthyfishdoctor.ui.fragment.PharmacopeiaFragment;
+import com.healthyfish.healthyfishdoctor.ui.fragment.TrainingFragment;
+import com.zhy.autolayout.AutoLinearLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
-
-import static com.healthyfish.healthyfishdoctor.constant.constants.HttpHealthyFishyUrl;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.btnGetInfoByPackageRetrofit)
-    Button btnGetInfoByPackageRetrofit;
-    @BindView(R.id.btnGetInfoByNormalRetrofit)
-    Button btnGetInfoByNormalRetrofit;
-    @BindView(R.id.imvGetImageByUrl)
-    ImageView imvGetImageByUrl;
+    @BindView(R.id.fg_viewpage)
+    ViewPager fgViewpage;
+    @BindView(R.id.iv_home)
+    ImageView ivHome;
+    @BindView(R.id.tv_home)
+    TextView tvHome;
+    @BindView(R.id.ly_home)
+    AutoLinearLayout lyHome;
+    @BindView(R.id.iv_interrogation)
+    ImageView ivInterrogation;
+    @BindView(R.id.tv_interrogation)
+    TextView tvInterrogation;
+    @BindView(R.id.ly_interrogation)
+    AutoLinearLayout lyInterrogation;
+    @BindView(R.id.iv_pharmacopeia)
+    ImageView ivPharmacopeia;
+    @BindView(R.id.tv_pharmacopeia)
+    TextView tvPharmacopeia;
+    @BindView(R.id.ly_pharmacopeia)
+    AutoLinearLayout lyPharmacopeia;
+    @BindView(R.id.iv_training)
+    ImageView ivTraining;
+    @BindView(R.id.tv_training)
+    TextView tvTraining;
+    @BindView(R.id.ly_training)
+    AutoLinearLayout lyTraining;
+    @BindView(R.id.iv_personal_center)
+    ImageView ivPersonalCenter;
+    @BindView(R.id.tv_personal_center)
+    TextView tvPersonalCenter;
+    @BindView(R.id.ly_personal_center)
+    AutoLinearLayout lyPersonalCenter;
 
-
-    private CompositeSubscription mSubscriptions = new CompositeSubscription();
-
-    final BeanBaseReq beanBaseReq = new BeanBaseReq();
-    final BeanPageReq beanPageReq = new BeanPageReq();
-    final BeanDoctorListReq beanDoctorListReq = new BeanDoctorListReq();
-    final BeanUserSmsAuthReq beanUserSmsAuthReq = new BeanUserSmsAuthReq();
-    final BeanHomeImgSlideReq beanHomeImgSlideReq = new BeanHomeImgSlideReq();
-    final BeanWeChatNews_All beanWeChatNews_all = new BeanWeChatNews_All();
-
+    private MainVpAdapter ViewpageAdapter;
+    private List<Fragment> fragments;
+    private HomeFragment homeFragment;
+    private InterrogationFragment interrogationFragment;
+    private PharmacopeiaFragment pharmacopeiaFragment;
+    private TrainingFragment trainingFragment;
+    private PersonalCenterFragment personalCenterFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        init();
     }
 
-    @OnClick({R.id.btnGetInfoByPackageRetrofit,
-            R.id.btnGetInfoByNormalRetrofit})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btnGetInfoByPackageRetrofit:
-                GetInfoByPackageRetrofit();
-                break;
+    //初始化接界面
+    private void init() {
+        initpgAdapter();//初始化viewpage
+        setTab(0);//初始化界面设置，即指定刚进入是可见的界面
+        //菜单监听
+        fgViewpage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
-            case R.id.btnGetInfoByNormalRetrofit:
-                /*GetInfoByNormalRetrofit();*/
-                break;
+            @Override
+            public void onPageSelected(int position) {
+                int pos = fgViewpage.getCurrentItem();
+                setTab(pos);
+            }
 
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    //菜单监听
+
+
+    //初始化ViewPage
+    private void initpgAdapter() {
+        fragments = new ArrayList<>();
+        homeFragment = new HomeFragment();
+        interrogationFragment = new InterrogationFragment();
+        pharmacopeiaFragment = new PharmacopeiaFragment();
+        trainingFragment = new TrainingFragment();
+        personalCenterFragment = new PersonalCenterFragment();
+        fragments.add(homeFragment);
+        fragments.add(interrogationFragment);
+        fragments.add(pharmacopeiaFragment);
+        fragments.add(trainingFragment);
+        fragments.add(personalCenterFragment);
+        ViewpageAdapter = new MainVpAdapter(getSupportFragmentManager()
+                , fragments);
+        //设置ViewPage的缓存页，数字表示预先加载的页面的偏移量，
+        // 现在0的意思是不预先加载，另一个作用是也不销毁生的页面
+        fgViewpage.setOffscreenPageLimit(0);
+        fgViewpage.setAdapter(ViewpageAdapter);
+    }
+
+    //重置菜单状态
+    private void reSet() {
+        ivHome.setImageResource(R.mipmap.home_unselected);
+        ivInterrogation.setImageResource(R.mipmap.interrogation_unselect);
+        ivPharmacopeia.setImageResource(R.mipmap.pharmacopeia_unselected);
+        ivTraining.setImageResource(R.mipmap.training_unselected);
+        ivPersonalCenter.setImageResource(R.mipmap.personal_center_unselect);
+        tvHome.setTextColor(getResources().getColor(R.color.color_general_and_title));
+        tvInterrogation.setTextColor(getResources().getColor(R.color.color_general_and_title));
+        tvPharmacopeia.setTextColor(getResources().getColor(R.color.color_general_and_title));
+        tvTraining.setTextColor(getResources().getColor(R.color.color_general_and_title));
+        tvPersonalCenter.setTextColor(getResources().getColor(R.color.color_general_and_title));
+    }
+
+    //设置菜单的选中状态
+    private void setTab(int i) {
+        switch (i) {
+            case 0:
+                reSet();
+                ivHome.setImageResource(R.mipmap.home);
+                tvHome.setTextColor(getResources().getColor(R.color.color_primary_dark));
+                fgViewpage.setCurrentItem(0);
+                break;
+            case 1:
+                reSet();
+                ivInterrogation.setImageResource(R.mipmap.interrogation);
+                tvInterrogation.setTextColor(getResources().getColor(R.color.color_primary_dark));
+                fgViewpage.setCurrentItem(1);
+                break;
+            case 2:
+                reSet();
+                ivPharmacopeia.setImageResource(R.mipmap.pharmacopeia);
+                tvPharmacopeia.setTextColor(getResources().getColor(R.color.color_primary_dark));
+                fgViewpage.setCurrentItem(2);
+                break;
+            case 3:
+                reSet();
+                ivTraining.setImageResource(R.mipmap.training);
+                tvTraining.setTextColor(getResources().getColor(R.color.color_primary_dark));
+                fgViewpage.setCurrentItem(3);
+                break;
+            case 4:
+                reSet();
+                ivPersonalCenter.setImageResource(R.mipmap.personal_center);
+                tvPersonalCenter.setTextColor(getResources().getColor(R.color.color_primary_dark));
+                fgViewpage.setCurrentItem(4);
+                break;
+            default:
         }
     }
 
-
-    private void GetInfoByPackageRetrofit() {
-
-        // 将请求类转换为Json字符
-        String req = new Gson().toJson(beanHomeImgSlideReq);
-        // 将Json字符转换为retrofit api所需的请求体
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), req);
-        // 获取封装工具类的实例getInstance，实例中包含上下文和服务器地址，并调用api方法（请求体， 观察者回调方法）
-        RetrofitManagerUtils.getInstance(MainActivity.this, HttpHealthyFishyUrl)
-                .getHealthyInfoByRetrofit(body, new Subscriber<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        List<BeanHomeImgSlideRespItem> imgs = new ArrayList<BeanHomeImgSlideRespItem>();
-                        try {
-                            // 将响应体（Json对象）转换为实体类（响应）对象，如果没有实体类对象可以直接调用
-                            BeanHomeImgSlideResp obj = new Gson().fromJson(responseBody.string(), BeanHomeImgSlideResp.class);
-                            // 如果返回数据中包含需要上传的图片url，通过实体类方法获取
-                            imgs = obj.getImgList();
-                            for (BeanHomeImgSlideRespItem img : imgs) {
-                                Log.e("Wayne", img.getImg());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Glide.with(getApplicationContext()).load(HttpHealthyFishyUrl + imgs.get(1).getImg()).into(imvGetImageByUrl);
-                    }
-                });
-
+    @OnClick({R.id.ly_home, R.id.ly_interrogation, R.id.ly_pharmacopeia, R.id.ly_training, R.id.ly_personal_center})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ly_home:
+                setTab(0);
+                break;
+            case R.id.ly_interrogation:
+                setTab(1);
+                break;
+            case R.id.ly_pharmacopeia:
+                setTab(2);
+                break;
+            case R.id.ly_training:
+                setTab(3);
+                break;
+            case R.id.ly_personal_center:
+                setTab(4);
+                break;
+        }
     }
-
-
-    /*private void GetInfoByNormalRetrofit() {
-
-        String url = null;
-
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(httpLoggingInterceptor)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(HttpHealthyFishyUrl)
-                .build();
-
-        IApiService apiService = retrofit.create(IApiService.class);
-
-        String req = new Gson().toJson(beanHomeImgSlideReq);
-
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), req);
-
-        mSubscriptions.add(apiService.getHealthyInfoByRetrofit(body)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<ResponseBody>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-
-                        try {
-                            BeanHomeImgSlideResp obj = new Gson().fromJson(responseBody.string(), BeanHomeImgSlideResp.class);
-                            List<BeanHomeImgSlideRespItem> imgs = obj.getImgList();
-                            for (BeanHomeImgSlideRespItem img : imgs) {
-                                Log.e("Wayne", img.getImg());
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }));
-
-        url = HttpHealthyFishyUrl + "/demo/downloadFile/upload/20170318/19411489838119199.jpg";
-
-        Glide.with(this).load(url).into(imvGetImageByUrl);
-
-    }*/
-
-
 }

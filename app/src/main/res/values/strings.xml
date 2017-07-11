@@ -1,3 +1,53 @@
 <resources>
-    <string name="app_name">HealthyFishDoctor</string>
+    <string name="app_name">HealthyFish</string>
+
+    <!--（1）MainActivtiy屏幕下方导航菜单-->
+    <string name="home">首页</string>
+    <string name="interrogation">问诊</string>
+    <string name="healthy_circle">健康圈</string>
+    <string name="health_workshop">健康工坊</string>
+    <string name="personal_center">个人中心</string>
+    <string name="pharmacopeia">药典</string>
+    <string name="training">培训</string>
+    <!--（2）首页上方6大功能     （1）中有问诊-->
+    <string name="registration">挂号</string>
+    <string name="inspection_report">检查报告</string>
+    <string name="dossier">病历夹</string>
+    <string name="health_management">健康管理</string>columncolumn
+    <string name="remote_monitoring">远程监护</string>
+    <string name="health_news">健康资讯</string>
+    <string name="load_more">点击加载更多</string>
+    <string name="all_med_rec">全部病历</string>
+    <string name="new_med_rec">新建病历</string>
+    <!--测试用的-->
+    <string name="date">2017年7月1日 星期二</string>
+    <string name="category">栏目、分类</string>
+    <string name="timestamp">2017年7月1日</string>
+    <string name="mobile_monitoring_equipment">移动监测设备</string>
+    <string name="item_med_rec_name_sex">姓名1  男  24岁</string>
+    <string name="item_med_rec_info">慢性疾病</string>
+    <string name="item_med_rec_date_diagnose">2017年7月1日  就诊</string>
+    <string name="unfilled">（未填写）</string>
+    <string name="new_the_course_of_the_disease">添加病程</string>
+    <string name="basic_information">基本信息</string>
+    <string name="save">保存</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="forgot_password">忘记密码?</string>
+    <string name="phone_number">手机号</string>
+    <string name="password">密码</string>
+    <string name="welcome_back">欢迎您回来</string>
+    <string name="back_home">回到首页></string>
+
+    <!--健康管理-->
+    <!--体质辨识简单介绍-->
+    <string name="introduce_pyh_ide">"此“体质测试”是依据中医国家标准进行开发，虽测试过程繁复，但却能帮助知晓身体情况，洞悉疾病隐患，当常常自检"</string>
+    <!--开始测试-->
+    <string name="begin_phy_ide_test">开始测试</string>
+    <string name="go_to_single_scheme">去完成</string>
+
+
 </resources>
