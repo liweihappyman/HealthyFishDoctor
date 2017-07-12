@@ -142,4 +142,9 @@
         <item name="android:windowExitAnimation">@anim/popup_anim_right_exit</item>
     </style>
 
+    <!--FlycoTabLayout-->
+    <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

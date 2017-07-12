@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.healthyfish.healthyfishdoctor.R;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * 描述：个人中心fragment
  * 作者：Wayne on 2017/7/11 20:55
@@ -17,9 +20,28 @@ import com.healthyfish.healthyfishdoctor.R;
  * 编辑：
  */
 public class PersonalCenterFragment extends Fragment {
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private Context mContext;
+    private View rootView;
+    Unbinder unbinder;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mContext = getActivity();
+        rootView = inflater.inflate(R.layout.fragment_personal_center, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
+        initAll();
+
+        return rootView;
+    }
+
+    private void initAll() {
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

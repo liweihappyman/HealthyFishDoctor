@@ -2,12 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_forth"
+    android:orientation="vertical"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_content_area_bg"
     tools:context="com.healthyfish.healthyfishdoctor.ui.fragment.TrainingFragment">
 
-    <TextView
+    <include layout="@layout/toolbar" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tl_training"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="培训" />
+        android:layout_height="48dp"
+        android:background="@color/color_white"
+        tl:tl_tab_padding="0dp"
+        tl:tl_indicator_color="@color/color_primary"
+        tl:tl_textSelectColor="@color/color_primary"
+        tl:tl_textUnselectColor="@color/color_auxiliary_info"
+        tl:tl_tab_width="95dp"
+        tl:tl_textsize="15sp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_training"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.view.ViewPager>
 
 </com.zhy.autolayout.AutoLinearLayout>
