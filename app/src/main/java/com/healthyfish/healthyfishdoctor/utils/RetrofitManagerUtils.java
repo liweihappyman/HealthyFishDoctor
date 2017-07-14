@@ -4,11 +4,9 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.healthyfish.healthyfishdoctor.MyApplication;
-import com.healthyfish.healthyfishdoctor.POJO.BeanBaseReq;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.api.IApiService;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;

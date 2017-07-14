@@ -13,15 +13,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
+import com.healthyfish.healthyfishdoctor.POJO.BeanTrainingVideo;
 import com.healthyfish.healthyfishdoctor.R;
-import com.healthyfish.healthyfishdoctor.utils.ViewFindUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
 
 /**
  * 描述：培训fragment
@@ -39,9 +39,8 @@ public class TrainingFragment extends Fragment {
     private View rootView;
     Unbinder unbinder;
 
-    private final String[] mTitles = {
-            "热门", "iOS", "Android", "前端"
-            , "后端", "设计", "工具资源"
+    private String[] mTitles = {
+            "热门", "中医", "临床", "护理", "西医"
     };
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -67,15 +66,31 @@ public class TrainingFragment extends Fragment {
     }
 
     private void initTabLayout() {
-        for (String title : mTitles) {
-            mFragments.add(SimpleCardFragment.getInstance(title));
+        // 初始化数据
+        List<BeanTrainingVideo> listTrainingThumbNail = new ArrayList<>();
+        BeanTrainingVideo bean = new BeanTrainingVideo();
+        bean.setNumViewer(100);
+        bean.setNameTraining("艾灸");
+
+        BeanTrainingVideo bean1 = new BeanTrainingVideo();
+        bean1.setNumViewer(200);
+        bean1.setNameTraining("益阳罐");
+
+        listTrainingThumbNail.add(bean);
+        listTrainingThumbNail.add(bean1);
+
+
+        for (int i = 0; i < mTitles.length; i++) {
+            mFragments.add(new SingleTrainingFragment(mContext, listTrainingThumbNail));
         }
 
         ViewPager viewPage = (ViewPager) rootView.findViewById(R.id.vp_training);
-        viewPage.setAdapter(new MyPagerAdapter(getActivity().getSupportFragmentManager()));
+        viewPage.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
         SlidingTabLayout tabLayout = (SlidingTabLayout) rootView.findViewById(R.id.tl_training);
 
         tabLayout.setViewPager(viewPage);
+
+
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -104,6 +119,7 @@ public class TrainingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        mFragments.clear();
     }
 
 
