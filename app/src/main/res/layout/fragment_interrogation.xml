@@ -2,13 +2,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_primary"
+    android:orientation="vertical"
     tools:context="com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/toolbar" />
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32px"
+        android:layout_marginLeft="54px"
+        android:text="付费服务"
+        style="@style/textSize_48"
+        android:textColor="@color/color_general_and_title"/>
+
+    <GridView
+        android:id="@+id/gv_pay_service"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="问诊" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:paddingTop="2px"
+        android:paddingBottom="2px"
+        android:horizontalSpacing="4px"
+        android:verticalSpacing="4px"
+        android:numColumns="3"
+        android:background="@android:color/darker_gray"/>
 
 </com.zhy.autolayout.AutoLinearLayout>

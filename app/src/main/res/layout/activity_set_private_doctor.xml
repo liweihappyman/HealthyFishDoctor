@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36px"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/color_white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/textSize_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="66px"
+                    android:layout_weight="1"
+                    android:text="私人医生"
+                    android:textColor="@color/color_auxiliary_info" />
+
+                <ToggleButton
+                    android:id="@+id/switch_private_doctor"
+                    android:layout_width="128px"
+                    android:layout_height="64px"
+                    android:layout_marginRight="53px"
+                    android:background="@drawable/switch_togglebtn"
+                    android:gravity="center_vertical"
+                    android:textOff=""
+                    android:textOn="" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/color_white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/textSize_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="66px"
+                    android:layout_weight="1"
+                    android:text="设置价格"
+                    android:textColor="@color/color_auxiliary_info" />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="53px"
+                    android:gravity="right"
+                    android:minWidth="200px"
+                    android:hint="未设置"
+                    android:textColor="@color/color_general_and_title"
+                    android:textColorHint="@color/color_hint" />
+
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/color_white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/textSize_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="66px"
+                    android:layout_weight="1"
+                    android:text="设置电话接诊时间"
+                    android:textColor="@color/color_auxiliary_info" />
+
+                <TextView
+                    android:id="@+id/tv_admission_time"
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="53px"
+                    android:gravity="right"
+                    android:minWidth="200px"
+                    android:hint="未设置"
+                    android:textColor="@color/color_general_and_title"
+                    android:textColorHint="@color/color_hint" />
+
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160px"
+                android:background="@color/color_white"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/textSize_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="66px"
+                    android:layout_weight="1"
+                    android:text="设置服务上限人数"
+                    android:textColor="@color/color_auxiliary_info" />
+
+                <TextView
+                    android:id="@+id/tv_upper_limit"
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="53px"
+                    android:gravity="right"
+                    android:minWidth="200px"
+                    android:hint="未设置"
+                    android:textColor="@color/color_general_and_title"
+                    android:textColorHint="@color/color_hint" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/bt_save"
+        style="@style/textSize_54"
+        android:layout_width="match_parent"
+        android:layout_height="126px"
+        android:background="@drawable/selector_1dp_btn_color_from_primary_to_white"
+        android:text="保存"
+        android:textColor="@color/selector_text_color_from_white_to_primary" />
+
+</com.zhy.autolayout.AutoLinearLayout>

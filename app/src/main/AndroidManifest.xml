@@ -31,6 +31,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--问诊设置图文咨询页面-->
+        <activity
+            android:name=".ui.activity.interrogation.SetGraphicConsultation"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!--问诊设置私人医生页面-->
+        <activity
+            android:name=".ui.activity.interrogation.SetPrivateDoctor"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!--问诊图文咨询页面-->
+        <activity android:name=".ui.activity.interrogation.GraphicConsultation" />
+        <!--问诊查看用户信息页面-->
+        <activity android:name=".ui.activity.interrogation.SeeUserInformation" />
+        <!--问诊设置接诊时间页面-->
+        <activity android:name=".ui.activity.interrogation.SetAdmissionTime" />
+
     </application>
 
 </manifest>

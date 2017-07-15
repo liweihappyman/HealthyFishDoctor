@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="800px"
+        android:layout_height="560px"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/textSize_60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textColor="@color/color_general_and_title" />
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="560px"
+            android:layout_height="140px"
+            android:layout_marginTop="49px"
+            android:background="@drawable/gray_rectangle"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="5px" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="560px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="65px"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bt_cancel"
+                style="@style/textSize_60"
+                android:layout_width="240px"
+                android:layout_height="120px"
+                android:background="@drawable/selector_4dp_btn_color_from_white_to_primary"
+                android:gravity="center"
+                android:text="取消" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/bt_sure"
+                style="@style/textSize_60"
+                android:layout_width="240px"
+                android:layout_height="120px"
+                android:background="@drawable/selector_4dp_btn_color_from_primary_to_white"
+                android:gravity="center"
+                android:text="确认" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>
