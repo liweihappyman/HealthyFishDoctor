@@ -1,14 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_third"
-    tools:context="com.healthyfish.healthyfishdoctor.ui.fragment.PharmacopeiaFragment">
+    android:orientation="vertical">
+    <include layout="@layout/toolbar"/>
+    <ImageView
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:layout_width="817px"
+        android:layout_height="255px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="225px"
+        android:background="@mipmap/pharmacopoeia" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="970px"
+        android:layout_height="120px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="140px"
+        android:background="@mipmap/pharmacopoeia_searchbar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginLeft="40px"
+            android:background="@mipmap/search" />
+
+        <EditText
+            style="@style/textSize_48"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="40px"
+            android:background="@null"
+            android:ellipsize="start"
+            android:hint="搜索药典"
+            android:maxLines="1"
+            android:textColorHint="@color/color_primary_dark" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="药典" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="80px"
+        android:layout_marginRight="80px"
+        android:layout_marginTop="115px"
+        android:orientation="horizontal">
 
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/western_medicine"
+                android:layout_width="144px"
+                android:layout_height="144px"
+                android:background="@mipmap/western_medicine" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33px"
+                android:text="西药"
+                android:textColor="@color/color_primary_dark"
+                android:textSize="58px" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/proprietary_chinese_medicine"
+                android:layout_width="144px"
+                android:layout_height="144px"
+                android:background="@mipmap/proprietary_chinese_medicine" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33px"
+                android:text="中成药"
+                android:textColor="@color/color_primary_dark"
+                android:textSize="58px" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/chinese_medicine"
+                android:layout_width="144px"
+                android:layout_height="144px"
+                android:background="@mipmap/traditional_chinese_medicine" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33px"
+                android:text="中药"
+                android:textColor="@color/color_primary_dark"
+                android:textSize="58px" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/prescription"
+                android:layout_width="144px"
+                android:layout_height="144px"
+                android:background="@mipmap/prescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33px"
+                android:text="方剂"
+                android:textColor="@color/color_primary_dark"
+                android:textSize="58px" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoLinearLayout>
+
