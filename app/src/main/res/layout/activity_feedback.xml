@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <include layout="@layout/toolbar"/>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="1000px"
+        android:layout_height="450px"
+        android:layout_marginTop="54px"
+        android:background="@drawable/rounded_rectangle_white">
+
+        <EditText
+            android:id="@+id/et_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="37px"
+            android:paddingLeft="47px"
+            android:paddingRight="47px"
+            android:paddingBottom="30px"
+            android:background="@null"
+            android:textColorHint="@color/color_hint"
+            style="@style/textSize_48"
+            android:hint="感谢您使用健鱼的产品。您可以在这里吐槽不好用的功能，不全面的内容，报告您发现的问题。我们将尽量在第一时间解决。谢谢您的支持与关注！"/>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+    
+    <Button
+        android:id="@+id/bt_commit"
+        android:layout_width="600px"
+        android:layout_height="120px"
+        android:layout_marginTop="60px"
+        android:text="提交"
+        style="@style/textSize_54"
+        android:textColor="@color/selector_text_color_from_white_to_primary"
+        android:background="@drawable/selector_4dp_btn_color_from_primary_to_white"/>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

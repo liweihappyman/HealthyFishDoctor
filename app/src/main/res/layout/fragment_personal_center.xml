@@ -1,14 +1,326 @@
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_secondary"
     tools:context="com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!--可折叠Toolbar-->
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_preview_scheme"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="个人中心" />
+        android:layout_height="220dp">
 
-</com.zhy.autolayout.AutoLinearLayout>
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_preview_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_third"
+            app:contentScrim="@color/color_third"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/iv_banner_healthy_scheme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    style="@style/big_content_title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="个人中心"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </android.support.v7.widget.Toolbar>
+
+            <!--未登录时的头部布局-->
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/rly_not_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:background="@color/color_primary">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_head_portrait"
+                    android:layout_width="284px"
+                    android:layout_height="284px"
+                    android:layout_marginLeft="398px"
+                    android:layout_marginTop="80px"
+                    android:src="@mipmap/ic_logo" />
+
+                <TextView
+                    android:id="@+id/tv_login_or_register"
+                    style="@style/textSize_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="406px"
+                    android:layout_marginTop="410px"
+                    android:text="登录/注册"
+                    android:textColor="@color/selector_text_color_from_white_to_primary" />
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rly_mail"
+                    android:layout_width="160px"
+                    android:layout_height="84px"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="27px">
+
+                    <ImageView
+                        android:layout_width="86px"
+                        android:layout_height="60px"
+                        android:layout_marginTop="24px"
+                        android:src="@mipmap/ic_mail" />
+
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <!--已登录时的头部布局-->
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/rly_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:background="@color/color_primary"
+                android:visibility="gone">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civ_head_portrait_login"
+                    android:layout_width="280px"
+                    android:layout_height="280px"
+                    android:layout_marginLeft="47px"
+                    android:layout_marginTop="130px"
+                    android:src="@mipmap/ic_logo" />
+
+                <TextView
+                    android:id="@+id/tv_name_login"
+                    style="@style/textSize_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="374px"
+                    android:layout_marginTop="170px"
+                    android:text="小李的健康信息"
+                    android:textColor="@color/selector_text_color_from_white_to_primary" />
+
+                <TextView
+                    android:id="@+id/tv_constitution_login"
+                    style="@style/textSize_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="374px"
+                    android:layout_marginTop="300px"
+                    android:text="气虚质"
+                    android:textColor="@color/selector_text_color_from_white_to_primary"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_go"
+                    android:layout_width="42px"
+                    android:layout_height="46px"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="77px"
+                    android:layout_marginTop="248px"
+                    android:src="@mipmap/ic_go_big" />
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rly_mail_login"
+                    android:layout_width="164px"
+                    android:layout_height="84px"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="27px">
+
+                    <ImageView
+                        android:layout_width="86px"
+                        android:layout_height="60px"
+                        android:layout_marginTop="24px"
+                        android:src="@mipmap/ic_mail" />
+
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!--具体设置-->
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/lly_personal_information"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="54px"
+                    android:text="个人信息"
+                    android:textColor="@color/color_general_and_title" />
+
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="37px"
+                    android:layout_marginRight="43px"
+                    android:src="@mipmap/ic_more_horizontal" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/lly_my_news"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="54px"
+                    android:text="我的消息"
+                    android:textColor="@color/color_general_and_title" />
+
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="37px"
+                    android:layout_marginRight="43px"
+                    android:src="@mipmap/ic_more_horizontal" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/lly_my_concern"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="54px"
+                    android:text="我的关注"
+                    android:textColor="@color/color_general_and_title" />
+
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="37px"
+                    android:layout_marginRight="43px"
+                    android:src="@mipmap/ic_more_horizontal" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/lly_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="54px"
+                    android:text="意见反馈"
+                    android:textColor="@color/color_general_and_title" />
+
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="37px"
+                    android:layout_marginRight="43px"
+                    android:src="@mipmap/ic_more_horizontal" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/lly_set"
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="54px"
+                    android:text="设置"
+                    android:textColor="@color/color_general_and_title" />
+
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="37px"
+                    android:layout_marginRight="43px"
+                    android:src="@mipmap/ic_more_horizontal" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

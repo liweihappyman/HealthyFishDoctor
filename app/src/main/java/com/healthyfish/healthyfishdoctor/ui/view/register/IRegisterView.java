@@ -15,7 +15,7 @@ public interface IRegisterView {
 
     String getRegisterUserName();
 
-    String getRegisterPassword();
+    String getRegisterVerificationCode();
 
     void toRegisterActivity();
 

@@ -47,6 +47,36 @@
         <!--问诊设置接诊时间页面-->
         <activity android:name=".ui.activity.interrogation.SetAdmissionTime" />
 
+        <!-- 个人中心我的健康信息页面 -->
+        <activity android:name=".ui.activity.personal_center.HealthInformation" />
+        <!-- 个人中心个人信息页面 -->
+        <activity android:name=".ui.activity.personal_center.PersonalInformation" />
+        <!-- 个人中心我的消息页面 -->
+        <activity android:name=".ui.activity.personal_center.MyNews" />
+        <!-- 个人中心我的关注页面 -->
+        <activity android:name=".ui.activity.personal_center.MyConcern" />
+        <!-- 个人中心意见反馈页面 -->
+        <activity android:name=".ui.activity.personal_center.Feedback" />
+        <!-- 个人中心设置页面 -->
+        <activity android:name=".ui.activity.personal_center.SetUp" />
+
+        <!-- 登录页面 -->
+        <activity android:name=".ui.activity.login_register.Login" />
+        <!-- 注册页面 -->
+        <activity android:name=".ui.activity.login_register.Register" />
+        <!-- 登录注册忘记密码页面 -->
+        <activity android:name=".ui.activity.login_register.ForgetPassword" />
+        <!-- 登录注册修改密码页面 -->
+        <activity android:name=".ui.activity.login_register.ChangePassword" />
+        <!-- 登录注册修改密码成功页面 -->
+        <activity android:name=".ui.activity.login_register.ChangePasswordSuccess" />
+        <!-- 登录注册填写昵称密码页面 -->
+        <activity android:name=".ui.activity.login_register.RegisterPassword" />
+        <!-- 登录注册填写身份证号和选择性别页面 -->
+        <activity android:name=".ui.activity.login_register.RegisterInformation" />
+        <!-- 登录注册注册成功页面 -->
+        <activity android:name=".ui.activity.login_register.RegisterSuccess" />
+
     </application>
 
 </manifest>

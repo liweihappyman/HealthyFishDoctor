@@ -9,4 +9,5 @@ package com.healthyfish.healthyfishdoctor.ui.presenter.register;
 
 // TODO: 2017/6/28 实现注册Presenter
 public class RegisterPresenter {
+
 }

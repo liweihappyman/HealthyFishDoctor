@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--默认字体颜色是主色调，按下按钮以后是白色-->
+    <item android:color="@color/color_white" android:state_pressed="true" />
+    <item android:color="@color/color_small_content"/>
+</selector>
