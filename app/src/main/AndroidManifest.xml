@@ -32,9 +32,55 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- 病历夹首页 -->
-        <activity android:name=".ui.activity.medical_record.MedRecHome" />
-        <!-- 病历夹所有病历页面 -->
+
+
+
+        <!--问诊设置图文咨询页面-->
+        <activity
+            android:name=".ui.activity.interrogation.SetGraphicConsultation"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!--问诊设置私人医生页面-->
+        <activity
+            android:name=".ui.activity.interrogation.SetPrivateDoctor"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!--问诊图文咨询页面-->
+        <activity android:name=".ui.activity.interrogation.GraphicConsultation" />
+        <!--问诊查看用户信息页面-->
+        <activity android:name=".ui.activity.interrogation.SeeUserInformation" />
+        <!--问诊设置接诊时间页面-->
+        <activity android:name=".ui.activity.interrogation.SetAdmissionTime" />
+
+        <!-- 个人中心我的健康信息页面 -->
+        <activity android:name=".ui.activity.personal_center.HealthInformation" />
+        <!-- 个人中心个人信息页面 -->
+        <activity android:name=".ui.activity.personal_center.PersonalInformation" />
+        <!-- 个人中心我的消息页面 -->
+        <activity android:name=".ui.activity.personal_center.MyNews" />
+        <!-- 个人中心我的关注页面 -->
+        <activity android:name=".ui.activity.personal_center.MyConcern" />
+        <!-- 个人中心意见反馈页面 -->
+        <activity android:name=".ui.activity.personal_center.Feedback" />
+        <!-- 个人中心设置页面 -->
+        <activity android:name=".ui.activity.personal_center.SetUp" />
+
+        <!-- 登录页面 -->
+        <activity android:name=".ui.activity.login_register.Login" />
+        <!-- 注册页面 -->
+        <activity android:name=".ui.activity.login_register.Register" />
+        <!-- 登录注册忘记密码页面 -->
+        <activity android:name=".ui.activity.login_register.ForgetPassword" />
+        <!-- 登录注册修改密码页面 -->
+        <activity android:name=".ui.activity.login_register.ChangePassword" />
+        <!-- 登录注册修改密码成功页面 -->
+        <activity android:name=".ui.activity.login_register.ChangePasswordSuccess" />
+        <!-- 登录注册填写昵称密码页面 -->
+        <activity android:name=".ui.activity.login_register.RegisterPassword" />
+        <!-- 登录注册填写身份证号和选择性别页面 -->
+        <activity android:name=".ui.activity.login_register.RegisterInformation" />
+        <!-- 登录注册注册成功页面 -->
+        <activity android:name=".ui.activity.login_register.RegisterSuccess" />
+
+          <!-- 病历夹全部病历页面 -->
         <activity android:name=".ui.activity.medical_record.AllMedRec" />
         <!-- 病历夹新建病历夹页面 -->
         <activity
@@ -59,11 +105,15 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 图片选择的预览页面 -->
         <activity android:name="com.foamtrace.photopicker.PhotoPreviewActivity" />
+         <!-- 药典列表 -->
         <activity
             android:name=".ui.activity.pharmacopeia.PharmacopeiaList"
             android:launchMode="singleTask" />
+        <!-- 药典某类药典列表 -->
         <activity android:name=".ui.activity.pharmacopeia.ListOfCertainPharmacopoeia" />
+        <!-- 药典药物详情 -->
         <activity android:name=".ui.activity.pharmacopeia.DrugDetail"></activity>
+
     </application>
 
 </manifest>

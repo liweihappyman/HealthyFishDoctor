@@ -1,9 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.healthyfish.healthyfishdoctor.ui.activity.login_register.Register">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:layout_width="413px"
+        android:layout_height="364px"
+        android:layout_marginTop="83px"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_logo"/>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="972px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100px"
+        android:paddingTop="40px"
+        android:paddingBottom="40px"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48px"
+            android:layout_height="58px"
+            android:layout_marginLeft="48px"
+            android:src="@mipmap/ic_login_user"/>
+
+        <EditText
+            android:id="@+id/et_input_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50px"
+            android:inputType="number"
+            android:imeOptions="actionNone"
+            android:maxLength="11"
+            android:hint="输入手机号"
+            android:maxLines="1"
+            android:background="@null"
+            style="@style/textSize_48"/>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="972px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70px"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="535px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="40px"
+            android:paddingBottom="40px"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="48px"
+                android:layout_height="58px"
+                android:layout_marginLeft="48px"
+                android:src="@mipmap/ic_input_validation_code"/>
+
+            <EditText
+                android:id="@+id/et_input_validation_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50px"
+                android:inputType="textVisiblePassword"
+                android:maxLength="8"
+                android:imeOptions="actionDone"
+                android:hint="输入验证码"
+                android:maxLines="1"
+                android:background="@null"
+                style="@style/textSize_48"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <Button
+            android:id="@+id/bt_get_code"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20px"
+            android:gravity="center"
+            style="@style/textSize_48"
+            android:textColor="@android:color/white"
+            android:text="获取短信验证码"/>
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <Button
+        android:id="@+id/bt_register"
+        android:layout_width="882px"
+        android:layout_height="126px"
+        android:layout_marginTop="190px"
+        android:paddingTop="30px"
+        android:paddingBottom="30px"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/selector_text_color_from_secondary_to_white"
+        android:background="@drawable/selector_4dp_btn_color_from_white_to_secondary"
+        android:textSize="54px"
+        android:text="注册"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160px"
+        android:layout_gravity="center"
+        android:textSize="42px"
+        android:text="点击注册即表示您同意"/>
+
+
+    <TextView
+        android:id="@+id/tv_agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50px"
+        android:layout_gravity="center"
+        android:text="《太医医生服务条款及协议》"
+        android:textColor="@color/selector_text_color_from_secondary_to_white"
+        style="@style/textSize_54"/>
+
+</com.zhy.autolayout.AutoLinearLayout>
+
+

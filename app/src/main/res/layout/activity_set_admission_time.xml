@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_primary_dark"
+        android:focusableInTouchMode="true"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/big_content_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="54px"
+            android:layout_gravity="right"
+            android:text="保存"
+            style="@style/textSize_48"
+            android:textColor="@color/selector_text_color_from_white_to_primary"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="240px"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="2px"
+                android:layout_height="60px"
+                android:layout_gravity="right"
+                android:background="@android:color/darker_gray" />
+
+            <RadioGroup
+                android:id="@+id/rgp_week"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rbt_monday"
+                    style="@style/textSize_48"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@drawable/selector_rbt_color_from_gray_to_white"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="星期一"
+                    android:textColor="@color/selector_rbt_text_color_from_white_to_gray" />
+
+                <RadioButton
+                    android:id="@+id/rbt_tuesday"
+                    style="@style/textSize_48"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@drawable/selector_rbt_color_from_gray_to_white"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="星期二"
+                    android:textColor="@color/selector_rbt_text_color_from_white_to_gray" />
+
+                <RadioButton
+                    android:id="@+id/rbt_wednesday"
+                    style="@style/textSize_48"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@drawable/selector_rbt_color_from_gray_to_white"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="星期三"
+                    android:textColor="@color/selector_rbt_text_color_from_white_to_gray" />
+
+                <RadioButton
+                    android:id="@+id/rbt_thursday"
+                    style="@style/textSize_48"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@drawable/selector_rbt_color_from_gray_to_white"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="星期四"
+                    android:textColor="@color/selector_rbt_text_color_from_white_to_gray" />
+
+                <RadioButton
+                    android:id="@+id/rbt_friday"
+                    style="@style/textSize_48"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@drawable/selector_rbt_color_from_gray_to_white"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="星期五"
+                    android:textColor="@color/selector_rbt_text_color_from_white_to_gray" />
+
+                <RadioButton
+                    android:id="@+id/rbt_saturday"
+                    style="@style/textSize_48"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@drawable/selector_rbt_color_from_gray_to_white"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="星期六"
+                    android:textColor="@color/selector_rbt_text_color_from_white_to_gray" />
+
+                <RadioButton
+                    android:id="@+id/rbt_sunday"
+                    style="@style/textSize_48"
+                    android:layout_width="match_parent"
+                    android:layout_height="120px"
+                    android:background="@drawable/selector_rbt_color_from_gray_to_white"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="星期天"
+                    android:textColor="@color/selector_rbt_text_color_from_white_to_gray" />
+
+            </RadioGroup>
+
+            <ImageView
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@android:color/darker_gray" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <include layout="@layout/layout_set_admission_time" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

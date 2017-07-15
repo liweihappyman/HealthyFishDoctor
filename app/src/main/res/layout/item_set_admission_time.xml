@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <CheckBox
+        android:id="@+id/cb_time"
+        android:layout_width="240px"
+        android:layout_height="120px"
+        android:gravity="center"
+        android:text="8:30"
+        android:textColor="@color/selector_ckb_text_color_from_gray_to_white"
+        style="@style/textSize_48"
+        android:button="@null"
+        android:background="@drawable/selector_ckb_bg_color_from_white_to_secondary"/>
+
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <include layout="@layout/toolbar"/>
+
+    <ImageView
+        android:layout_width="316px"
+        android:layout_height="316px"
+        android:layout_marginTop="200px"
+        android:src="@mipmap/ic_login_success"/>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="66px"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="72px"
+            android:textColor="@color/colorPrimary"
+            android:text="恭喜您注册成功"/>
+
+        <TextView
+            android:id="@+id/tv_back_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45px"
+            android:padding="5px"
+            android:layout_gravity="right"
+            android:text="返回首页>"
+            android:textSize="42px"
+            android:textColor="@color/selector_text_color_from_hint_to_white"/>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <Button
+        android:id="@+id/bt_add_document"
+        android:layout_width="720px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="155px"
+        android:paddingBottom="30px"
+        android:paddingTop="30px"
+        android:gravity="center"
+        android:background="@drawable/selector_4dp_btn_color_from_primary_to_white"
+        android:text="添加健康档案"
+        android:textSize="54px"
+        android:textColor="@color/selector_text_color_from_white_to_primary"/>
+
+</com.zhy.autolayout.AutoLinearLayout>

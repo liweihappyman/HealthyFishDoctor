@@ -1,9 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.healthyfish.healthyfishdoctor.ui.activity.login_register.Login"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.healthyfish.healthyfishdoctor.ui.activity.login_register.Login">
+    android:layout_height="match_parent">
 
-</android.support.constraint.ConstraintLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <ProgressBar
+            android:id="@+id/login_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyle"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <ImageView
+        android:layout_width="459px"
+        android:layout_height="403px"
+        android:layout_marginLeft="312px"
+        android:layout_marginTop="140px"
+        android:src="@mipmap/ic_logo"
+        android:id="@+id/imageView" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="670px"
+        android:layout_marginLeft="53px"
+        android:orientation="vertical"
+        android:id="@+id/autoLinearLayout">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="972px"
+            android:layout_height="128px"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="48px"
+                android:layout_height="58px"
+                android:layout_marginLeft="48px"
+                android:src="@mipmap/ic_login_user"/>
+
+            <EditText
+                android:id="@+id/et_login_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36px"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:maxLength="11"
+                android:maxLines="1"
+                android:hint="@string/phone_number"
+                android:background="@null"
+                android:textSize="48px"
+                android:textColor="@color/color_hint"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="972px"
+            android:layout_height="128px"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="48px"
+                android:layout_height="58px"
+                android:layout_marginLeft="48px"
+                android:src="@mipmap/ic_login_password"/>
+
+            <EditText
+                android:id="@+id/et_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36px"
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:hint="@string/password"
+                android:background="@null"
+                android:textSize="48px"
+                android:textColor="@color/color_hint"/>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="972px"
+        android:layout_height="120px"
+        android:text="@string/login"
+        android:textSize="72px"
+        android:textColor="@color/selector_text_color_from_primary_to_white"
+        android:background="@drawable/selector_4dp_btn_color_from_primary_frame_to_primary"
+        android:layout_below="@+id/autoLinearLayout"
+        android:layout_marginTop="36px"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tv_forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="860px"
+        android:layout_marginTop="1118px"
+        android:padding="3px"
+        android:text="@string/forgot_password"
+        style="@style/textSize_36"
+        android:textColor="@color/selector_text_color_from_gray_to_white"/>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="205px"
+        android:layout_height="105px"
+        android:layout_marginLeft="438px"
+        android:layout_marginTop="500px"
+        android:layout_below="@+id/btn_login"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/register"
+        android:textSize="48px"
+        android:textColor="@color/selector_text_color_from_primary_to_white"
+        android:background="@drawable/selector_4dp_btn_color_from_primary_frame_to_primary"/>
+
+</com.zhy.autolayout.AutoRelativeLayout>
