@@ -5,6 +5,9 @@ import android.content.Context;
 
 import com.healthyfish.healthyfishdoctor.utils.HttpsUtils;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
+import com.zhy.autolayout.config.AutoLayoutConifg;
+
+import org.litepal.LitePal;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +32,10 @@ public class MyApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        //自适应平屏幕
+        AutoLayoutConifg.getInstance().useDeviceSize();
         applicationContext = getApplicationContext();
+        LitePal.initialize(getApplicationContext());//初始化数据库
     }
 
     /**

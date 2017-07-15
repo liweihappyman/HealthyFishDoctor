@@ -1,9 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment">
-
     <include layout="@layout/home_toolbar" />
+    <include layout="@layout/home_function_menu"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        style="@style/textSize_36"
+        android:textColor="@color/color_general_and_title"
+        android:text="全部消息"
+        android:gravity="center_vertical"
+        android:paddingLeft="55px"
+        />
+    <ListView
+        android:id="@+id/message_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/color_divider"
+        android:dividerHeight="3px"></ListView>
 
-</FrameLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

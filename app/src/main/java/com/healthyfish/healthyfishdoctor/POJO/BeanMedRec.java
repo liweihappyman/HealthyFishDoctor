@@ -27,6 +27,15 @@ public class BeanMedRec extends DataSupport implements Serializable{
     private String clinicalTime;//就诊时间
     private List<BeanCourseOfDisease> listCourseOfDisease = new ArrayList<BeanCourseOfDisease>() ;//病程列表
     private boolean state;//记录是自己的还是医生改过的状态  false表示是自己的，true表示改过的
+    private BeanMedRecUser beanMedRecUser;
+
+    public BeanMedRecUser getBeanMedRecUser() {
+        return beanMedRecUser;
+    }
+
+    public void setBeanMedRecUser(BeanMedRecUser beanMedRecUser) {
+        this.beanMedRecUser = beanMedRecUser;
+    }
 
     public int getId() {
         return id;
