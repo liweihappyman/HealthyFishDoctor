@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--默认按钮样式： 整体按钮背景颜色为次色
+                      按下按钮以后是边框颜色是次色，按钮内部背景是白色
+                      整体圆角1dp-->
+    <item android:state_checked="true">
+        <shape>
+            <corners android:radius="1dp" />
+            <solid android:color="@color/color_secondary" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="@color/color_white" />
+            <!-- 圆角 -->
+            <corners android:radius="1dp" />
+        </shape>
+    </item>
+</selector>

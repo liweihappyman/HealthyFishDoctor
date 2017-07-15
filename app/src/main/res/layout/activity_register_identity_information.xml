@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <include layout="@layout/toolbar"/>
+
+    <ImageView
+        android:layout_width="219px"
+        android:layout_height="219px"
+        android:layout_marginTop="70px"
+        android:src="@mipmap/ic_head_portrait"/>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="972px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80px"
+        android:paddingTop="40px"
+        android:paddingBottom="40px"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48px"
+            android:layout_height="58px"
+            android:layout_marginLeft="48px"
+            android:src="@mipmap/ic_idcart"/>
+
+        <EditText
+            android:id="@+id/et_input_idCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70px"
+            android:inputType="number"
+            android:imeOptions="actionDone"
+            android:maxLength="18"
+            android:maxLines="1"
+            android:hint="输入身份证"
+            android:background="@null"
+            android:textSize="48px"
+            android:textColorHint="@color/color_hint"/>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rgp_gender"
+        android:layout_width="504px"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80px"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbtn_male"
+            android:layout_width="144px"
+            android:layout_height="144px"
+            android:layout_gravity="left"
+            android:button="@null"
+            android:background="@drawable/selector_rbt_male"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_female"
+            android:layout_width="144px"
+            android:layout_height="144px"
+            android:button="@null"
+            android:background="@drawable/selector_rbt_female"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="978px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="130px"
+        android:paddingBottom="35px"
+        android:paddingTop="35px"
+        android:background="@drawable/selector_4dp_btn_color_from_primary_to_white"
+        android:textSize="54px"
+        android:textColor="@color/selector_text_color_from_white_to_primary"
+        android:text="下一步"/>
+
+</com.zhy.autolayout.AutoLinearLayout>

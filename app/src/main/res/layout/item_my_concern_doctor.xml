@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5px"
+        app:cardCornerRadius="2px">
+
+        <com.daimajia.swipe.SwipeLayout
+            android:id="@+id/sly_message_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:splitMotionEvents="false">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="283px"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/tv_cancel_attention"
+                    style="@style/textSize_60"
+                    android:layout_width="180px"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_secondary"
+                    android:gravity="center"
+                    android:text="取消\n关注"
+                    android:textColor="@color/color_white" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/rly_doctor_info_visible"
+                android:layout_width="match_parent"
+                android:layout_height="283px"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@id/civ_head_portrait"
+                    android:layout_width="120px"
+                    android:layout_height="120px"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginTop="40px"
+                    android:src="@mipmap/ic_male_select" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="183px"
+                    android:orientation="horizontal"
+                    android:paddingTop="30px">
+
+                    <TextView
+                        android:id="@+id/tv_doctorName"
+                        style="@style/textSize_66"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="赵倩"
+                        android:textColor="@color/color_general_and_title" />
+
+                    <TextView
+                        android:id="@+id/tv_doctorDepartment"
+                        style="@style/textSize_48"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="45px"
+                        android:text="中医科"
+                        android:textColor="@color/color_auxiliary_info" />
+
+                    <TextView
+                        android:id="@+id/tv_doctorTitle"
+                        style="@style/textSize_48"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="45px"
+                        android:text="主任医师"
+                        android:textColor="@color/color_auxiliary_info" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_hospital"
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="183px"
+                    android:layout_marginTop="108px"
+                    android:text="柳州市中医院"
+                    android:textColor="@color/color_auxiliary_info" />
+
+                <TextView
+                    android:id="@+id/tv_doctorInfo"
+                    style="@style/textSize_48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="180px"
+                    android:layout_marginTop="190px"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="擅长：消化系统疾病、口腔溃疡、阴虚、肾阳虚、阳虚、虚火"
+                    android:textColor="@color/color_small_content" />
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+        </com.daimajia.swipe.SwipeLayout>
+
+    </com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView>
+
+</com.zhy.autolayout.AutoLinearLayout>
