@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200px"
+    android:background="@color/color_white"
+    android:orientation="horizontal">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img"
+        android:layout_width="138px"
+        android:layout_height="138px"
+        android:layout_marginLeft="55px"
+        android:layout_marginTop="30px"
+        android:src="@color/color_primary_dark" />
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_marginLeft="20px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/name"
+        style="@style/textSize_48"
+        android:textColor="@color/color_content_title"
+        android:layout_marginTop="33px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="赵思思的病历夹"/>
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
+            style="@style/genera_title_text"
+            android:text="2017年10月20日"
+            />
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

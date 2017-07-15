@@ -46,10 +46,12 @@
     </style>
 
     <style name="funtion_menu_tv">
-        <item name="android:layout_marginTop">28px</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">42px</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">48px</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
         <item name="android:textColor">@color/color_content_title</item>
     </style>
     <!--普通标题文字颜色及大小-->

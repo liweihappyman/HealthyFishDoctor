@@ -1,5 +1,6 @@
 package com.healthyfish.healthyfishdoctor;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -14,14 +15,21 @@ import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PharmacopeiaFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.TrainingFragment;
+import com.tbruyelle.rxpermissions.Permission;
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        initPermision();//获取权限
         init();
     }
 
@@ -192,4 +200,19 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void initPermision() {
+        Observable.timer(2000, TimeUnit.MILLISECONDS)
+                .compose(RxPermissions.getInstance(this).ensureEach(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Permission>() {
+                    @Override
+                    public void call(Permission permission) {
+
+                    }
+                });
+    }
+
 }

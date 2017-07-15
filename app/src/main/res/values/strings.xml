@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HealthyFish</string>
+    <string name="app_name">健鱼医生</string>
 
     <!--（1）MainActivtiy屏幕下方导航菜单-->
     <string name="home">首页</string>

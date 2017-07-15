@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!-- 数据库名 -->
+    <dbname value="MedRec" >
+    </dbname>
+    <!-- 数据库版本 -->
+
+    <version value="1" >
+    </version>
+    <!-- 映射模型 -->
+
+    <list>
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser">
+        </mapping>
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanMedRec" >
+        </mapping>
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease">
+        </mapping>
+    </list>
+
+</litepal>
+
+

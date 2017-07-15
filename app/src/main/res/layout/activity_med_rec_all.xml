@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+  >
+    <include layout="@layout/toolbar"/>
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/new_med_rec"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="70px"
+            android:layout_height="70px"
+            android:background="@mipmap/new_med_rec"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_med_rec"
+            android:textColor="@color/color_primary_dark"
+            android:layout_marginLeft="35px"
+            style="@style/big_content_title_text"/>
+    </com.zhy.autolayout.AutoLinearLayout>
+    <ListView
+        android:id="@+id/med_rec_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

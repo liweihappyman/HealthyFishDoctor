@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/toolbar"/>
+    <LinearLayout
+    android:layout_marginTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+
+    <com.healthyfish.healthyfishdoctor.ui.widget.FlowLayout
+    android:id="@+id/id_flowlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="horizontal">
+    </com.healthyfish.healthyfishdoctor.ui.widget.FlowLayout>
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textSize="48px"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="50px"
+        android:text="所有标签"
+    />
+
+    <com.healthyfish.healthyfishdoctor.ui.widget.TagFlowLayout
+
+    android:id="@+id/id_flowlayout_two"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal">
+    </com.healthyfish.healthyfishdoctor.ui.widget.TagFlowLayout>
+
+    </LinearLayout>
+
+    <TextView
+    android:id="@+id/save"
+    android:layout_width="match_parent"
+    android:layout_height="125px"
+    android:background="@color/color_primary_dark"
+    android:clickable="true"
+    android:gravity="center"
+    android:text="保存"
+    android:textColor="@android:color/white"
+    style="@style/textSize_54" />
+
+</LinearLayout>

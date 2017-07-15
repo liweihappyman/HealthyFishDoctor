@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/share"
+        android:title="分享病历"
+        app:showAsAction="never"/>
+    <item android:id="@+id/del"
+        android:title="shanchu"
+        app:showAsAction="never"/>
+    <item android:id="@+id/test"
+        android:title="popupWindow"
+        app:showAsAction="never"/>
+
+</menu>
