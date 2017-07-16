@@ -46,6 +46,8 @@
         <activity android:name=".ui.activity.interrogation.SeeUserInformation" />
         <!--问诊设置接诊时间页面-->
         <activity android:name=".ui.activity.interrogation.SetAdmissionTime" />
+        <!--问诊选择模板页面-->
+        <activity android:name=".ui.activity.interrogation.SelectTemplate" />
 
         <!-- 个人中心我的健康信息页面 -->
         <activity android:name=".ui.activity.personal_center.HealthInformation" />

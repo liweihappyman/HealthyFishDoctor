@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.healthyfish.healthyfishdoctor.POJO.BeanPayService;
 import com.healthyfish.healthyfishdoctor.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +57,10 @@ public class PayServiceGvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.item_pay_service_gv, null);
+            convertView = mLayoutInflater.inflate(R.layout.item_pay_service_gv, parent,false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
+            AutoUtils.autoSize(convertView);//item自适应适配
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
