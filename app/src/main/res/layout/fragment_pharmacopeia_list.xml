@@ -1,0 +1,17 @@
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.healthyfish.healthyfishdoctor.ui.fragment.PharmacopeiaListFragment">
+    <ExpandableListView
+        android:id="@+id/explv_pharmacopia"
+        android:layout_marginTop="36px"
+        android:layout_width="match_parent"
+        android:divider="@color/color_divider"
+        android:dividerHeight="3px"
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null"
+        android:childIndicator="@null">
+    </ExpandableListView>
+</com.zhy.autolayout.AutoLinearLayout>

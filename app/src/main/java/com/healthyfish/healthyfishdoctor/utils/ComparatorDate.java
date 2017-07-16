@@ -22,10 +22,8 @@ public class ComparatorDate implements Comparator {
     // 星期E 今年的第D天  这个月的第F星期   今年的第w个星期   这个月的第W个星期  今天的a k1~24制时间 K0-11小时制时间 z时区");
     //SimpleDateFormat sdf = new SimpleDateFormat("yyyyyyyy-MM-dd HH(hh):mm:ss S E D F w W a k K z");
     //日期大小比较类
-    //public int orderByDate(String date1, String date2) {
-    DateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
-    // }
 
+    DateFormat df = new SimpleDateFormat("yyyy年MM月dd日");
     @Override
     public int compare(Object o, Object t1) {
         BeanMedRec bean1 = (BeanMedRec) o;

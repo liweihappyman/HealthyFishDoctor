@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="208px"
+    android:background="@color/color_white"
+    android:id="@+id/drug_layout"
+    android:clickable="true"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/name_of_drug"
+        android:layout_marginTop="40px"
+        android:paddingLeft="55px"
+        style="@style/textSize_60"
+        android:text="注射用青蒿琥酯"
+        android:textColor="@color/color_content_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/name_of_company"
+        android:layout_marginTop="23px"
+        android:paddingLeft="55px"
+        style="@style/textSize_42"
+        android:text="桂林南药股份有限公司"
+        android:textColor="@color/color_auxiliary_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20px"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@color/color_divider"/>
+
+</com.zhy.autolayout.AutoLinearLayout>

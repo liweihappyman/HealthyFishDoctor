@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical"
+    tools:context="com.healthyfish.healthyfishdoctor.ui.activity.pharmacopeia.DrugDetail">
+
+    <include layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/name_of_drug"
+        style="@style/textSize_60"
+        android:layout_width="match_parent"
+        android:layout_height="132px"
+        android:gravity="center_vertical"
+        android:paddingLeft="55px"
+        android:text="注射用青蒿琥酯"
+        android:textColor="@color/color_content_title" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@color/color_divider" />
+
+    <TextView
+        style="@style/textSize_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55px"
+        android:layout_marginTop="45px"
+        android:text="【适应症】"
+        android:textColor="@color/color_content_title" />
+
+    <TextView
+        android:id="@+id/indications"
+        style="@style/textSize_54"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35px"
+        android:layout_marginLeft="55px"
+        android:layout_marginRight="55px"
+        android:layout_marginTop="20px"
+        android:text="适用于脑型疟及各种危重疟疾的抢救"
+        android:textColor="@color/color_content_title" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@color/color_divider" />
+
+    <TextView
+        style="@style/textSize_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55px"
+        android:layout_marginTop="45px"
+        android:text="【规格】"
+        android:textColor="@color/color_content_title" />
+
+    <TextView
+        android:id="@+id/specifications"
+        style="@style/textSize_54"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35px"
+        android:layout_marginLeft="55px"
+        android:layout_marginRight="55px"
+        android:layout_marginTop="20px"
+        android:text="60mg"
+        android:textColor="@color/color_content_title" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@color/color_divider" />
+
+    <TextView
+        style="@style/textSize_48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55px"
+        android:layout_marginTop="45px"
+        android:text="【用法用量】"
+        android:textColor="@color/color_content_title" />
+
+    <TextView
+        android:id="@+id/usage_and_dosage"
+        style="@style/textSize_54"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35px"
+        android:layout_marginLeft="55px"
+        android:layout_marginRight="55px"
+        android:layout_marginTop="20px"
+        android:text="静脉注射。临床前，加入所附的5%的碳酸氢钠注射液0.6ml，振摇2分钟。。。"
+        android:textColor="@color/color_content_title" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@color/color_divider" />
+
+</com.zhy.autolayout.AutoLinearLayout>

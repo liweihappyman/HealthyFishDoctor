@@ -25,11 +25,14 @@
 
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:windowSoftInputMode="adjustPan|stateHidden" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
 
         <!--问诊设置图文咨询页面-->
@@ -79,30 +82,39 @@
         <!-- 登录注册注册成功页面 -->
         <activity android:name=".ui.activity.login_register.RegisterSuccess" />
 
-        <activity android:name=".ui.activity.medical_record.MedRecHome"></activity>
-        <!-- 病历夹页面 -->
+          <!-- 病历夹全部病历页面 -->
         <activity android:name=".ui.activity.medical_record.AllMedRec" />
-        <!-- 新建病历夹页面 -->
+        <!-- 病历夹新建病历夹页面 -->
         <activity
             android:name=".ui.activity.medical_record.NewMedRec"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!-- 添加病历标签 -->
-
-        <activity android:name=".ui.activity.medical_record.Lable"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <!-- 用户信息 -->
-        <activity android:name=".ui.activity.medical_record.PatientInfo"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!-- 病历夹添加病历标签 -->
+        <activity
+            android:name=".ui.activity.medical_record.Lable"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 病历夹用户信息页面 -->
+        <activity
+            android:name=".ui.activity.medical_record.PatientInfo"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 图片选择器 -->
         <activity
             android:name="com.foamtrace.photopicker.PhotoPickerActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".ui.activity.medical_record.CreateCourse"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!-- 病历夹的创建病程页面 -->
+        <activity
+            android:name=".ui.activity.medical_record.CreateCourse"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 图片选择的预览页面 -->
         <activity android:name="com.foamtrace.photopicker.PhotoPreviewActivity" />
-
-
+         <!-- 药典列表 -->
+        <activity
+            android:name=".ui.activity.pharmacopeia.PharmacopeiaList"
+            android:launchMode="singleTask" />
+        <!-- 药典某类药典列表 -->
+        <activity android:name=".ui.activity.pharmacopeia.ListOfCertainPharmacopoeia" />
+        <!-- 药典药物详情 -->
+        <activity android:name=".ui.activity.pharmacopeia.DrugDetail"></activity>
 
     </application>
 
