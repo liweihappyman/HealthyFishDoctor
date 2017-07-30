@@ -79,7 +79,7 @@
         <activity android:name=".ui.activity.login_register.RegisterInformation" />
         <!-- 登录注册注册成功页面 -->
         <activity android:name=".ui.activity.login_register.RegisterSuccess" />
-
+        <activity android:name=".ui.activity.medical_record.MedRecHome" />
           <!-- 病历夹全部病历页面 -->
         <activity android:name=".ui.activity.medical_record.AllMedRec" />
         <!-- 病历夹新建病历夹页面 -->

@@ -1,6 +1,14 @@
 package com.healthyfish.healthyfishdoctor.utils;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
+import com.healthyfish.healthyfishdoctor.POJO.BeanBaseReq;
+
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.internal.platform.Platform;
 
 /**
@@ -61,5 +69,16 @@ public class OkHttpUtils {
         public static final String DELETE = "DELETE";
         public static final String PUT = "PUT";
         public static final String PATCH = "PATCH";
+    }
+
+
+    @NonNull
+    public static RequestBody getRequestBody(BeanBaseReq beanBaseReq) {
+        String jsonStr = JSON.toJSONString(beanBaseReq);
+
+        Log.i("请求信息"," "+jsonStr);
+
+        MediaType MJSON = MediaType.parse("application/json; charset=utf-8");
+        return RequestBody.create(MJSON,jsonStr);
     }
 }
