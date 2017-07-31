@@ -32,7 +32,6 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 /**
  * 描述：标签页
  * 作者：WKJ on 2017/7/4.

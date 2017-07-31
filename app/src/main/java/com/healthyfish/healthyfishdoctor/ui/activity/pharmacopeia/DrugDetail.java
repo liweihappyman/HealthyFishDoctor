@@ -84,10 +84,6 @@ public class DrugDetail extends BaseActivity {
 
             }
         });
-
-
-
-
     }
 
 
