@@ -2,6 +2,9 @@ package com.healthyfish.healthyfishdoctor;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.Toast;
 
 import com.healthyfish.healthyfishdoctor.utils.HttpsUtils;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
@@ -46,4 +49,33 @@ public class MyApplication extends Application{
     public static Context getContetxt() {
         return applicationContext;
     }
+
+
+
+
+    public static Handler getApplicationHandler(){
+        return applicationHandler;
+    }
+
+
+    /**
+     * 服务上传图片成功或者失败Toast提醒用户
+     */
+    public static  Handler applicationHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0x11:
+                    Toast.makeText(getContetxt(),"图片上传成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case 0x12:
+                    Toast.makeText(getContetxt(),"图片上传失败",Toast.LENGTH_SHORT).show();
+                    break;
+                case 0x13:
+                    Toast.makeText(getContetxt(),"图片保存成功",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 }

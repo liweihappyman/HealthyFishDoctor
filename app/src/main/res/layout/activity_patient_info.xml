@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
     <include layout="@layout/toolbar" />
 
     <TextView
@@ -25,17 +24,19 @@
 
     <ImageView style="@style/Divider" />
 
-    <EditText
+    <TextView
         android:id="@+id/gender"
         style="@style/EditText_Hint"
+        android:clickable="true"
         android:layout_marginTop="30px"
         android:hint="性别" />
 
     <ImageView style="@style/Divider" />
 
-    <EditText
+    <TextView
         android:id="@+id/birthday"
         style="@style/EditText_Hint"
+        android:clickable="true"
         android:layout_marginTop="30px"
         android:hint="出生日期" />
 

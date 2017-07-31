@@ -27,7 +27,8 @@ public class CreateCourseGridAdapter extends BaseAdapter {
     private Context mContext;
     private List<String> listPaths;
 
-    public CreateCourseGridAdapter(List<String> listPaths, Context mContext) {
+
+    public CreateCourseGridAdapter(List<String> listPaths,Context mContext) {
         this.listPaths = listPaths;
         this.mContext = mContext;
     }
@@ -42,6 +43,8 @@ public class CreateCourseGridAdapter extends BaseAdapter {
         return listPaths.get(position);
     }
 
+
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -51,27 +54,35 @@ public class CreateCourseGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView imageView;
-//        if (convertView == null) {
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.item_image, null);
-        imageView = (ImageView) convertView.findViewById(R.id.image);
-//            convertView.setTag(imageView);
-        AutoUtils.auto(convertView);
-//        } else {
-//            imageView = (ImageView) convertView.getTag();
-//        }
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_image,null);
+            imageView = (ImageView) convertView.findViewById(R.id.image);
+            AutoUtils.auto(convertView);
+
         if (listPaths.size() <= 8) {
             if (position < listPaths.size()) {
 
-                Glide.with(mContext)
-                        .load(new File(getItem(position)))
-                        .placeholder(R.mipmap.default_error)
-                        .error(R.mipmap.default_error)
-                        .centerCrop()
-                        .crossFade()
-                        .into(imageView);
+                if (new File(getItem(position)).exists()){
+                    Glide.with(mContext)
+                            .load(new File(getItem(position)))
+                            .placeholder(R.mipmap.default_error)
+                            .error(R.mipmap.default_error)
+                            .override(300,300)
+                            .centerCrop()
+                            .crossFade()
+                            .into(imageView);
+                }else {//从网络加载
+                        Glide.with(mContext)
+                                .load(getItem(position))
+                                .placeholder(R.mipmap.default_error)
+                                .error(R.mipmap.default_error)
+                                .override(300, 300)
+                                .centerCrop()
+                                .crossFade()
+                                .into(imageView);
+                }
             }
             if (position == listPaths.size()) {
-                imageView.setImageResource(R.mipmap.addpic);
+                imageView.setImageResource(R.drawable.selector_btn_add_photo);
             }
             if (position == 8) {
                 imageView.setVisibility(View.GONE);

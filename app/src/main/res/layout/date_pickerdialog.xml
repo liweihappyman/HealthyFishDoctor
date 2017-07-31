@@ -23,7 +23,7 @@
         android:gravity="center_horizontal"
         android:paddingLeft="10px" >
 
-        <com.healthyfish.healthyfishdoctor.ui.widget.WkjNumberPicker
+        <com.healthyfish.healthyfish.ui.widget.WkjNumberPicker
             android:id="@+id/np1"
             android:layout_width="200px"
             android:layout_height="wrap_content"/>
@@ -33,7 +33,7 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:textSize="48px"
             android:text="年"/>
-        <com.healthyfish.healthyfishdoctor.ui.widget.WkjNumberPicker
+        <com.healthyfish.healthyfish.ui.widget.WkjNumberPicker
             android:id="@+id/np2"
             android:layout_width="200px"
             android:layout_height="wrap_content"/>
@@ -43,7 +43,7 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:textSize="48px"
             android:text="月"/>
-        <com.healthyfish.healthyfishdoctor.ui.widget.WkjNumberPicker
+        <com.healthyfish.healthyfish.ui.widget.WkjNumberPicker
             android:id="@+id/np3"
             android:layout_width="200px"
             android:layout_height="wrap_content"/>

@@ -1,12 +1,15 @@
 package com.healthyfish.healthyfishdoctor.ui.activity.medical_record;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.R;
+import com.healthyfish.healthyfishdoctor.ui.widget.DatePickerDialog;
+import com.healthyfish.healthyfishdoctor.utils.Utils1;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,6 +71,8 @@ public class PatientInfo extends AppCompatActivity implements View.OnClickListen
             actionBar.setHomeAsUpIndicator(R.mipmap.back_icon);
         }
         save.setOnClickListener(PatientInfo.this);
+        gender.setOnClickListener(this);
+        birthday.setOnClickListener(this);
         initData();
     }
 
@@ -80,6 +87,8 @@ public class PatientInfo extends AppCompatActivity implements View.OnClickListen
         }
         if (medRec.getBirthday() != null) {
             birthday.setText(medRec.getBirthday());
+        }else {
+            birthday.setText(Utils1.getTime());
         }
         if (medRec.getIDno() != null) {
             idNumber.setText(medRec.getIDno());
@@ -126,6 +135,12 @@ public class PatientInfo extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.gender:
+                chooseGengerDialog();
+                break;
+            case R.id.birthday:
+                selectBirthday();
+                break;
             case R.id.save:
                 getInfo();
                 Intent intent = new Intent(PatientInfo.this, NewMedRec.class);
@@ -135,4 +150,45 @@ public class PatientInfo extends AppCompatActivity implements View.OnClickListen
                 break;
         }
     }
+
+
+    /**
+     * 性别选择对话框
+     */
+    private void chooseGengerDialog() {
+        final String[] strings = new String[]{"男", "女"};
+        new AlertDialog.Builder(PatientInfo.this)
+                .setTitle("请选择性别")
+                .setSingleChoiceItems(strings, 0,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                gender.setText(strings[which]);
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .setNegativeButton("取消", null)
+                .show();
+    }
+    /**
+     *     出生日期选择对话框
+     */
+    private void selectBirthday() {
+        DatePickerDialog datePicker_dialog = new DatePickerDialog(this, new
+                DatePickerDialog.MyListener() {
+                    @Override
+                    public void refreshUI(String string) {
+                        birthday.setText(string);
+                    }
+                });
+        datePicker_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        datePicker_dialog.show();
+    }
+
+
+
+
+
+
+
 }
