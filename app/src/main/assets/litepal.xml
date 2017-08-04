@@ -16,6 +16,9 @@
         </mapping>
         <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease">
         </mapping>
+
+        <!--健康咨询HealthyChat的表-->
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.ImMsgBean" />
     </list>
 
 </litepal>

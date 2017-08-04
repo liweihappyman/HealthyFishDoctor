@@ -31,6 +31,7 @@ public class MyNewsAdapter extends BaseAdapter {
     private LayoutInflater mLayoutInflater;
     private List<BeanMyNewsItem> mList = new ArrayList<>();
 
+
     public MyNewsAdapter(Context mContext, List<BeanMyNewsItem> mList) {
         this.mContext = mContext;
         this.mList = mList;

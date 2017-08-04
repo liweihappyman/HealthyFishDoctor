@@ -20,6 +20,8 @@ public class BeanMedRecUser extends DataSupport implements Serializable{
     private String date;
     private List<BeanMedRec> medRecList = new ArrayList<BeanMedRec>();//1对多
 
+    public BeanMedRecUser() {
+    }
 
     public BeanMedRecUser(String name, String date) {
         this.name = name;

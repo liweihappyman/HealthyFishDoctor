@@ -7,11 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 描述：
+ * 描述：病历夹
  * 作者： TMXK on 2017/7/1.
  */
 
 public class BeanMedRec extends DataSupport implements Serializable{
+    private String key;//服务器返回的key
+    private String timestamp;//服务器返回的执行操作的时间
+    //------------------------------------------------------------
+    private BeanMedRecUser beanMedRecUser;
     private int id;//数据库自动分配的id，用来查询关联表的数据
     private boolean select = false;//在选择病历页面记录选中状态，
     private List<String> lables = new ArrayList<String>();//标签
@@ -27,7 +31,7 @@ public class BeanMedRec extends DataSupport implements Serializable{
     private String clinicalTime;//就诊时间
     private List<BeanCourseOfDisease> listCourseOfDisease = new ArrayList<BeanCourseOfDisease>() ;//病程列表
     private boolean state;//记录是自己的还是医生改过的状态  false表示是自己的，true表示改过的
-    private BeanMedRecUser beanMedRecUser;
+
 
     public BeanMedRecUser getBeanMedRecUser() {
         return beanMedRecUser;
@@ -35,6 +39,20 @@ public class BeanMedRec extends DataSupport implements Serializable{
 
     public void setBeanMedRecUser(BeanMedRecUser beanMedRecUser) {
         this.beanMedRecUser = beanMedRecUser;
+    }
+
+    public String getKey() {
+        return key;
+    }
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getId() {

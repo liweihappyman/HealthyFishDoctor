@@ -31,6 +31,7 @@
     <color name="color_accent">#FF4081</color>
 
 
+    <color name="color_black">#000000</color>
     <color name="color_general_and_title">#666666</color>
     <!--辅助信息字体颜色-->
     <color name="color_auxiliary_info">#888888</color>

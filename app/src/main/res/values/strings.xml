@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">健鱼医生</string>
 
+    <!--判断是客户端还是医生端-->
+    <string name="type">doct</string>
+
     <!--（1）MainActivtiy屏幕下方导航菜单-->
     <string name="home">首页</string>
     <string name="interrogation">问诊</string>

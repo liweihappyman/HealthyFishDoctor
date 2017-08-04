@@ -9,7 +9,7 @@
         android:title="shanchu"
         app:showAsAction="never"/>
     <item android:id="@+id/test"
-        android:title="popupWindow"
+        android:title="刷新"
         app:showAsAction="never"/>
 
 </menu>

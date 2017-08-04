@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
+<<<<<<< HEAD
+=======
+import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
+>>>>>>> pr/4
 import com.healthyfish.healthyfishdoctor.ui.fragment.PharmacopeiaListFragment;
 
 import java.util.ArrayList;
@@ -47,9 +51,15 @@ public class PharmacopeiaList extends BaseActivity {
     }
 
     private void initTabLayout() {
+<<<<<<< HEAD
 
         for (int i = 0; i < mTitles.length; i++) {
             mFragments.add(new PharmacopeiaListFragment());
+=======
+        mFragments.add(new PharmacopeiaListFragment());
+        for (int i = 0; i < mTitles.length-1; i++) {
+            mFragments.add(new HomeFragment());
+>>>>>>> pr/4
         }
 
         ViewPager viewPage = (ViewPager) findViewById(R.id.vp_pharmacopeia);

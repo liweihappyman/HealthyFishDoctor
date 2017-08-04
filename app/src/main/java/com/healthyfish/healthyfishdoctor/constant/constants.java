@@ -7,7 +7,7 @@ package com.healthyfish.healthyfishdoctor.constant;
  * 编辑：
  */
 
-public class constants {
+public class Constants {
 
     // OkHttpClient设置连接超时时间
     public final static int CONNECT_TIMEOUT = 5000;
@@ -24,6 +24,9 @@ public class constants {
     //测试用的
     public static boolean first = true;
 
+    // 健康咨询chat界面
+    public static int EMOTICON_CLICK_TEXT = 1;
+    public static int EMOTICON_CLICK_BIGIMAGE = 2;
 
     // 网络访问服务器主机地址
     public final static String HttpHealthyFishyUrl = "http://www.kangfish.cn";
