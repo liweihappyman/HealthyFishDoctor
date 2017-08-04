@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="8dp"
+    android:paddingRight="48dp"
+    android:paddingTop="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_portrait"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="12dp"
+        android:src="@mipmap/logo_240" />
+
+    <TextView
+        android:id="@+id/chatname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_portrait"
+        android:layout_marginLeft="18dp"
+        android:text="客户"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="60dp"
+        android:layout_toRightOf="@id/iv_portrait"
+        android:background="@drawable/common_chat_left"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/sendtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_image"
+        android:layout_marginLeft="60dp"
+        android:text="9：30"
+        android:textSize="9sp" />
+</RelativeLayout>

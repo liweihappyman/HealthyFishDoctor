@@ -6,20 +6,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.healthyfish.healthyfishdoctor.utils.HttpsUtils;
-import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.litepal.LitePal;
-
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-
-import static com.healthyfish.healthyfishdoctor.constant.constants.CONNECT_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.READ_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.WRITE_TIMEOUT;
 
 /**
  * 描述：MyApplication初始化参数

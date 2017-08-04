@@ -9,9 +9,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_healthyfish_doctor"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_healthyfish_doctor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -33,21 +33,23 @@
             </intent-filter>
         </activity>
 
+        <!--健康咨询（chat）-->
+        <activity android:name=".utils.chat_utils.PicViewActivity" />
+        <activity android:name=".ui.activity.interrogation.HealthyChat"></activity>
 
-
-        <!--问诊设置图文咨询页面-->
+        <!-- 问诊设置图文咨询页面 -->
         <activity
             android:name=".ui.activity.interrogation.SetGraphicConsultation"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <!--问诊设置私人医生页面-->
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 问诊设置私人医生页面 -->
         <activity
             android:name=".ui.activity.interrogation.SetPrivateDoctor"
-            android:windowSoftInputMode="adjustPan|stateHidden"/>
-        <!--问诊图文咨询页面-->
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 问诊图文咨询页面 -->
         <activity android:name=".ui.activity.interrogation.GraphicConsultation" />
-        <!--问诊查看用户信息页面-->
+        <!-- 问诊查看用户信息页面 -->
         <activity android:name=".ui.activity.interrogation.SeeUserInformation" />
-        <!--问诊设置接诊时间页面-->
+        <!-- 问诊设置接诊时间页面 -->
         <activity android:name=".ui.activity.interrogation.SetAdmissionTime" />
 
         <!-- 个人中心我的健康信息页面 -->
@@ -80,7 +82,7 @@
         <!-- 登录注册注册成功页面 -->
         <activity android:name=".ui.activity.login_register.RegisterSuccess" />
         <activity android:name=".ui.activity.medical_record.MedRecHome" />
-          <!-- 病历夹全部病历页面 -->
+        <!-- 病历夹全部病历页面 -->
         <activity android:name=".ui.activity.medical_record.AllMedRec" />
         <!-- 病历夹新建病历夹页面 -->
         <activity
@@ -105,15 +107,15 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 图片选择的预览页面 -->
         <activity android:name="com.foamtrace.photopicker.PhotoPreviewActivity" />
-         <!-- 药典列表 -->
+        <!-- 药典列表 -->
         <activity
             android:name=".ui.activity.pharmacopeia.PharmacopeiaList"
             android:launchMode="singleTask" />
         <!-- 药典某类药典列表 -->
         <activity android:name=".ui.activity.pharmacopeia.ListOfCertainPharmacopoeia" />
         <!-- 药典药物详情 -->
-        <activity android:name=".ui.activity.pharmacopeia.DrugDetail"></activity>
-
+        <activity android:name=".ui.activity.pharmacopeia.DrugDetail" />
+        <activity android:name=".ui.activity.interrogation.HealthyChat"></activity>
     </application>
 
 </manifest>
