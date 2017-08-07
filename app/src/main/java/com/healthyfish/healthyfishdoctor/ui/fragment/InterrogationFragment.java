@@ -47,7 +47,7 @@ public class InterrogationFragment extends Fragment {
 
     private boolean isOpen1 = true;
     private boolean isOpen2 = false;
-    private boolean isOpen3 = true;
+    private boolean isOpen3 = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,15 +107,27 @@ public class InterrogationFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        Intent intent1 = new Intent(getActivity(), GraphicConsultation.class);
-                        startActivity(intent1);
+                        if (isOpen1) {
+                            Intent intent1 = new Intent(getActivity(), GraphicConsultation.class);
+                            startActivity(intent1);
+                        } else {
+                            MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");
+                        }
                         break;
                     case 1:
-                        MyToast.showToast(getActivity(),"您还没开通该服务噢，赶紧开通吧！");
+                        if (isOpen2) {
+
+                        } else {
+                            MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");
+                        }
                         break;
                     case 2:
-                        Intent intent2 = new Intent(getActivity(), SetPrivateDoctor.class);
-                        startActivity(intent2);
+                        if (isOpen3) {
+                            Intent intent2 = new Intent(getActivity(), SetPrivateDoctor.class);
+                            startActivity(intent2);
+                        } else {
+                            MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");
+                        }
                         break;
                 }
 

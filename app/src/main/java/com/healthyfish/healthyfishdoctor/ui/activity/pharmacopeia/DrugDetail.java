@@ -2,7 +2,7 @@ package com.healthyfish.healthyfishdoctor.ui.activity.pharmacopeia;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-<<<<<<< HEAD
+
 import android.widget.TextView;
 
 import com.healthyfish.healthyfishdoctor.R;
@@ -10,7 +10,7 @@ import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-=======
+
 import android.util.Log;
 import android.widget.TextView;
 
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 
->>>>>>> pr/4
+
 /**
  * 描述：药物详情
  * 作者：WKJ on 2017/7/15.
@@ -56,10 +56,6 @@ public class DrugDetail extends BaseActivity {
         setContentView(R.layout.activity_drug_detail);
         ButterKnife.bind(this);
         initToolBar(toolbar,toolbarTitle,"具体药名");
-<<<<<<< HEAD
-
-    }
-=======
         testP();
     }
 
@@ -101,5 +97,4 @@ public class DrugDetail extends BaseActivity {
     }
 
 
->>>>>>> pr/4
 }

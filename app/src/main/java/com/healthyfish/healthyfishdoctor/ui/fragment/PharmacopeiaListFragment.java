@@ -4,10 +4,9 @@ package com.healthyfish.healthyfishdoctor.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-<<<<<<< HEAD
-=======
+
 import android.util.Log;
->>>>>>> pr/4
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,39 +14,37 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-=======
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanListReq;
->>>>>>> pr/4
+
 import com.healthyfish.healthyfishdoctor.POJO.BeanPharmacopeia;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.PharmacopeiaExplvAdapter;
 import com.healthyfish.healthyfishdoctor.ui.activity.pharmacopeia.ListOfCertainPharmacopoeia;
-<<<<<<< HEAD
+
 
 import java.util.ArrayList;
-=======
+
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
->>>>>>> pr/4
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-<<<<<<< HEAD
-=======
+
 import okhttp3.ResponseBody;
 import rx.Subscriber;
->>>>>>> pr/4
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,31 +54,27 @@ public class PharmacopeiaListFragment extends Fragment {
     ExpandableListView explvPharmacopia;
     Unbinder unbinder;
     private List<BeanPharmacopeia> list = new ArrayList<>();
-<<<<<<< HEAD
-=======
+
     private List<String> listPresCategeryKey = new ArrayList<>();
     private List<String> listPresCategeryName = new ArrayList<>();
     private List<String> listCertainPresKey = new ArrayList<>();
     private List<String> listCertainPresDescibe = new ArrayList<>();
 
->>>>>>> pr/4
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pharmacopeia_list, container, false);
         unbinder = ButterKnife.bind(this, view);
-<<<<<<< HEAD
-=======
+
         //getPrescriptionCategeryKey();
         getCertainPrescriptionKey();
->>>>>>> pr/4
+
         initData();
         return view;
     }
 
-<<<<<<< HEAD
-=======
 
 
 //获取方剂种类key,再根据种类获取value（中文名）
@@ -255,7 +248,7 @@ public class PharmacopeiaListFragment extends Fragment {
 
 
 
->>>>>>> pr/4
+
     private void initData() {
 
         List<String>  chils1 = new ArrayList<>();
