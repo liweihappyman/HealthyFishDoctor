@@ -51,6 +51,8 @@
     <!--开始测试-->
     <string name="begin_phy_ide_test">开始测试</string>
     <string name="go_to_single_scheme">去完成</string>
+    <string name="prompt_perfect_information">提示：只有完善个人信息并通过审核后才能使用医生功能</string>
+    <string name="prompt_authentication">温馨提示：医生端功能需要认证通过才开放。认证需要实名，电话回访，执业资格证。</string>
 
 
 </resources>

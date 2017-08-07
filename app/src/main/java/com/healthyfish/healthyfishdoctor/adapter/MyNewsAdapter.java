@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.healthyfish.healthyfishdoctor.POJO.BeanMyNewsItem;
 import com.healthyfish.healthyfishdoctor.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,9 +58,10 @@ public class MyNewsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.item_my_news_listview, null);
+            convertView = mLayoutInflater.inflate(R.layout.item_my_news_listview,parent,false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
+            AutoUtils.autoSize(convertView);//item自适应适配
         }else {
             holder = (ViewHolder) convertView.getTag();
         }

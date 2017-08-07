@@ -31,7 +31,7 @@ import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.healthy_chat.AppFuncAdapter;
 import com.healthyfish.healthyfishdoctor.adapter.healthy_chat.ChattingListAdapter;
-import com.healthyfish.healthyfishdoctor.constant.Constants;
+import com.healthyfish.healthyfishdoctor.constant.constants;
 import com.healthyfish.healthyfishdoctor.ui.widget.SessionChatKeyboardBase;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.chat_utils.SimpleCommonUtils;
@@ -91,18 +91,18 @@ public class HealthyChat extends AppCompatActivity implements FuncLayout.OnFuncK
         sessionChat = (SessionChatKeyboardBase) findViewById(R.id.session_chat);
 
         //
-        BeanDoctorChatInfo beanDoctorChatInfo = (BeanDoctorChatInfo) getIntent().getSerializableExtra("BeanDoctorChatInfo");
-
-        // 医生姓名
-        toolbar.setTitle(beanDoctorChatInfo.getName());
-        setSupportActionBar(toolbar);
-
-        beanUserLoginReq = JSON.parseObject(MySharedPrefUtil.getValue("user"), BeanUserLoginReq.class);
-        //topic = "d" + beanDoctorChatInfo.getPhone();
-        topic = "u" + "18077207818";
-        sender = "d" + beanUserLoginReq.getMobileNo();
-        //medRECKey = "dmr" + beanDoctorChatInfo.getPhone() + beanUserLoginReq.getMobileNo();
-        doctorPortrait = beanDoctorChatInfo.getImgUrl();
+//        BeanDoctorChatInfo beanDoctorChatInfo = (BeanDoctorChatInfo) getIntent().getSerializableExtra("BeanDoctorChatInfo");
+//
+//        // 医生姓名
+//        toolbar.setTitle(beanDoctorChatInfo.getName());
+//        setSupportActionBar(toolbar);
+//
+//        beanUserLoginReq = JSON.parseObject(MySharedPrefUtil.getValue("user"), BeanUserLoginReq.class);
+//        //topic = "d" + beanDoctorChatInfo.getPhone();
+//        topic = "u" + "18077207818";
+//        sender = "d" + beanUserLoginReq.getMobileNo();
+//        //medRECKey = "dmr" + beanDoctorChatInfo.getPhone() + beanUserLoginReq.getMobileNo();
+//        doctorPortrait = beanDoctorChatInfo.getImgUrl();
 
         initView();
         // 注册EventBus
@@ -181,7 +181,7 @@ public class HealthyChat extends AppCompatActivity implements FuncLayout.OnFuncK
                 if (o == null) {
                     return;
                 }
-                if (actionType == Constants.EMOTICON_CLICK_BIGIMAGE) {
+                if (actionType == constants.EMOTICON_CLICK_BIGIMAGE) {
                     if (o instanceof EmoticonEntity) {
                         OnSendImage(((EmoticonEntity) o).getIconUri());
                     }

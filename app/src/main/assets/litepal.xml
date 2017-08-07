@@ -19,6 +19,8 @@
 
         <!--健康咨询HealthyChat的表-->
         <mapping class="com.healthyfish.healthyfishdoctor.POJO.ImMsgBean" />
+        <!--医生信息-->
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanDoctorDB" />
     </list>
 
 </litepal>

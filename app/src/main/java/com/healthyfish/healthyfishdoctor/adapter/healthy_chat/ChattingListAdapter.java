@@ -24,15 +24,13 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
-import org.litepal.crud.DataSupport;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import sj.keyboard.utils.imageloader.ImageBase;
 
-import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
+import static com.healthyfish.healthyfishdoctor.constant.constants.HttpHealthyFishyUrl;
 
 
 // 聊天界面、对话框 -- 适配器
@@ -366,8 +364,9 @@ public class ChattingListAdapter extends BaseAdapter {
 
     // 获取本机用户头像
     public String getLocalUserImg() {
-        String key = "info_" + uid;
-        List<BeanPersonalInformation> personalInformationList = DataSupport.where("key = ?", key).find(BeanPersonalInformation.class);
-        return HttpHealthyFishyUrl + personalInformationList.get(0).getImgUrl();
+//        String key = "info_" + uid;
+//        List<BeanPersonalInformation> personalInformationList = DataSupport.where("key = ?", key).find(BeanPersonalInformation.class);
+//        return HttpHealthyFishyUrl + personalInformationList.get(0).getImgUrl();
+        return null;
     }
 }

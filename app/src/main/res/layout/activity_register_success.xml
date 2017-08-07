@@ -47,8 +47,16 @@
         android:paddingTop="30px"
         android:gravity="center"
         android:background="@drawable/selector_4dp_btn_color_from_primary_to_white"
-        android:text="添加健康档案"
+        android:text="完善个人信息"
         android:textSize="54px"
         android:textColor="@color/selector_text_color_from_white_to_primary"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50px"
+        android:text="@string/prompt_perfect_information"
+        android:textColor="@color/color_secondary"
+        style="@style/textSize_36"/>
 
 </com.zhy.autolayout.AutoLinearLayout>

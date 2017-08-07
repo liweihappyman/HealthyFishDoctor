@@ -1,24 +1,46 @@
 package com.healthyfish.healthyfishdoctor;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
+import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
+import com.healthyfish.healthyfishdoctor.POJO.BeanDoctor;
+import com.healthyfish.healthyfishdoctor.POJO.BeanDoctorDB;
+import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.adapter.MainVpAdapter;
+import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
+import com.healthyfish.healthyfishdoctor.eventbus.LoginEventBus;
 import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PharmacopeiaFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.TrainingFragment;
+import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
+import com.healthyfish.healthyfishdoctor.utils.MyToast;
+import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
+import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 import com.tbruyelle.rxpermissions.Permission;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.zhy.autolayout.AutoLinearLayout;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +48,9 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -74,11 +98,43 @@ public class MainActivity extends AppCompatActivity {
     private TrainingFragment trainingFragment;
     private PersonalCenterFragment personalCenterFragment;
 
+    private boolean isExit = false;
+    private String uid = "";
+    private boolean isFirstReq = true;
+    private boolean isSecondReq = false;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        String user = MySharedPrefUtil.getValue("user");
+        if (!TextUtils.isEmpty(user)) {
+            BeanUserLoginReq beanUserLoginReq = JSON.parseObject(user, BeanUserLoginReq.class);
+            MyApplication.uid = beanUserLoginReq.getMobileNo();
+            uid = beanUserLoginReq.getMobileNo();
+            if (MyApplication.isFirstOpen) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        getInformationFromNetwork("cert_" + uid);
+                    }
+                }).start();
+            }
+        }
         initPermision();//获取权限
         init();
     }
@@ -213,6 +269,139 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    /**
+     * 从服务器获取医生信息
+     */
+    private void getInformationFromNetwork(String reqKey) {
+        BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
+        beanBaseKeyGetReq.setKey(reqKey);
+
+        RetrofitManagerUtils.getInstance(this, null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
+
+            String infoResp = "";
+
+            @Override
+            public void onCompleted() {
+                if (!TextUtils.isEmpty(infoResp)) {
+                    if (infoResp.substring(0, 1).equals("{")) {
+                        BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(infoResp, BeanBaseKeyGetResp.class);
+                        if (beanBaseKeyGetResp.getCode() == 0) {
+                            MyApplication.isFirstOpen = false;
+                            if (!TextUtils.isEmpty(beanBaseKeyGetResp.getValue())) {
+                                String str = beanBaseKeyGetResp.getValue().toString().substring(0, 1);
+                                if (!str.equals("{")) {//防止之前网页版的个人信息格式不匹配导致出错
+                                    MyToast.showToast(MyApplication.getContetxt(), "您的个人信息有误，请到个人信息重新修改");
+                                    EventBus.getDefault().post(new LoginEventBus(null,true));
+                                    return;
+                                }
+                                Log.i("LYQ", "beanBaseKeyGetResp.getValue():" + beanBaseKeyGetResp.getValue());
+                                if (isFirstReq) {//第一次请求时已审核，第二次请求时未审核
+                                    isFirstReq = false;
+                                    BeanDoctor beanDoctor = JSON.parseObject(beanBaseKeyGetResp.getValue(), BeanDoctor.class);
+                                    saveToDB("cert_" + uid, beanDoctor, true);
+                                } else {
+                                    BeanDoctor beanDoctor = JSON.parseObject(beanBaseKeyGetResp.getValue(), BeanDoctor.class);
+                                    saveToDB("certReq_" + uid, beanDoctor, false);
+                                }
+                            } else {//第一次请求时未审核
+                                if (!isSecondReq) {
+                                    isFirstReq = false;
+                                    getInformationFromNetwork("certReq_" + uid);
+                                    isSecondReq = true;
+                                } else {
+                                    MyToast.showToast(MainActivity.this, "您还未上传个人信息");
+                                }
+                            }
+
+                        } else {
+                            MyToast.showToast(MainActivity.this, "加载个人信息失败");
+                        }
+                    } else {
+                        MyToast.showToast(MainActivity.this, "加载个人信息出错啦");
+                    }
+                } else {
+                    MyToast.showToast(MainActivity.this, "加载个人信息出错了");
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                MyToast.showToast(MainActivity.this, "加载个人信息出错");
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    infoResp = responseBody.string();
+                    Log.i("LYQ", "infoResp:" + infoResp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * 将个人信息保存到数据库
+     *
+     * @param key
+     * @param beanDoctor
+     * @param isPast
+     */
+    private void saveToDB(String key, BeanDoctor beanDoctor, boolean isPast) {
+        BeanDoctorDB beanDoctorDB = new BeanDoctorDB();
+        beanDoctorDB.setDoctId(beanDoctor.getDoctId());
+        beanDoctorDB.setKey(key);
+        beanDoctorDB.setType(beanDoctor.getType());
+        beanDoctorDB.setHosp(beanDoctor.getHosp());
+        beanDoctorDB.setHospTxt(beanDoctor.getHospTxt());
+        beanDoctorDB.setDept(beanDoctor.getDept());
+        beanDoctorDB.setDeptTxt(beanDoctor.getDeptTxt());
+        beanDoctorDB.setName(beanDoctor.getName());
+        beanDoctorDB.setGender(beanDoctor.getGender());
+        beanDoctorDB.setDoct(beanDoctor.getDoct());
+        beanDoctorDB.setDoctReg(beanDoctor.getDoctReg());
+        beanDoctorDB.setDesc(beanDoctor.getDesc());
+        beanDoctorDB.setIcon(beanDoctor.getIcon());
+        String jsonImages = JSONArray.toJSONString(beanDoctor.getImgList());
+        beanDoctorDB.setImages(jsonImages);
+        beanDoctorDB.setReister(beanDoctor.getReister());
+        beanDoctorDB.setPhone(beanDoctor.getPhone());
+        beanDoctorDB.setPast(isPast);
+        Log.i("LYQ", "保存到数据库：" + JSON.toJSONString(beanDoctorDB));
+        boolean isSave = beanDoctorDB.saveOrUpdate("doctId = ?", uid);
+        if (!isSave) {
+            beanDoctorDB.saveOrUpdate("doctId = ?", uid);
+        }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    /**
+     * 再次点击返回键退出App
+     */
+    private void exit() {
+        if (isExit) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+            System.exit(0);
+        } else {
+            isExit = true;
+            MyToast.showToast(MyApplication.getContetxt(),"再按一次退出程序");
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        }
     }
 
 }

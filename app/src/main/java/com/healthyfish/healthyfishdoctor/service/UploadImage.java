@@ -3,14 +3,22 @@ package com.healthyfish.healthyfishdoctor.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.healthyfish.healthyfishdoctor.MyApplication;
+import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
+import com.healthyfish.healthyfishdoctor.POJO.BeanDoctor;
+import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUploadImagesResp;
 import com.healthyfish.healthyfishdoctor.POJO.MessageToServise;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.litepal.crud.DataSupport;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,12 +39,12 @@ import top.zibin.luban.Luban;
  * 编辑：WKJ
  */
 public class UploadImage extends IntentService {
-    int medRecId;//病历夹在数据库中的id
-    int courseOfDiseaseId;//病程在数据库中的id
     int sizeOfImagePathList;//总共图片的size大小
     List<String> imagePathList;//原始图片路径
     List<String> imageUrls;//存放图片网络路径
-    boolean updateImages = false;
+    private String type = "";
+    private final String TYPE_IMAGE = "IMAGE";
+    private final String TYPE_HEAD_PORTRAIT = "HEAD_PORTRAIT";
 
     public UploadImage() {
         super("UploadImage");
@@ -47,62 +55,83 @@ public class UploadImage extends IntentService {
         //初始化数据，获取activity传过来的数据
         initData(intent);
         //获取要上传的图片的路径
-        List<String> uplaodList = getUplaodList();
-        //imagePathList.size() > 0，说明有图片要上传，否则直接保存
-        if (uplaodList.size() > 0) {
+        List<String> uploadList = getUploadList();
+        if (uploadList.size() > 0) {
+            List<File> list = new ArrayList<>();//每次上传往里面放一张图片
             List<File> compressFiles = getCompressFiles();//压缩图片
-            uploadFilesAndSave(compressFiles);//上传图片并保存返回的图片路径
-        } else {
-
+            for (int i = 0; i < compressFiles.size(); i++) {
+                list.clear();
+                list.add(compressFiles.get(i));
+                uploadFilesAndSave(list, i);//上传图片并保存返回的图片路径
+            }
+        } else if (imageUrls.size() != 0 && sizeOfImagePathList == imageUrls.size()) {
+            MyApplication.getApplicationHandler().sendEmptyMessage(0x11);
+            if (type.equals(TYPE_HEAD_PORTRAIT)) {
+                BeanDoctor beanDoctor = new BeanDoctor();
+                beanDoctor.setIcon(imageUrls.get(0));
+                EventBus.getDefault().post(beanDoctor);
+            } else if (type.equals(TYPE_IMAGE)) {
+                BeanDoctor beanDoctor = new BeanDoctor();
+                beanDoctor.setImgList(imageUrls);
+                EventBus.getDefault().post(beanDoctor);
+            }
         }
     }
 
 
     /**
      * 上传图片，并将返回的路径保存到数据库
-     *
-     * @param compressFiles 压缩后的文件
      */
-    private void uploadFilesAndSave(List<File> compressFiles) {
-        for (int i = 0; i < compressFiles.size(); i++) {
-            final List<File> list = new ArrayList<>();
-            list.clear();
-            list.add(compressFiles.get(i));
-            RetrofitManagerUtils.getInstance(this, null).uploadFilesRetrofit(list, i, new Subscriber<ResponseBody>() {
-                @Override
-                public void onCompleted() {
-                    //Toast.makeText(MyApplication.getContetxt(), "图片上传完成！", Toast.LENGTH_SHORT).show();
-                    //Log.i("图片上传", "完成");
-                }
+    private void uploadFilesAndSave(final List<File> list, final int position) {
+        Log.i("LYQ", "uploadFilesAndSave:");
+        //list当前上传的图片文件，position：当前上传的图片文件在compressFiles中的位置
+        RetrofitManagerUtils.getInstance(this, null).uploadFilesRetrofit(list, position, new Subscriber<ResponseBody>() {
 
-                @Override
-                public void onError(Throwable e) {
-                    Toast.makeText(MyApplication.getContetxt(), "图片上传失败", Toast.LENGTH_SHORT).show();
-                    //Log.i("图片上传", "图片上传失败" + e.toString());
-                }
+            String str = "";
 
-                @Override
-                public void onNext(ResponseBody responseBody) {
-                    try {
-                        String str = responseBody.string();
-                        //Log.i("图片上传", "返回数据" + str);
-                        if (str != null) {
-                            BeanUploadImagesResp beanUploadImagesResp = new BeanUploadImagesResp();
-                            beanUploadImagesResp = JSON.parseObject(str, BeanUploadImagesResp.class);
-                            String url = "http://www.kangfish.cn" + beanUploadImagesResp.getUrl();
-                            imageUrls.add(url);
-                            //保存路径到数据库中
-                            if (sizeOfImagePathList == imageUrls.size()) {
-
-                            }
+            @Override
+            public void onCompleted() {
+                if (str != null) {
+                    BeanUploadImagesResp beanUploadImagesResp = new BeanUploadImagesResp();
+                    beanUploadImagesResp = JSON.parseObject(str, BeanUploadImagesResp.class);
+                    imageUrls.add(beanUploadImagesResp.getUrl());
+                    //通知上传完毕
+                    if (sizeOfImagePathList == imageUrls.size()) {
+                        if (type.equals(TYPE_HEAD_PORTRAIT)) {
+                            MyApplication.getApplicationHandler().sendEmptyMessage(0x14);
+                            BeanDoctor beanDoctor = new BeanDoctor();
+                            beanDoctor.setIcon(imageUrls.get(0));
+                            EventBus.getDefault().post(beanDoctor);
+                        } else if (type.equals(TYPE_IMAGE)) {
+                            MyApplication.getApplicationHandler().sendEmptyMessage(0x15);
+                            BeanDoctor beanDoctor = new BeanDoctor();
+                            beanDoctor.setImgList(imageUrls);
+                            EventBus.getDefault().post(beanDoctor);
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
-                    //网络图片路径样式:http://www.kangfish.cn/demo/downloadFile/upload/20170727/58651501120528555.png
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //如果是502错误，则请求重新传送当前文件
+                if (e.toString().equals("retrofit2.adapter.rxjava.HttpException: HTTP 502 Bad Gateway")) {
+                    uploadFilesAndSave(list, position);
+                } else {
+                    MyApplication.getApplicationHandler().sendEmptyMessage(0x12);
+                }
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    str = responseBody.string();
+                    Log.i("图片上传", "返回数据" + str);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -118,7 +147,6 @@ public class UploadImage extends IntentService {
             final DecimalFormat df = new DecimalFormat("00.0000");
             try {
                 String size = df.format(((double) (new FileInputStream(file).available())) / 1024 / 1024);
-                //Log.i("图片原来的大小" + i, "第  " + i + "  张:  " + size + "   M");
                 if (Float.valueOf(size) < 0.6) {//如果文件小于600k，就不用压缩了
                     compressFiles.add(file);
                 } else {
@@ -137,16 +165,17 @@ public class UploadImage extends IntentService {
      * @return
      */
     @NonNull
-    private List<String> getUplaodList() {
-        List<String> uplaodlist = new ArrayList<>();
+    private List<String> getUploadList() {
+        List<String> uploadList = new ArrayList<>();
         for (int i = 0; i < imagePathList.size(); i++) {
             if (!new File(imagePathList.get(i)).exists()) {
                 imageUrls.add(imagePathList.get(i));
             } else {
-                uplaodlist.add(imagePathList.get(i));
+                uploadList.add(imagePathList.get(i));
             }
         }
-        return uplaodlist;
+        Log.i("LYQ", "getUploadList:" + uploadList.get(0));
+        return uploadList;
     }
 
     /**
@@ -155,13 +184,20 @@ public class UploadImage extends IntentService {
      * @param intent
      */
     private void initData(Intent intent) {
-        MessageToServise messageToServise = (MessageToServise) intent.getSerializableExtra("messageToService");
-        medRecId = messageToServise.getMedRecId();
-        courseOfDiseaseId = messageToServise.getCourseOfDiseaseId();
+        BeanDoctor beanDoctor = (BeanDoctor) intent.getSerializableExtra("BeanDoctor");
         imagePathList = new ArrayList<>();
-        imagePathList = messageToServise.getImageList();
-        sizeOfImagePathList = imagePathList.size();
-        imageUrls = new ArrayList<>();//存放图片网络路径
+        if (beanDoctor != null) {
+            if (!TextUtils.isEmpty(beanDoctor.getIcon())) {
+                type = TYPE_HEAD_PORTRAIT;
+                imagePathList.add(beanDoctor.getIcon());
+            } else if (!beanDoctor.getImgList().isEmpty()) {
+                type = TYPE_IMAGE;
+                imagePathList = beanDoctor.getImgList();
+            }
+            sizeOfImagePathList = imagePathList.size();
+            imageUrls = new ArrayList<>();//存放图片网络路径
+            Log.i("LYQ", "initData:" + imagePathList.get(0));
+        }
     }
 
-    }
+}

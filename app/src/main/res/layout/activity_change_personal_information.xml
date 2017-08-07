@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="135px"
+        android:background="@color/color_primary_dark"
+        android:focusableInTouchMode="true"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/big_content_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="修改个人信息"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tv_save"
+            style="@style/textSize_54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="36px"
+            android:text="保存"
+            android:textColor="@color/selector_text_color_from_white_to_primary" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:background="@color/color_white"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/color_primary_dark"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/color_primary_dark"
+        app:tabTextAppearance="@style/textSize_42"
+        app:tabTextColor="@color/color_general_and_title" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_change_personal_information"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</com.zhy.autolayout.AutoLinearLayout>

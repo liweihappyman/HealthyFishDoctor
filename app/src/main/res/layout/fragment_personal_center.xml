@@ -49,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="20dp"
-                android:background="@color/color_primary">
+                android:background="@color/color_divider">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/civ_head_portrait"
@@ -69,20 +69,20 @@
                     android:text="登录/注册"
                     android:textColor="@color/selector_text_color_from_white_to_primary" />
 
-                <com.zhy.autolayout.AutoRelativeLayout
-                    android:id="@+id/rly_mail"
-                    android:layout_width="160px"
-                    android:layout_height="84px"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="27px">
+                <!--<com.zhy.autolayout.AutoRelativeLayout-->
+                <!--android:id="@+id/rly_mail"-->
+                <!--android:layout_width="160px"-->
+                <!--android:layout_height="84px"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_marginTop="27px">-->
 
-                    <ImageView
-                        android:layout_width="86px"
-                        android:layout_height="60px"
-                        android:layout_marginTop="24px"
-                        android:src="@mipmap/ic_mail" />
+                <!--<ImageView-->
+                <!--android:layout_width="86px"-->
+                <!--android:layout_height="60px"-->
+                <!--android:layout_marginTop="24px"-->
+                <!--android:src="@mipmap/ic_mail" />-->
 
-                </com.zhy.autolayout.AutoRelativeLayout>
+                <!--</com.zhy.autolayout.AutoRelativeLayout>-->
 
             </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="374px"
                     android:layout_marginTop="170px"
-                    android:text="小李的健康信息"
+                    android:text=""
                     android:textColor="@color/selector_text_color_from_white_to_primary" />
 
                 <TextView
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="374px"
                     android:layout_marginTop="300px"
-                    android:text="气虚质"
+                    android:text=""
                     android:textColor="@color/selector_text_color_from_white_to_primary"
                     android:textStyle="bold" />
 

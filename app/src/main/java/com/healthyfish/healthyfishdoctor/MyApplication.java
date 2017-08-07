@@ -19,7 +19,8 @@ import org.litepal.LitePal;
 
 public class MyApplication extends Application{
     public static Context applicationContext;
-
+    public static String uid = "";
+    public static boolean isFirstOpen = true;
 
     @Override
     public void onCreate() {
@@ -63,6 +64,12 @@ public class MyApplication extends Application{
                     break;
                 case 0x13:
                     Toast.makeText(getContetxt(),"图片保存成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case 0x14:
+                    Toast.makeText(getContetxt(),"头像上传成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case 0x15:
+                    Toast.makeText(getContetxt(),"证件上传成功",Toast.LENGTH_SHORT).show();
                     break;
             }
         }
