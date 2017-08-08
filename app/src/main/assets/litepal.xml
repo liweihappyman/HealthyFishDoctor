@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <!-- 数据库名 -->
-    <dbname value="MedRec" >
+    <dbname value="HealthyFishDoctor" >
     </dbname>
     <!-- 数据库版本 -->
 

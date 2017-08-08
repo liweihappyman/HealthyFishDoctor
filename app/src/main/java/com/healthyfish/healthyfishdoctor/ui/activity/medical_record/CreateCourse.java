@@ -34,7 +34,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.MessageToServise;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.CreateCourseGridAdapter;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.service.UploadImages;
 import com.healthyfish.healthyfishdoctor.ui.widget.DatePickerDialog;
 import com.healthyfish.healthyfishdoctor.utils.Utils1;
@@ -92,7 +92,7 @@ public class CreateCourse extends AppCompatActivity implements View.OnClickListe
             actionBar.setHomeAsUpIndicator(R.mipmap.back_icon);
         }
         initListener();
-        if (constants.POSITION_COURSE == -1) {
+        if (Constants.POSITION_COURSE == -1) {
             initData1();
         } else {
             initData2();
@@ -122,7 +122,7 @@ public class CreateCourse extends AppCompatActivity implements View.OnClickListe
      * 删除病程的操作,新建状态提示没有可删除的病程
      */
     private void delete() {
-        if (constants.POSITION_COURSE != -1) {
+        if (Constants.POSITION_COURSE != -1) {
             showDelDialog();// 删除提示对话框
         } else {
             Toast.makeText(this, "没有可删除的病程哦", Toast.LENGTH_SHORT).show();
@@ -163,7 +163,7 @@ public class CreateCourse extends AppCompatActivity implements View.OnClickListe
      */
     private void initData2() {
         medRec = DataSupport.find(BeanMedRec.class, NewMedRec.ID, true);
-        courseOfDisease = medRec.getListCourseOfDisease().get(constants.POSITION_COURSE);
+        courseOfDisease = medRec.getListCourseOfDisease().get(Constants.POSITION_COURSE);
         //Log.i("查看病程信息", "路径：" + courseOfDisease.getImgUrls().toString());
         type.setText(courseOfDisease.getType());
         date.setText(courseOfDisease.getDate());
@@ -212,7 +212,7 @@ public class CreateCourse extends AppCompatActivity implements View.OnClickListe
      */
     private void saveOrUpdata() {
         getInfo();//获取控件的值
-        if (constants.POSITION_COURSE != -1) {//每次更新必须重新关联
+        if (Constants.POSITION_COURSE != -1) {//每次更新必须重新关联
             courseOfDisease.setBeanMedRec(medRec);//关联，medRec必须是数据库已经存在的数据对象
             courseOfDisease.setImgPaths(imagePaths);
             String g = courseOfDisease.getImgPaths().toString();

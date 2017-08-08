@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.healthyfish.healthyfishdoctor.R;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.utils.chat_utils.ImageLoadUtils;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class BigEmoticonsAndTitleAdapter extends BigEmoticonsAdapter {
             @Override
             public void onClick(View v) {
                 if (mOnEmoticonClickListener != null) {
-                    mOnEmoticonClickListener.onEmoticonClick(emoticonEntity, constants.EMOTICON_CLICK_BIGIMAGE, isDelBtn);
+                    mOnEmoticonClickListener.onEmoticonClick(emoticonEntity, Constants.EMOTICON_CLICK_BIGIMAGE, isDelBtn);
                 }
             }
         });

@@ -7,7 +7,7 @@ package com.healthyfish.healthyfishdoctor.constant;
  * 编辑：
  */
 
-public class constants {
+public class Constants {
 
     // OkHttpClient设置连接超时时间
     public final static int CONNECT_TIMEOUT = 5000;

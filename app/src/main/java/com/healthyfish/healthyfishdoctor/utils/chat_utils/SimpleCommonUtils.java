@@ -15,7 +15,7 @@ import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.healthy_chat.BigEmoticonsAdapter;
 import com.healthyfish.healthyfishdoctor.adapter.healthy_chat.BigEmoticonsAndTitleAdapter;
 import com.healthyfish.healthyfishdoctor.adapter.healthy_chat.TextEmoticonsAdapter;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.filter.EmojiFilter;
 import com.healthyfish.healthyfishdoctor.ui.widget.SimpleAppsGridView;
 import com.sj.emoji.DefEmoticons;
@@ -63,7 +63,7 @@ public class SimpleCommonUtils {
                     if (o == null) {
                         return;
                     }
-                    if (actionType == constants.EMOTICON_CLICK_TEXT) {
+                    if (actionType == Constants.EMOTICON_CLICK_TEXT) {
                         String content = null;
                         if (o instanceof EmojiBean) {
                             content = ((EmojiBean) o).emoji;
@@ -142,7 +142,7 @@ public class SimpleCommonUtils {
                             @Override
                             public void onClick(View v) {
                                 if (emoticonClickListener != null) {
-                                    emoticonClickListener.onEmoticonClick(emojiBean, constants.EMOTICON_CLICK_TEXT, isDelBtn);
+                                    emoticonClickListener.onEmoticonClick(emojiBean, Constants.EMOTICON_CLICK_TEXT, isDelBtn);
                                 }
                             }
                         });

@@ -62,7 +62,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 
-import static com.healthyfish.healthyfishdoctor.constant.constants.HttpHealthyFishyUrl;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
 
 /**
  * 描述：线上信息页面

@@ -53,7 +53,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-import static com.healthyfish.healthyfishdoctor.constant.constants.HttpHealthyFishyUrl;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
 
 /**
  * 描述：个人中心fragment
