@@ -273,7 +273,15 @@ public class MqttUtil {
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
             bs.write((byte) localUser.length());
             bs.write(localUser.getBytes());
-            bs.write((bean.getType() + bean.getContent()).getBytes());
+            // 判断是否是文字还是图片
+            switch (bean.getType()) {
+                case "t":
+                    bs.write((bean.getType() + bean.getContent()).getBytes());
+                    break;
+                case "i":
+                    bs.write((bean.getType() + bean.getImgUrl()).getBytes());
+                    break;
+            }
             if (mqttAsyncClient == null) {
                 connect();
                 /*callHandler(obj.getString("method"), "failed: 请先登录");*/
@@ -377,7 +385,7 @@ public class MqttUtil {
     public static void sendImg(final ImMsgBean bean) {
 
         // TODO: 2017/8/6 解决图片发送问题
-        // bean.save();
+        bean.save();
 
         try {
             sendMsg(bean);
