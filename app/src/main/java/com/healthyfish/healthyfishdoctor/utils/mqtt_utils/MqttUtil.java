@@ -582,6 +582,7 @@ class MqttMsgText {
         bean.setTime(DateTimeUtil.getLongMs());
         bean.setType("t");
         bean.setTopic(topic);
+        bean.setNewMsg(true);
         bean.save();
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
 
@@ -603,6 +604,7 @@ class MqttMsgImage {
         bean.setName(peer);
         bean.setTime(DateTimeUtil.getLongMs());
         bean.setTopic(topic);
+        bean.setNewMsg(true);
         bean.save();
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
     }

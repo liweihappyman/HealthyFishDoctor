@@ -161,17 +161,4 @@ public class RetrofitManagerUtils {
                 .subscribe(subscriber);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
