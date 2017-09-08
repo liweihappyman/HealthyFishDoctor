@@ -86,7 +86,7 @@ public class MqttUtil {
     private static String userType;
     private static String localUser;
     private static String localTopic;
-    private static int keepAliveInterval = 10;
+    private static int keepAliveInterval = 60;
     private static boolean keepAliveFlag = false;
 
     public static final byte FLAG_ACK = (byte) 0x80;

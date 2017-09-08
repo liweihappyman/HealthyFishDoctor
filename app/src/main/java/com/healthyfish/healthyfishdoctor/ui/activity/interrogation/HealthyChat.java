@@ -34,6 +34,7 @@ import com.foamtrace.photopicker.intent.PhotoPickerIntent;
 import com.healthyfish.healthyfishdoctor.MainActivity;
 import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.AppFuncBean;
+import com.healthyfish.healthyfishdoctor.POJO.BeanUserChatInfo;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
@@ -97,8 +98,8 @@ public class HealthyChat extends AppCompatActivity implements FuncLayout.OnFuncK
     private BeanUserLoginReq beanUserLoginReq;
     // TODO: 2017/8/8 用户聊天信息
     // 获取用户聊天信息
-    // private BeanDoctorChatInfo beanDoctorChatInfo;
-    // 获取医生手机信息
+    private BeanUserChatInfo beanUserChatInfo;
+    // 获取对方手机信息
     private String topic;
     // 本机登录者
     private String sender;
@@ -130,17 +131,17 @@ public class HealthyChat extends AppCompatActivity implements FuncLayout.OnFuncK
 
     // 初始化聊天信息
     private void initChatInfo() {
-        /*beanDoctorChatInfo = (BeanDoctorChatInfo) getIntent().getSerializableExtra("BeanDoctorChatInfo");
+        beanUserChatInfo = (BeanUserChatInfo) getIntent().getSerializableExtra("BeanUserChatInfo");
         beanUserLoginReq = JSON.parseObject(MySharedPrefUtil.getValue("user"), BeanUserLoginReq.class);
-        topic = "d" + beanDoctorChatInfo.getPhone();
+        topic = "u" + beanUserChatInfo.getPhone();
         //topic = "d" + "13977211042";
-        sender = "u" + beanUserLoginReq.getMobileNo();
+        sender = "d" + beanUserLoginReq.getMobileNo();
         //medRECKey = "dmr" + beanDoctorChatInfo.getPhone() + beanUserLoginReq.getMobileNo();
-        doctorPortrait = beanDoctorChatInfo.getImgUrl();
-        serviceType = beanDoctorChatInfo.getServiceType();*/
+        doctorPortrait = beanUserChatInfo.getImgUrl();
+        serviceType = beanUserChatInfo.getServiceType();
 
-        topic = "u18077207818";
-        sender = "d18977280163";
+/*        topic = "u18077207818";
+        sender = "d18977280163";*/
     }
 
     private void initView() {
@@ -158,7 +159,7 @@ public class HealthyChat extends AppCompatActivity implements FuncLayout.OnFuncK
 
     private void initToolbar() {
         // 医生姓名
-        toolbar.setTitle(topic.substring(1));
+        toolbar.setTitle(beanUserChatInfo.getName());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

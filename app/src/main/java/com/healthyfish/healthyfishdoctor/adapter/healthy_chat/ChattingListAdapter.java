@@ -252,11 +252,11 @@ public class ChattingListAdapter extends BaseAdapter {
     public void disPlayLeftTextView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         setContent(holder.tv_content, bean.getContent());
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        // Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
     }
 
     public void disPlayLeftImageView(int position, View view, ViewHolder holder, ImMsgBean bean) {
-        // Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
         if (ImageBase.Scheme.FILE == ImageBase.Scheme.ofUri(bean.getImage())) {
             String filePath = ImageBase.Scheme.FILE.crop(bean.getImage());
             Glide.with(holder.iv_image.getContext())
@@ -273,7 +273,7 @@ public class ChattingListAdapter extends BaseAdapter {
     public void disPlayRightTextView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         setContent(holder.tv_content, bean.getContent());
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        // Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
         // 动态修改发送状态（加载、失败、成功）
         statusOfLoadingOrFailureOrSuccess(holder, bean);
 
@@ -281,7 +281,7 @@ public class ChattingListAdapter extends BaseAdapter {
 
     public void disPlayRightImageView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         try {
-            // Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+            Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
             if (ImageBase.Scheme.FILE == ImageBase.Scheme.ofUri(bean.getImage())) {
                 String filePath = ImageBase.Scheme.FILE.crop(bean.getImage());
                 Glide.with(holder.iv_image.getContext())

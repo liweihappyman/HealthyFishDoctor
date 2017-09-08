@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/color_white">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="93px"
+        android:layout_marginLeft="81px"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="45px"
+            android:layout_height="45px"
+            android:src="@mipmap/ic_picture_consulting_open"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="37px"
+            android:text="图文咨询"
+            style="@style/textSize_36"
+            android:textColor="@color/color_general_and_title"/>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5px"
+        android:layout_marginLeft="54px"
+        android:layout_marginRight="54px"
+        android:background="@android:color/darker_gray"/>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="43px">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_peer_graphic_consultation"
+            android:layout_width="144px"
+            android:layout_height="144px"
+            android:layout_marginLeft="78px"
+            android:layout_marginTop="39px"
+            android:src="@mipmap/ic_male_select" />
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24px"
+                android:layout_marginRight="54px"
+                android:layout_marginTop="35px"
+                android:orientation="vertical">
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_peerName_graphic_consultation"
+                        style="@style/textSize_42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="赵倩"
+                        android:textColor="@color/color_content_title" />
+
+                    <TextView
+                        android:id="@+id/tv_hospital_graphic_consultation"
+                        style="@style/textSize_36"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30px"
+                        android:text="柳州市中医院"
+                        android:textColor="@color/color_auxiliary_info" />
+
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_message_graphic_consultation"
+                    style="@style/textSize_36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17px"
+                    android:text="[文本信息]"
+                    android:textColor="@color/color_content_title" />
+
+                <TextView
+                    android:id="@+id/tv_receive_time_graphic_consultation"
+                    style="@style/textSize_36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19px"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="2017年08月07日" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_new_msg_graphic_consultation"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="64px"
+                android:visibility="gone"
+                android:background="@mipmap/new_msg" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>
