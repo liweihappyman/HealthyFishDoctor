@@ -113,7 +113,7 @@ public class InterrogationFragment extends Fragment {
                 switch (position){
                     case 0:
                         if (isOpen1) {
-                            Intent intent1 = new Intent(getActivity(), HealthyChat.class);
+                            Intent intent1 = new Intent(getActivity(), SetGraphicConsultation.class);
                             startActivity(intent1);
                         } else {
                             MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");

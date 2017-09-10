@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.foamtrace.photopicker.intent.PhotoPreviewIntent;
@@ -273,7 +274,11 @@ public class ChattingListAdapter extends BaseAdapter {
     public void disPlayRightTextView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         setContent(holder.tv_content, bean.getContent());
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+        if (getLocalUserImg() != null) {
+            Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+        } else {
+            Glide.with(holder.iv_portrait.getContext()).load(R.mipmap.logo_doctor_240).into(holder.iv_portrait);
+        }
         // 动态修改发送状态（加载、失败、成功）
         statusOfLoadingOrFailureOrSuccess(holder, bean);
 
@@ -281,7 +286,11 @@ public class ChattingListAdapter extends BaseAdapter {
 
     public void disPlayRightImageView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         try {
-            Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+            if (getLocalUserImg() != null) {
+                Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+            } else {
+                Glide.with(holder.iv_portrait.getContext()).load(R.mipmap.logo_doctor_240).into(holder.iv_portrait);
+            }
             if (ImageBase.Scheme.FILE == ImageBase.Scheme.ofUri(bean.getImage())) {
                 String filePath = ImageBase.Scheme.FILE.crop(bean.getImage());
                 Glide.with(holder.iv_image.getContext())
@@ -314,11 +323,11 @@ public class ChattingListAdapter extends BaseAdapter {
     // 获取本机用户头像
     public String getLocalUserImg() {
         String key = "info_" + uid;
-        /*List<BeanPersonalInformation> personalInformationList = DataSupport.where("key = ?", key).find(BeanPersonalInformation.class);
-        if (personalInformationList != null) {
-            return HttpHealthyFishyUrl + personalInformationList.get(0).getImgUrl();
-        }*/
-        return String.valueOf(R.mipmap.logo_240);
+        List<BeanPersonalInformation> personalInformationList = DataSupport.where("key = ?", key).find(BeanPersonalInformation.class);
+        if (personalInformationList.size() != 0) {
+            return personalInformationList.get(0).getImgUrl();
+        }
+        return null;
     }
 
     /**

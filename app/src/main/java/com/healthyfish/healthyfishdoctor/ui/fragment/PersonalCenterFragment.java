@@ -273,7 +273,7 @@ public class PersonalCenterFragment extends Fragment {
             if (!TextUtils.isEmpty(mLoginEventBus.getImgUrl())) {
                 Glide.with(getActivity()).load(HttpHealthyFishyUrl + mLoginEventBus.getImgUrl()).error(R.mipmap.error).into(civHeadPortraitLogin);
             } else {
-                Glide.with(getActivity()).load(R.mipmap.ic_logo).into(civHeadPortraitLogin);
+                Glide.with(getActivity()).load(R.mipmap.logo_doctor_240).into(civHeadPortraitLogin);
             }
             if (!TextUtils.isEmpty(mLoginEventBus.getName())) {
                 setTextBold(mLoginEventBus.getName());
@@ -281,7 +281,7 @@ public class PersonalCenterFragment extends Fragment {
                 tvNameLogin.setText("医生 你好");
             }
         } else {
-            Glide.with(getActivity()).load(R.mipmap.ic_logo).into(civHeadPortraitLogin);
+            Glide.with(getActivity()).load(R.mipmap.logo_doctor_240).into(civHeadPortraitLogin);
             tvNameLogin.setText("医生 你好");
         }
     }

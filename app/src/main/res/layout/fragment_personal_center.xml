@@ -57,7 +57,7 @@
                     android:layout_height="284px"
                     android:layout_marginLeft="398px"
                     android:layout_marginTop="80px"
-                    android:src="@mipmap/ic_logo" />
+                    android:src="@mipmap/logo_doctor_240" />
 
                 <TextView
                     android:id="@+id/tv_login_or_register"
@@ -101,7 +101,7 @@
                     android:layout_height="280px"
                     android:layout_marginLeft="47px"
                     android:layout_marginTop="130px"
-                    android:src="@mipmap/ic_logo" />
+                    android:src="@mipmap/logo_doctor_240" />
 
                 <TextView
                     android:id="@+id/tv_name_login"

@@ -35,130 +35,130 @@
                 android:id="@+id/civ_head_portrait"
                 android:layout_width="230px"
                 android:layout_height="230px"
-                android:layout_marginTop="30px"
                 android:layout_gravity="center_horizontal"
-                android:src="@mipmap/ic_logo"/>
+                android:layout_marginTop="30px"
+                android:src="@mipmap/logo_doctor_240" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15px"
                 android:layout_marginTop="30px"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
-                
+                android:padding="15px">
+
                 <TextView
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="医院："
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:textColor="@color/color_general_and_title" />
 
                 <TextView
                     android:id="@+id/tv_hospital"
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20px"
                     android:layout_weight="1"
-                    android:paddingTop="20px"
-                    android:paddingBottom="20px"
                     android:hint="请选择"
-                    android:textColorHint="@color/color_hint"
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:paddingBottom="20px"
+                    android:paddingTop="20px"
+                    android:textColor="@color/color_general_and_title"
+                    android:textColorHint="@color/color_hint" />
 
             </com.zhy.autolayout.AutoLinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/color_light_gray"/>
+                android:background="@color/color_light_gray" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15px"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="15px">
 
                 <TextView
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="科室："
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:textColor="@color/color_general_and_title" />
 
                 <TextView
                     android:id="@+id/tv_department"
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20px"
                     android:layout_weight="1"
-                    android:paddingTop="20px"
-                    android:paddingBottom="20px"
                     android:hint="请选择"
-                    android:textColorHint="@color/color_hint"
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:paddingBottom="20px"
+                    android:paddingTop="20px"
+                    android:textColor="@color/color_general_and_title"
+                    android:textColorHint="@color/color_hint" />
 
             </com.zhy.autolayout.AutoLinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/color_light_gray"/>
+                android:background="@color/color_light_gray" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15px"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="15px">
 
                 <TextView
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="姓名："
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:textColor="@color/color_general_and_title" />
 
                 <TextView
                     android:id="@+id/tv_name"
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20px"
                     android:layout_weight="1"
-                    android:paddingTop="20px"
-                    android:paddingBottom="20px"
                     android:hint="请选择"
-                    android:textColorHint="@color/color_hint"
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:paddingBottom="20px"
+                    android:paddingTop="20px"
+                    android:textColor="@color/color_general_and_title"
+                    android:textColorHint="@color/color_hint" />
 
             </com.zhy.autolayout.AutoLinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/color_light_gray"/>
+                android:background="@color/color_light_gray" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15px"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="15px">
 
                 <TextView
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="电话："
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:textColor="@color/color_general_and_title" />
 
 
                 <EditText
@@ -168,12 +168,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20px"
                     android:background="@null"
-                    android:maxLines="1"
                     android:hint="手机号"
-                    android:paddingTop="20px"
-                    android:paddingBottom="20px"
                     android:inputType="number"
                     android:maxLength="11"
+                    android:maxLines="1"
+                    android:paddingBottom="20px"
+                    android:paddingTop="20px"
                     android:textColor="@color/color_general_and_title"
                     android:textColorHint="@color/color_hint"
                     android:textSize="55px" />
@@ -183,93 +183,93 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/color_light_gray"/>
+                android:background="@color/color_light_gray" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15px"
                 android:background="@color/white"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="15px">
 
                 <TextView
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="职称："
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:textColor="@color/color_general_and_title" />
 
                 <TextView
                     android:id="@+id/tv_duties"
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20px"
                     android:layout_weight="1"
-                    android:paddingTop="20px"
                     android:paddingBottom="20px"
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:paddingTop="20px"
+                    android:textColor="@color/color_general_and_title" />
 
             </com.zhy.autolayout.AutoLinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/color_light_gray"/>
+                android:background="@color/color_light_gray" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15px"
                 android:background="@color/white"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="15px">
 
                 <TextView
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="专长："
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:textColor="@color/color_general_and_title" />
 
                 <TextView
                     android:id="@+id/tv_desc"
+                    style="@style/textSize_54"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20px"
                     android:layout_weight="1"
-                    android:paddingTop="20px"
                     android:paddingBottom="20px"
-                    style="@style/textSize_54"
-                    android:textColor="@color/color_general_and_title"/>
+                    android:paddingTop="20px"
+                    android:textColor="@color/color_general_and_title" />
 
             </com.zhy.autolayout.AutoLinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/color_light_gray"/>
+                android:background="@color/color_light_gray" />
 
             <TextView
+                style="@style/textSize_54"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30px"
                 android:padding="15px"
                 android:text="证件："
-                style="@style/textSize_54"
                 android:textColor="@color/color_general_and_title"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <com.healthyfish.healthyfishdoctor.ui.widget.MyGridView
                 android:id="@+id/gv_select_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:background="@color/white"
-                android:padding="15px"
-                android:numColumns="3"
+                android:layout_marginBottom="10px"
                 android:layout_marginTop="10px"
-                android:layout_marginBottom="10px" />
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:numColumns="3"
+                android:padding="15px" />
 
         </com.zhy.autolayout.AutoLinearLayout>
 

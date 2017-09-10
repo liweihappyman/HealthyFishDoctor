@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initMqtt() {
-        if (!TextUtils.isEmpty(MySharedPrefUtil.getValue("sid"))) {
+        if (!TextUtils.isEmpty(MySharedPrefUtil.getValue("user"))) {
             AutoLogin.autoLogin();
             MqttUtil.startAsync();
         }

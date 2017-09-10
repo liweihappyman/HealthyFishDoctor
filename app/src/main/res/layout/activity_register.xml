@@ -13,7 +13,7 @@
         android:layout_height="364px"
         android:layout_marginTop="83px"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_logo"/>
+        android:src="@mipmap/logo_healthyfish_doctor"/>
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="972px"
