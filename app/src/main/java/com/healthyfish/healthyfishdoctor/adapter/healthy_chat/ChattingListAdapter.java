@@ -280,7 +280,6 @@ public class ChattingListAdapter extends BaseAdapter {
                     rightMdrHolder = (ViewHolder) convertView.getTag();
                 }
                 disPlayRightMdrView(position, convertView, rightMdrHolder, bean);
-
                 // 点击病历内容跳转到病历
                 rightMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -288,7 +287,6 @@ public class ChattingListAdapter extends BaseAdapter {
                         goToMedRec(bean.getMdrKey().substring(5));
                     }
                 });
-
                 break;
 
             case VIEW_TYPE_LEFT_MDR:
@@ -308,6 +306,13 @@ public class ChattingListAdapter extends BaseAdapter {
                     leftMdrHolder = (ViewHolder) convertView.getTag();
                 }
                 disPlayLeftMdrView(position, convertView, leftMdrHolder, bean);
+                // 点击病历内容跳转到病历
+                leftMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        goToMedRec(bean.getMdrKey().substring(5));
+                    }
+                });
                 break;
             default:
                 convertView = new View(mActivity);
@@ -368,7 +373,7 @@ public class ChattingListAdapter extends BaseAdapter {
     private void disPlayRightMdrView(int position, View convertView, ViewHolder holder, ImMsgBean bean) {
         // 查看病历详情
         String mdrDetail = getMDRKey(bean.getContent().substring(5));
-        setContent(holder.tv_content, "病历接收成功\n" + "病历详情: " + mdrDetail);
+        setContent(holder.tv_content, "病历发送成功\n" + "病历详情: " + mdrDetail);
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
         Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
         // 动态修改发送状态（加载、失败、成功）
