@@ -14,6 +14,9 @@ public class ImMsgBean extends DataSupport implements Serializable{
     public final static int CHAT_MSGTYPE_IMG_RECEIVER = 11;
     public final static int CHAT_MSGTYPE_TEXT_SENDER = 12;
     public final static int CHAT_MSGTYPE_IMG_SENDER = 13;
+    public final static int CHAT_MSGTYPE_MDR_SENDER = 14;
+    public final static int CHAT_MSGTYPE_MDR_RECEIVER = 15;
+
 
     public ImMsgBean() {
     }
@@ -46,7 +49,7 @@ public class ImMsgBean extends DataSupport implements Serializable{
     // 发送者肖像
     private String portrait;
     // 发送电子病历的key
-    private String dmrKey;
+    private String mdrKey;
     // 是发送者还是接收者
     private boolean isSender = false;
     // 发送状态
@@ -144,12 +147,12 @@ public class ImMsgBean extends DataSupport implements Serializable{
         this.portrait = portrait;
     }
 
-    public String getDmrKey() {
-        return dmrKey;
+    public String getMdrKey() {
+        return mdrKey;
     }
 
-    public void setDmrKey(String dmrKey) {
-        this.dmrKey = dmrKey;
+    public void setMdrKey(String dmrKey) {
+        this.mdrKey = dmrKey;
     }
 
     public boolean isSender() {

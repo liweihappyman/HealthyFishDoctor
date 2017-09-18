@@ -45,6 +45,7 @@ import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatImageMessage;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
 import com.healthyfish.healthyfishdoctor.service.WeChatUploadImage;
+import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
 import com.healthyfish.healthyfishdoctor.ui.widget.SessionChatKeyboardBase;
 import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
@@ -70,7 +71,7 @@ import sj.keyboard.widget.FuncLayout;
 
 import static java.lang.Thread.sleep;
 
-public class HealthyChat extends AppCompatActivity implements FuncLayout.OnFuncKeyBoardListener, AutoHeightLayout.OnMaxParentHeightChangeListener {
+public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoardListener, AutoHeightLayout.OnMaxParentHeightChangeListener {
     private static final int REQUEST_CAMERA_CODE = 12;
     private static final int REQUEST_PREVIEW_CODE = 13;
     // 发送延时显示失败（秒数）
@@ -612,9 +613,13 @@ public class HealthyChat extends AppCompatActivity implements FuncLayout.OnFuncK
         unregisterReceiver(netReceiver);
     }
 
-/*    @Override
+    @Override
     protected void onResume() {
         super.onResume();
-        initListView();
-    }*/
+        initMqtt();
+    }
+
+    private void initMqtt() {
+
+    }
 }
