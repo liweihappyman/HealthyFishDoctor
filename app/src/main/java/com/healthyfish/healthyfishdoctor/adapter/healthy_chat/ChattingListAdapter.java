@@ -293,7 +293,7 @@ public class ChattingListAdapter extends BaseAdapter {
                 final ViewHolder leftMdrHolder;
                 if (convertView == null) {
                     leftMdrHolder = new ViewHolder();
-                    holderView = mInflater.inflate(R.layout.listitem_chat_right_text, null);
+                    holderView = mInflater.inflate(R.layout.listitem_chat_left_text, null);
                     holderView.setFocusable(true);
                     leftMdrHolder.iv_portrait = (ImageView) holderView.findViewById(R.id.iv_portrait);
                     leftMdrHolder.tv_content = (TextView) holderView.findViewById(R.id.tv_content);
@@ -386,8 +386,6 @@ public class ChattingListAdapter extends BaseAdapter {
         setContent(holder.tv_content, "病历接收成功\n" + "病历详情: " + mdrDetail);
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
         Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
-        // 动态修改发送状态（加载、失败、成功）
-        statusOfLoadingOrFailureOrSuccess(holder, bean);
     }
 
     public void setContent(TextView tv_content, String content) {
@@ -407,18 +405,21 @@ public class ChattingListAdapter extends BaseAdapter {
     public String getLocalUserImg() {
         String key = "info_" + uid;
         List<BeanPersonalInformation> personalInformationList = DataSupport.where("key = ?", key).find(BeanPersonalInformation.class);
-        if (personalInformationList != null) {
+        if (!personalInformationList.isEmpty()) {
+
+            Log.e("返回本机头像 ", personalInformationList.get(0).getImgUrl());
             return HttpHealthyFishyUrl + personalInformationList.get(0).getImgUrl();
+        } else {
+            return String.valueOf(R.mipmap.logo_240);
         }
-        return String.valueOf(R.mipmap.logo_240);
     }
 
     // 根据病历的key获取病历详情
     private String getMDRKey(String mdrKey) {
         List<BeanMedRec> mdeRecList = DataSupport.where("key = ?", mdrKey).find(BeanMedRec.class);
         //Log.e("返回病历信息 ", mdeRecList.get(0).getDiseaseInfo());
-        return mdeRecList.get(0).getDiseaseInfo();
-        //return null;
+        //return mdeRecList.get(0).getDiseaseInfo();
+        return null;
     }
 
     // 点击病历内容跳转到病历

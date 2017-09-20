@@ -1,15 +1,25 @@
 package com.healthyfish.healthyfishdoctor.utils.mqtt_utils;
 
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.healthyfish.healthyfishdoctor.MyApplication;
+import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
+import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
+import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
+import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
+import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
+import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.AllMedRec;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
+import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
+import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -23,10 +33,16 @@ import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
+import org.litepal.crud.DataSupport;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
+import okhttp3.ResponseBody;
+import rx.Subscriber;
+
+import static com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil.beanMedRecUser;
 import static com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil.userName;
 
 
@@ -103,6 +119,8 @@ public class MqttUtil {
     public static BeanUserLoginReq beanUserLoginReq = JSON.parseObject(userJson, BeanUserLoginReq.class);
     public static String userName = beanUserLoginReq.getMobileNo();
     public static String userPwd = beanUserLoginReq.getPwdSHA256();
+
+    public static BeanMedRecUser beanMedRecUser = new BeanMedRecUser();
 
     static Handler pingHandler = new Handler();
     static Runnable pingRunnable = new Runnable() {
@@ -539,8 +557,7 @@ class PushCallback implements MqttCallback {
                         byte[] msg_array = new byte[msg_len];
                         System.arraycopy(payload, 2 + uid_len, msg_array, 0, msg_len);
                         String content = new String(msg_array, "utf-8");
-                        // TODO: 2017/7/27 保存msg
-                        MqttMsgText.process(bean, peer, content, topic);
+                        MqttMsgMdr.process(bean, peer, content, topic);
                         break;
                     }
                     // TODO: 2017/7/25 发送收到图片处理
@@ -589,6 +606,81 @@ class MqttMsgText {
     }
 }
 
+class MqttMsgMdr {
+
+    // 接收病历
+    public static void process(ImMsgBean bean, String peer, String content, String topic) {
+        // 要显示的内容
+        bean.setContent(content);
+        bean.setToDefault("isSender");
+        bean.setName(peer);
+
+        bean.setTime(DateTimeUtil.getLongMs());
+        bean.setType("m");
+        bean.setTopic(topic);
+        bean.setNewMsg(true);
+        bean.save();
+
+        // 通过key获取病历
+        keyGet(bean);
+
+        // 获取新的信息
+        EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
+
+    }
+
+    // 通过key获取病历
+    private static void keyGet(final ImMsgBean bean) {
+        final BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
+        final String key = bean.getContent().substring(5);
+        if (DataSupport.where("name = ?", bean.getName().substring(1)).find(BeanMedRecUser.class).isEmpty()) {
+            beanMedRecUser.setName(bean.getName().substring(1));
+            beanMedRecUser.setImgUrl(bean.getPortrait());
+            beanMedRecUser.save();
+        } else {
+            beanMedRecUser = DataSupport.where("name = ?", bean.getName().substring(1)).find(BeanMedRecUser.class).get(0);
+        }
+        beanBaseKeyGetReq.setKey(key);
+
+        RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getMedRecByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Toast.makeText(MyApplication.getContetxt(), "出错啦", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    String rspv = responseBody.string();
+                    if (!TextUtils.isEmpty(rspv)) {
+                        BeanBaseKeyGetResp object = JSON.parseObject(rspv, BeanBaseKeyGetResp.class);
+                        if (object.getValue() != null) {
+                            BeanMedRec beanMedRec = JSON.parseObject(object.getValue(), BeanMedRec.class);
+                            beanMedRec.setKey(key);
+                            beanMedRec.setBeanMedRecUser(beanMedRecUser);
+                            beanMedRec.save();
+                            List<BeanCourseOfDisease> courseOfDiseaseList = beanMedRec.getListCourseOfDisease();
+                            for (BeanCourseOfDisease courseOfDisease : courseOfDiseaseList) {
+                                courseOfDisease.setBeanMedRec(beanMedRec);
+                                courseOfDisease.save();
+                            }
+                        } else {
+                            /*nullValueKey.add(key);
+                            hasNullValueKey = true;*/
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+}
 //i|len|<src="...">|img_bytes
 class MqttMsgImage {
     public static void process(ImMsgBean bean, String peer, String url, String topic) {
