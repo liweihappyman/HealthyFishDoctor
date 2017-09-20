@@ -46,11 +46,12 @@ public class RegisterSuccess extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_back_home:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.bt_add_document:
-                //添加健康档案
+                //完善个人信息
+
                 break;
         }
     }

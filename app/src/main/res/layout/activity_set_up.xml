@@ -14,7 +14,6 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_white"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -26,6 +25,7 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/lly_message_notification"
                 android:layout_width="match_parent"
+                android:background="@color/color_white"
                 android:layout_height="160px"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -60,6 +60,7 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/lly_change_password"
                 android:layout_width="match_parent"
+                android:background="@color/color_white"
                 android:layout_height="160px"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -92,6 +93,7 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/lly_update_version"
                 android:layout_width="match_parent"
+                android:background="@color/color_white"
                 android:layout_height="160px"
                 android:clickable="true"
                 android:gravity="center_vertical"
@@ -133,9 +135,10 @@
                 style="@style/textSize_54"
                 android:layout_width="882px"
                 android:layout_height="126px"
-                android:layout_marginTop="58px"
+                android:layout_marginTop="40px"
                 android:background="@drawable/selector_btn_color_from_secondary_to_white"
                 android:text="退出登录"
+                android:layout_marginBottom="30px"
                 android:textColor="@color/selector_text_color_from_white_to_secondary" />
 
         </com.zhy.autolayout.AutoLinearLayout>

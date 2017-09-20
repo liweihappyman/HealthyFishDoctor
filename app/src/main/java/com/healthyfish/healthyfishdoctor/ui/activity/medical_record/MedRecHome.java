@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.MedRecHomeLvAdapter;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 
 import org.litepal.crud.DataSupport;
 
@@ -60,10 +60,10 @@ public class MedRecHome extends AppCompatActivity {
         list.add(new BeanMedRecUser("呵呵哒", "2017年8月20日"));
         list.add(new BeanMedRecUser("隔壁老王", "2017年8月20日"));
         list.add(new BeanMedRecUser("呵呵哒", "2017年8月20日"));
-        if (constants.first) {
+        if (Constants.first) {
             for (int i = 0; i < list.size(); i++) {
                 list.get(i).save();
-                constants.first = false;
+                Constants.first = false;
             }
         }
         MedRecHomeLvAdapter adapter = new MedRecHomeLvAdapter(this, list);
@@ -71,7 +71,7 @@ public class MedRecHome extends AppCompatActivity {
         medRecHomeLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                constants.MED_REC_USER_ID = list.get(position).getId();
+                Constants.MED_REC_USER_ID = list.get(position).getId();
                 Intent intent = new Intent(MedRecHome.this, AllMedRec.class);
                 startActivity(intent);
             }

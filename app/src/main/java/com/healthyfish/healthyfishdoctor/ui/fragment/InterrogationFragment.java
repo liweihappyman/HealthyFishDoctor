@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,13 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanPayService;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.PayServiceGvAdapter;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.GraphicConsultation;
+import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.HealthyChat;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.SetGraphicConsultation;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.SetPrivateDoctor;
+import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
+import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.MyToast;
+import com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +52,7 @@ public class InterrogationFragment extends Fragment {
 
     private boolean isOpen1 = true;
     private boolean isOpen2 = false;
-    private boolean isOpen3 = true;
+    private boolean isOpen3 = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,15 +112,27 @@ public class InterrogationFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        Intent intent1 = new Intent(getActivity(), GraphicConsultation.class);
-                        startActivity(intent1);
+                        if (isOpen1) {
+                            Intent intent1 = new Intent(getActivity(), SetGraphicConsultation.class);
+                            startActivity(intent1);
+                        } else {
+                            MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");
+                        }
                         break;
                     case 1:
-                        MyToast.showToast(getActivity(),"您还没开通该服务噢，赶紧开通吧！");
+                        if (isOpen2) {
+
+                        } else {
+                            MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");
+                        }
                         break;
                     case 2:
-                        Intent intent2 = new Intent(getActivity(), SetPrivateDoctor.class);
-                        startActivity(intent2);
+                        if (isOpen3) {
+                            Intent intent2 = new Intent(getActivity(), SetPrivateDoctor.class);
+                            startActivity(intent2);
+                        } else {
+                            MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");
+                        }
                         break;
                 }
 

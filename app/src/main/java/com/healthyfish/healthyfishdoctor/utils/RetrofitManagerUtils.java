@@ -26,10 +26,10 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.healthyfish.healthyfishdoctor.constant.constants.CONNECT_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.HttpHealthyFishyUrl;
-import static com.healthyfish.healthyfishdoctor.constant.constants.READ_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.WRITE_TIMEOUT;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.CONNECT_TIMEOUT;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.READ_TIMEOUT;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.WRITE_TIMEOUT;
 
 /**
  * 描述：Retrofit封装
@@ -160,18 +160,5 @@ public class RetrofitManagerUtils {
         apiService.uploadFiles(photos)
                 .subscribe(subscriber);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

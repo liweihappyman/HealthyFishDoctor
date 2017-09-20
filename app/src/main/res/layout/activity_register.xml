@@ -13,7 +13,7 @@
         android:layout_height="364px"
         android:layout_marginTop="83px"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_logo"/>
+        android:src="@mipmap/logo_healthyfish_doctor"/>
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="972px"
@@ -127,7 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50px"
         android:layout_gravity="center"
-        android:text="《太医医生服务条款及协议》"
+        android:text="《健鱼医生服务条款及协议》"
         android:textColor="@color/selector_text_color_from_secondary_to_white"
         style="@style/textSize_54"/>
 

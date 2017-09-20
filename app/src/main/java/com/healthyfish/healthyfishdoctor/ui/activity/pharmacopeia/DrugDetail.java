@@ -2,6 +2,15 @@ package com.healthyfish.healthyfishdoctor.ui.activity.pharmacopeia;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
+import android.widget.TextView;
+
+import com.healthyfish.healthyfishdoctor.R;
+import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import android.util.Log;
 import android.widget.TextView;
 
@@ -18,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
+
 
 /**
  * 描述：药物详情

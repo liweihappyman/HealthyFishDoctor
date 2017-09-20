@@ -6,20 +6,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.healthyfish.healthyfishdoctor.utils.HttpsUtils;
-import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import org.litepal.LitePal;
-
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-
-import static com.healthyfish.healthyfishdoctor.constant.constants.CONNECT_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.READ_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.WRITE_TIMEOUT;
 
 /**
  * 描述：MyApplication初始化参数
@@ -30,7 +19,8 @@ import static com.healthyfish.healthyfishdoctor.constant.constants.WRITE_TIMEOUT
 
 public class MyApplication extends Application{
     public static Context applicationContext;
-
+    public static String uid = "";
+    public static boolean isFirstOpen = true;
 
     @Override
     public void onCreate() {
@@ -74,6 +64,12 @@ public class MyApplication extends Application{
                     break;
                 case 0x13:
                     Toast.makeText(getContetxt(),"图片保存成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case 0x14:
+                    Toast.makeText(getContetxt(),"头像上传成功",Toast.LENGTH_SHORT).show();
+                    break;
+                case 0x15:
+                    Toast.makeText(getContetxt(),"证件上传成功",Toast.LENGTH_SHORT).show();
                     break;
             }
         }

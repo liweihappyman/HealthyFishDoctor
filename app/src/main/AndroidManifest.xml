@@ -9,9 +9,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_healthyfish_doctor"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo_healthyfish_doctor"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -23,7 +23,9 @@
             android:name="design_height"
             android:value="1900" />
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
@@ -49,6 +51,8 @@
         <activity android:name=".ui.activity.interrogation.SeeUserInformation" />
         <!--问诊设置接诊时间页面-->
         <activity android:name=".ui.activity.interrogation.SetAdmissionTime" />
+        <!--问诊选择模板页面-->
+        <activity android:name=".ui.activity.interrogation.SelectTemplate" />
 
         <!-- 个人中心我的健康信息页面 -->
         <activity android:name=".ui.activity.personal_center.HealthInformation" />
@@ -114,6 +118,28 @@
         <!-- 药典药物详情 -->
         <activity android:name=".ui.activity.pharmacopeia.DrugDetail"></activity>
 
+        <!--问诊界面-->
+        <activity android:name=".ui.activity.interrogation.HealthyChat"></activity>
+
+        <!--个人中心修改完善个人信息页面-->
+        <activity
+            android:name=".ui.activity.personal_center.ChangePersonalInformation"
+            android:launchMode="singleTask"/>
+        <!--个人信息上传证件图片服务-->
+        <service
+            android:name=".service.UploadImage"
+            android:exported="false"/>
+
+        <!--聊天发送图片-->
+        <service
+            android:name=".service.WeChatUploadImage"
+            android:exported="false"></service>
+        <!--判断网络广播-->
+        <receiver android:name=".broadcast.NetWorkChangeBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

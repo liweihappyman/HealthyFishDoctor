@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 
 import com.healthyfish.healthyfishdoctor.POJO.BeanAdmissionTimeItem;
 import com.healthyfish.healthyfishdoctor.R;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +60,10 @@ public class SetAdmissionTimeGvAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = mLayoutInflater.inflate(R.layout.item_set_admission_time, null);
+            convertView = mLayoutInflater.inflate(R.layout.item_set_admission_time, parent,false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
+            AutoUtils.autoSize(convertView);//item自适应适配
         }else {
             holder = (ViewHolder) convertView.getTag();
         }

@@ -7,14 +7,14 @@
 
     <com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="283px"
         app:cardElevation="5px"
         app:cardCornerRadius="2px">
 
         <com.daimajia.swipe.SwipeLayout
             android:id="@+id/sly_message_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="283px"
             android:background="@color/color_white"
             android:splitMotionEvents="false">
 
@@ -27,7 +27,7 @@
                     android:id="@+id/tv_cancel_attention"
                     style="@style/textSize_60"
                     android:layout_width="180px"
-                    android:layout_height="match_parent"
+                    android:layout_height="283px"
                     android:background="@color/color_secondary"
                     android:gravity="center"
                     android:text="取消\n关注"

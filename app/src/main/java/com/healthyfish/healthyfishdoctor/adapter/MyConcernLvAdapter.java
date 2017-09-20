@@ -15,6 +15,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanMyConcernItem;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.utils.MyToast;
 import com.zhy.autolayout.AutoRelativeLayout;
+import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
