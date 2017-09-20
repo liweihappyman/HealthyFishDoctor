@@ -260,7 +260,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
     //保存操作和更操作并返回AllMedRed页面
     private void saveOrUpdate() {
         BeanMedRecUser beanMedRecUser = DataSupport.find(BeanMedRecUser.class, constants.MED_REC_USER_ID, true);
-        Log.i("lllllll", beanMedRecUser.getDate());
+        //Log.i("lllllll", beanMedRecUser.getDate());
         medRec.setDiagnosis(diagnosis.getText().toString());
         medRec.setDiseaseInfo(diseaseInfo.getText().toString());
         medRec.setClinicalDepartement(clinicalDepartment.getText().toString());
@@ -531,11 +531,11 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
 
     //设置name（姓名） 、patientInfo（患者信息点击时间的控件，这里用来显示性别）控件的值
     private void setInfo() {
-        if (medRec.getName() != null) {
+        if (medRec.getName() != null&& !medRec.getName().trim().equals("null")&& !medRec.getName().equals("")) {
             name.setText("姓名： " + medRec.getName());
         }
-        if (medRec.getGender() != null) {
-            patientInfo.setText("性别： " + medRec.getGender());
+        if (medRec.getGender() != null && !medRec.getGender().trim().equals("null")&& !medRec.getGender().equals("")) {
+            patientInfo.setText(medRec.getGender());
         }
     }
 

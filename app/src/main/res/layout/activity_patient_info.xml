@@ -19,8 +19,8 @@
     <EditText
         android:id="@+id/name"
         style="@style/EditText_Hint"
-        android:layout_marginTop="60px"
-        android:hint="姓名" />
+        android:layout_marginTop="70px"
+        android:hint="姓名 (*必填)" />
 
     <ImageView style="@style/Divider" />
 
@@ -28,8 +28,8 @@
         android:id="@+id/gender"
         style="@style/EditText_Hint"
         android:clickable="true"
-        android:layout_marginTop="30px"
-        android:hint="性别" />
+        android:layout_marginTop="50px"
+        android:hint="性别 (*必填)" />
 
     <ImageView style="@style/Divider" />
 
@@ -37,7 +37,7 @@
         android:id="@+id/birthday"
         style="@style/EditText_Hint"
         android:clickable="true"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="50px"
         android:hint="出生日期" />
 
     <ImageView style="@style/Divider" />
@@ -45,7 +45,7 @@
     <EditText
         android:id="@+id/id_number"
         style="@style/EditText_Hint"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="50px"
         android:hint="身份证号码" />
 
     <ImageView style="@style/Divider" />
@@ -53,7 +53,7 @@
     <EditText
         android:id="@+id/occupation"
         style="@style/EditText_Hint"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="50px"
         android:hint="职业" />
 
     <ImageView style="@style/Divider" />
@@ -106,11 +106,10 @@
         style="@style/textSize_54"
         android:layout_width="match_parent"
         android:layout_height="125px"
-        android:background="@color/color_primary_dark"
+        android:background="@drawable/selector_1dp_btn_color_from_primary_to_white"
         android:clickable="true"
         android:gravity="center"
         android:text="保存"
         android:textColor="@android:color/white" />
-
 
 </com.zhy.autolayout.AutoLinearLayout>

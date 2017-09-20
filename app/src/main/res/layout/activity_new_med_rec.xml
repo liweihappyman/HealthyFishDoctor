@@ -10,6 +10,7 @@
     <include layout="@layout/toolbar" />
 
     <ScrollView
+        android:layout_marginBottom="20px"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp">
@@ -19,84 +20,94 @@
             android:layout_height="wrap_content"
 
             android:orientation="vertical">
-
-            <com.zhy.autolayout.AutoLinearLayout
+            <com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="vertical">
 
-                <TextView
-                    style="@style/TextView_Lable"
-                    android:layout_marginTop="50px"
-                    android:text="标签" />
+                app:cardCornerRadius="3px"
+                android:elevation="5dp">
 
-                <TextView
-                    android:id="@+id/lable"
-                    style="@style/EditText_Hint"
-                    android:clickable="true" />
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="vertical">
 
-                <ImageView style="@style/Divider" />
+                    <TextView
+                        style="@style/TextView_Lable"
+                        android:layout_marginTop="50px"
+                        android:text="标签" />
 
-                <TextView
-                    style="@style/TextView_Lable"
-                    android:text="患者信息" />
+                    <TextView
+                        android:id="@+id/lable"
+                        style="@style/EditText_Hint"
+                        android:clickable="true" />
 
-                <TextView
-                    android:id="@+id/name"
-                    style="@style/EditText_Hint"
-                    android:text="姓名" />
+                    <ImageView style="@style/Divider" />
 
-                <TextView
-                    android:id="@+id/patient_info"
-                    style="@style/EditText_Hint"
-                    android:clickable="true" />
+                    <TextView
+                        style="@style/TextView_Lable"
+                        android:text="患者信息" />
 
-                <ImageView style="@style/Divider" />
+                    <TextView
+                        android:id="@+id/name"
+                        style="@style/EditText_Hint"
+                        android:text="姓名（*必填）" />
 
-                <TextView
-                    style="@style/TextView_Lable"
-                    android:text="诊断" />
+                    <TextView
+                        android:id="@+id/patient_info"
+                        style="@style/EditText_Hint"
+                        android:clickable="true" />
 
-                <EditText
-                    android:id="@+id/diagnosis"
-                    style="@style/EditText_Hint" />
+                    <ImageView style="@style/Divider" />
 
-                <ImageView style="@style/Divider" />
+                    <TextView
+                        style="@style/TextView_Lable"
+                        android:text="诊断" />
 
-                <TextView
-                    style="@style/TextView_Lable"
-                    android:text="病情信息" />
+                    <EditText
+                        android:id="@+id/diagnosis"
+                        style="@style/EditText_Hint"
+                        android:hint="（*必填）"/>
 
-                <EditText
-                    android:id="@+id/disease_info"
-                    style="@style/EditText_Hint" />
+                    <ImageView style="@style/Divider" />
 
-                <ImageView style="@style/Divider" />
+                    <TextView
+                        style="@style/TextView_Lable"
+                        android:text="病情信息" />
 
-                <TextView
-                    style="@style/TextView_Lable"
-                    android:text="就诊科室" />
+                    <EditText
+                        android:id="@+id/disease_info"
+                        style="@style/EditText_Hint"
+                        android:hint="（*必填）"/>
 
-                <EditText
-                    android:id="@+id/clinical_department"
-                    style="@style/EditText_Hint" />
+                    <ImageView style="@style/Divider" />
 
-                <ImageView style="@style/Divider" />
+                    <TextView
+                        style="@style/TextView_Lable"
+                        android:text="就诊科室"
+                        />
 
-                <TextView
-                    style="@style/TextView_Lable"
-                    android:text="就诊时间" />
+                    <EditText
+                        android:id="@+id/clinical_department"
+                        style="@style/EditText_Hint" />
 
-                <TextView
-                    android:id="@+id/clinical_time"
-                    style="@style/EditText_Hint"
-                    android:clickable="true" />
+                    <ImageView style="@style/Divider" />
 
-                <ImageView
-                    style="@style/Divider"
-                    android:layout_marginBottom="30px" />
-            </com.zhy.autolayout.AutoLinearLayout>
+                    <TextView
+                        style="@style/TextView_Lable"
+                        android:text="就诊时间" />
+
+                    <TextView
+                        android:id="@+id/clinical_time"
+                        style="@style/EditText_Hint"
+                        android:clickable="true" />
+
+                    <ImageView
+                        style="@style/Divider"
+                        android:layout_marginBottom="30px" />
+                </com.zhy.autolayout.AutoLinearLayout>
+            </com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView>
 
             <TextView
                 android:id="@+id/create_course"
@@ -128,7 +139,7 @@
         android:id="@+id/save"
         android:layout_width="match_parent"
         android:layout_height="125px"
-        android:background="@color/color_primary_dark"
+        android:background="@drawable/selector_1dp_btn_color_from_primary_to_white"
         android:clickable="true"
         android:gravity="center"
         android:text="保存"
