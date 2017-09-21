@@ -14,6 +14,8 @@ import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.MedRecHomeLvAdapter;
 import com.healthyfish.healthyfishdoctor.constant.Constants;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,4 +77,11 @@ public class MedRecHome extends AppCompatActivity {
             }
         });
     }
+//-------------------------------------------这里是测试版的，退出该界面就删除所有病历夹相关的信息
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        DataSupport.deleteAll(BeanMedRecUser.class);
+    }
+//-------------------------------------------这里是测试版的，退出该界面就删除所有病历夹相关的信息
 }

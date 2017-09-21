@@ -4,88 +4,104 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="150px"
         android:gravity="center_vertical|center_horizontal"
-        android:text="设置开始时间"
-        android:textSize="56px"
-        />
+        android:text="设置日期"
+        android:textSize="56px" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="#d2d0d0"/>
+        android:background="#d2d0d0" />
+
     <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/dialog_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:paddingLeft="10px" >
+        android:orientation="horizontal"
+        android:paddingLeft="10px">
 
-        <com.healthyfish.healthyfish.ui.widget.WkjNumberPicker
+        <com.healthyfish.healthyfishdoctor.ui.widget.WkjNumberPicker
             android:id="@+id/np1"
             android:layout_width="200px"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:textSize="48px"
-            android:text="年"/>
-        <com.healthyfish.healthyfish.ui.widget.WkjNumberPicker
+            android:text="年"
+            android:textSize="48px" />
+
+        <com.healthyfish.healthyfishdoctor.ui.widget.WkjNumberPicker
             android:id="@+id/np2"
             android:layout_width="200px"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:textSize="48px"
-            android:text="月"/>
-        <com.healthyfish.healthyfish.ui.widget.WkjNumberPicker
+            android:text="月"
+            android:textSize="48px" />
+
+        <com.healthyfish.healthyfishdoctor.ui.widget.WkjNumberPicker
             android:id="@+id/np3"
             android:layout_width="200px"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:textSize="48px"
-            android:text="日"/>
+            android:text="日"
+            android:textSize="48px" />
     </com.zhy.autolayout.AutoLinearLayout>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="3px"
-        android:background="#d2d0d0"/>
+        android:background="#d2d0d0" />
+
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:padding="10px" >
+        android:orientation="horizontal"
+        android:padding="10px">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.1" />
+
         <Button
             android:id="@+id/dialog_confirm"
             android:layout_width="200px"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:background="@drawable/gray_rectangle"
-            android:text="确定" />
+            android:background="@drawable/selector_1dp_btn_color_from_primary_to_white"
+            android:text="确定"
+            android:textColor="@color/color_white" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.4" />
+
         <Button
             android:id="@+id/dialog_back"
             android:layout_width="200px"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:background="@drawable/gray_rectangle"
-            android:text="取消" />
+            android:background="@drawable/selector_1dp_btn_color_from_primary_to_white"
+            android:text="取消"
+            android:textColor="@color/color_white" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

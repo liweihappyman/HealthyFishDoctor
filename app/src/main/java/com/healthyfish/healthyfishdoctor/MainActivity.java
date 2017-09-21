@@ -30,9 +30,7 @@ import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
 import com.healthyfish.healthyfishdoctor.eventbus.InitAllMessage;
 import com.healthyfish.healthyfishdoctor.eventbus.LoginEventBus;
 import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
-
 import com.healthyfish.healthyfishdoctor.ui.activity.login_register.Login;
-
 import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;

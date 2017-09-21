@@ -1,16 +1,16 @@
 package com.healthyfish.healthyfishdoctor.ui.activity.medical_record;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +18,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -67,6 +65,10 @@ import static com.healthyfish.healthyfishdoctor.ui.activity.medical_record.NewMe
 
 public class AllMedRec extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     public static final int TO_NEW_MED_REC = 38;//进入NewMedRec页面的请求标志
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefresh;
     private List<String> nullValueKey = new ArrayList<>();//存放value值为空的key；
     boolean hasNullValueKey = false;//标志空值key
     @BindView(R.id.toolbar)
@@ -96,19 +98,31 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
         newMedRec.setOnClickListener(this);
         medRecAll.setOnItemClickListener(this);
         init();//先获取数据库的数据初始化列表
-        reqForNetworkData();//然后加载网络数据更新列表
+        initRefresh();
+        //reqForNetworkData();//然后加载网络数据更新列表
     }
+
+    private void initRefresh() {
+        swipeRefresh.setColorSchemeColors(Color.parseColor("#019b79"));
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //reqForNetworkData(true);//然后加载网络数据更新列表
+            }
+        });
+    }
+
     /**
      * 思路:先加载本地数据库的内容，异步获取网络的数据，通过对比key，如果没有则添加到本地数据库，最后更新列表
      */
     private void init() {
         listMecRec.clear();
-        beanMedRecUser = DataSupport.find(BeanMedRecUser.class,Constants.MED_REC_USER_ID,true);
+        beanMedRecUser = DataSupport.find(BeanMedRecUser.class, constants.MED_REC_USER_ID, true);
         listMecRec = beanMedRecUser.getMedRecList();
         if (listMecRec.size() == 0) {
-            initNullLV();
-        }
-        if (listMecRec.size() > 0) {
+            //initNullLV();
+            reqForNetworkData(false);//如果本地数据为空，则从网上加载，否则要刷新数据，只有下拉刷新
+        } else {
             //将日期按时间先后排序
             ComparatorDate c = new ComparatorDate();
             Collections.sort(listMecRec, c);
@@ -128,11 +142,11 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
     /**
      * 访问网络数据
      */
-    private void reqForNetworkData() {
+    private void reqForNetworkData(final boolean refresh) {
         final List<String> keysOutDB = new ArrayList<>();//存放数据库没有的key
-        //String userStr = MySharedPrefUtil.getValue("_user");
+        //String userStr = MySharedPrefUtil.getValue("user");
         //BeanUserLoginReq beanUserLogin = JSON.parseObject(userStr, BeanUserLoginReq.class);
-        StringBuilder prefix = new StringBuilder("medRec_18576011826");
+        StringBuilder prefix = new StringBuilder("medRec_");
         //prefix.append(beanUserLogin.getMobileNo());//获取当前用户的手机号
 
         BeanUserListReq beanUserListReq = new BeanUserListReq();
@@ -140,27 +154,22 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
         beanUserListReq.setFrom(0);
         beanUserListReq.setNum(-1);
         beanUserListReq.setTo(-1);
-//        BeanUserListValueReq userListValueReq = new BeanUserListValueReq();
-//        userListValueReq.setPrefix(prefix.toString());
-//        userListValueReq.setFrom(0);
-//        userListValueReq.setNum(-1);
-//        userListValueReq.setTo(-1);
         RetrofitManagerUtils.getInstance(this, null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanUserListReq), new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
-
             }
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(AllMedRec.this, "出错啦，请检查网络环境"+e.toString(), Toast.LENGTH_SHORT).show();
+                swipeRefresh.setRefreshing(false);
+                Toast.makeText(AllMedRec.this, "出错啦，请检查网络环境", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNext(ResponseBody responseBody) {
                 try {
                     String str = responseBody.string();
-                    Log.i("所有病历", "数据" + str);
+                    //Log.i("所有病历", "数据" + str);
                     if (!TextUtils.isEmpty(str)) {
                         List<String> keys = JSONArray.parseObject(str, List.class);
                         if (keys.size() > 0) {
@@ -175,12 +184,16 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
                                 new Thread() {
                                     @Override
                                     public void run() {
-                                        keyGet(keysOutDB);
+                                        keyGet(keysOutDB,refresh);
                                     }
                                 }.start();
-                            }else {
-                                Toast.makeText(AllMedRec.this,"已经是最新数据了",Toast.LENGTH_SHORT).show();
+                            } else {
+                                swipeRefresh.setRefreshing(false);
+                                Toast.makeText(AllMedRec.this, "已经是最新数据了", Toast.LENGTH_SHORT).show();
                             }
+                        }else {
+                            swipeRefresh.setRefreshing(false);
+                            Toast.makeText(AllMedRec.this, "没有可加载的数据哦", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (IOException e) {
@@ -189,7 +202,6 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
             }
         });
     }
-
 
 
     /**
@@ -232,7 +244,7 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
      * 根据返回的key逐个获取数据r
      */
 
-    private void keyGet(final List<String> keysOutDB) {
+    private void keyGet(final List<String> keysOutDB, final boolean refresh) {
         for (final String key : keysOutDB) {
             size++;
             final BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
@@ -243,11 +255,16 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
                     if (size == keysOutDB.size()) {
                         size = 0;
                         handler.sendEmptyMessage(0x11);
+                        if (refresh) {
+                            swipeRefresh.setRefreshing(false);
+                            Toast.makeText(AllMedRec.this, "更新成功", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 
                 @Override
                 public void onError(Throwable e) {
+                    swipeRefresh.setRefreshing(false);
                     Toast.makeText(AllMedRec.this, "出错啦", Toast.LENGTH_SHORT).show();
                 }
 
@@ -255,12 +272,11 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
                 public void onNext(ResponseBody responseBody) {
                     try {
                         String rspv = responseBody.string();
-                        if (!TextUtils.isEmpty(rspv)) {
+                        if (rspv != null) {
                             BeanBaseKeyGetResp object = JSON.parseObject(rspv, BeanBaseKeyGetResp.class);
                             if (object.getValue() != null) {
                                 BeanMedRec beanMedRec = JSON.parseObject(object.getValue(), BeanMedRec.class);
                                 beanMedRec.setKey(key);
-                                beanMedRec.setBeanMedRecUser(beanMedRecUser);
                                 beanMedRec.save();
                                 List<BeanCourseOfDisease> courseOfDiseaseList = beanMedRec.getListCourseOfDisease();
                                 for (BeanCourseOfDisease courseOfDisease : courseOfDiseaseList) {
@@ -306,11 +322,12 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
 
                 break;
             case R.id.test:
-                reqForNetworkData();//获取网络数据
+                //reqForNetworkData();//获取网络数据
                 break;
         }
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.med_rec, menu);
@@ -354,11 +371,13 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
         public void handleMessage(Message msg) {
             if (msg.what == 0x11) {
                 init();//更新列表
-                if (hasNullValueKey){
-                    for (String key:nullValueKey)
+                if (hasNullValueKey) {
+                    for (String key : nullValueKey)
                         networkReqDelMedRec(key);//删除空值key
                 }
             }
         }
     };
+
+
 }

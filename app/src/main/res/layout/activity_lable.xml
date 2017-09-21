@@ -45,14 +45,14 @@
     </LinearLayout>
 
     <TextView
-    android:id="@+id/save"
-    android:layout_width="match_parent"
-    android:layout_height="125px"
-    android:background="@color/color_primary_dark"
-    android:clickable="true"
-    android:gravity="center"
-    android:text="保存"
-    android:textColor="@android:color/white"
-    style="@style/textSize_54" />
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="125px"
+        android:background="@drawable/selector_1dp_btn_color_from_primary_to_white"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@android:color/white"
+        style="@style/textSize_54" />
 
 </LinearLayout>

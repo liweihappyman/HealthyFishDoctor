@@ -40,9 +40,9 @@ public class PatientInfo extends AppCompatActivity implements View.OnClickListen
     @BindView(R.id.name)
     EditText name;
     @BindView(R.id.gender)
-    EditText gender;
+    TextView gender;
     @BindView(R.id.birthday)
-    EditText birthday;
+    TextView birthday;
     @BindView(R.id.id_number)
     EditText idNumber;
     @BindView(R.id.occupation)
@@ -79,10 +79,10 @@ public class PatientInfo extends AppCompatActivity implements View.OnClickListen
     //初始化页面的显示
     private void initData() {
         medRec = (BeanMedRec) getIntent().getSerializableExtra("info");
-        if (medRec.getName() != null) {
+        if (medRec.getName() != null&& !medRec.getName().equals("null")) {
             name.setText(medRec.getName());
         }
-        if (medRec.getGender() != null) {
+        if (medRec.getGender() != null && !medRec.getGender().equals("null")) {
             gender.setText(medRec.getGender());
         }
         if (medRec.getBirthday() != null) {

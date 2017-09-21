@@ -1,53 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_white"
-    android:orientation="vertical">
+    android:layout_marginTop="5px"
+    android:elevation="8dp"
+    >
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20px"
+        android:background="@color/color_white"
+        android:orientation="vertical">
 
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/type"
-            android:layout_width="wrap_content"
-            android:layout_height="65px"
-            android:background="@mipmap/bg_green"
-            android:gravity="center"
-            android:text="复诊"
-            android:textColor="@color/color_white"
-            android:layout_marginTop="20px"
-            android:textSize="36px" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="2px"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/date"
-            style="@style/genera_title_text"
-            android:layout_width="wrap_content"
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30px"
-            android:layout_marginRight="20px"
-            android:text="2017年12月10日" />
-    </com.zhy.autolayout.AutoLinearLayout>
+            android:layout_marginTop="20px"
+            android:orientation="horizontal">
 
-    <GridView
-        android:id="@+id/image_gridview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="3"
-        android:layout_marginTop="30px"
-        android:paddingLeft="10px"
-        android:layout_marginBottom="30px"></GridView>
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="3px"
-        android:background="@color/color_divider"/>
-</com.zhy.autolayout.AutoLinearLayout>
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="65px"
+                android:layout_marginTop="20px"
+                android:background="@mipmap/bg_green"
+                android:gravity="center"
+                android:text="复诊"
+                android:layout_marginBottom="20px"
+                android:textColor="@color/color_white"
+                android:textSize="36px" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="2px"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/date"
+                style="@style/genera_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30px"
+                android:layout_marginRight="20px"
+                android:text="2017年12月10日" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <GridView
+            android:id="@+id/image_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:layout_marginTop="30px"
+            android:paddingLeft="10px"
+            android:layout_marginBottom="30px"></GridView>
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView>

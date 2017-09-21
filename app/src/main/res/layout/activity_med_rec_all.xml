@@ -26,11 +26,16 @@
             android:layout_marginLeft="35px"
             style="@style/big_content_title_text"/>
     </com.zhy.autolayout.AutoLinearLayout>
-    <ListView
-        android:id="@+id/med_rec_all"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/med_rec_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </com.zhy.autolayout.AutoLinearLayout>
