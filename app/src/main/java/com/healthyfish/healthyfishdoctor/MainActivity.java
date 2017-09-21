@@ -27,8 +27,10 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.adapter.MainVpAdapter;
 import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
+import com.healthyfish.healthyfishdoctor.eventbus.InitAllMessage;
 import com.healthyfish.healthyfishdoctor.eventbus.LoginEventBus;
 import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
+import com.healthyfish.healthyfishdoctor.ui.activity.login_register.Login;
 import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;
@@ -45,6 +47,8 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -126,6 +130,10 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        init();
         String user = MySharedPrefUtil.getValue("user");
         if (!TextUtils.isEmpty(user)) {
             BeanUserLoginReq beanUserLoginReq = JSON.parseObject(user, BeanUserLoginReq.class);
@@ -144,16 +152,43 @@ public class MainActivity extends BaseActivity {
                     }
                 }).start();
             }
+            initPermision();//获取权限
+            // 初始化MQTT获取sid
+            initMQTT();
+        } else {
+            MyToast.showToast(this, "您还没有登录呦");
+            startActivity(new Intent(this, Login.class));
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshLoginState(InitAllMessage initAllMessage) {
+
+        //打开App时若未登录则跳转到登录页面，登录成功后返回通知初始化以下内容
+        uid = MyApplication.uid;
+
         initPermision();//获取权限
-        init();
+
+        initMQTT();// 初始化MQTT连接，首先获取sid，然后开启MQTT连接
+
+        //登录积分
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getInformationFromNetwork("cert_" + uid);
+            }
+        }).start();
+
     }
 
     //初始化接界面
     private void init() {
         initpgAdapter();//初始化viewpage
-        // 初始化MQTT获取sid
-        initMQTT();
         setTab(0);//初始化界面设置，即指定刚进入是可见的界面
         //菜单监听
         fgViewpage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -451,4 +486,9 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
