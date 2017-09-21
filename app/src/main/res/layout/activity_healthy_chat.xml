@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.healthyfish.healthyfishdoctor.ui.activity.interrogation.HealthyChat">
 
     <com.healthyfish.healthyfishdoctor.ui.widget.SessionChatKeyboardBase
         android:id="@+id/session_chat"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -26,6 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
+                    app:titleTextColor="@color/white"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
             </android.support.design.widget.AppBarLayout>
 
@@ -55,4 +57,4 @@
 
     </com.healthyfish.healthyfishdoctor.ui.widget.SessionChatKeyboardBase>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

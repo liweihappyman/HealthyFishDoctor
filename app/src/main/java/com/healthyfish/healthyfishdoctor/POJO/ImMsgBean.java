@@ -1,16 +1,22 @@
 package com.healthyfish.healthyfishdoctor.POJO;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
-public class ImMsgBean extends DataSupport {
+import java.io.Serializable;
 
-    public final static int CHAT_SENDER_OTHER = 0;
+public class ImMsgBean extends DataSupport implements Serializable{
+
+    public final static int CHAT_SENDER_OTHER= 0;
     public final static int CHAT_SENDER_ME = 1;
 
     public final static int CHAT_MSGTYPE_TEXT_RECEIVER = 10;
     public final static int CHAT_MSGTYPE_IMG_RECEIVER = 11;
     public final static int CHAT_MSGTYPE_TEXT_SENDER = 12;
     public final static int CHAT_MSGTYPE_IMG_SENDER = 13;
+    public final static int CHAT_MSGTYPE_MDR_SENDER = 14;
+    public final static int CHAT_MSGTYPE_MDR_RECEIVER = 15;
+
 
     public ImMsgBean() {
     }
@@ -20,45 +26,61 @@ public class ImMsgBean extends DataSupport {
     }
 
     private int id;
+    // 服务类型
+    private String serviceType;
     // 界面UI的发送类型：图片，文字
     private int msgType;
-    // MQTT判断发送类型：t(text) i(image) v s(system)
+    // MQTT判断发送类型：t(text) i(image) v(video) s(system)
     private String type;
     // 发送时间
+    @Column(nullable = false)
     private long time;
     // 图片内容
     private String image;
-    // 姓名
+    // 发送姓名
     private String name;
     // 发送内容
     private String content;
+    // 发送图片在服务器的地址
+    private String imgUrl;
     // 发送主题
+    @Column(nullable = false)
     private String topic;
     // 发送者肖像
     private String portrait;
     // 发送电子病历的key
-    private String dmrKey;
+    private String mdrKey;
     // 是发送者还是接收者
     private boolean isSender = false;
     // 发送状态
     private boolean isSuccess = false;
     // 是否在loading
     private boolean isLoading = false;
+    // 是否是新消息
+    private boolean isNewMsg = false;
 
-    public boolean isSuccess() {
-        return isSuccess;
+    public int getId() {
+        return id;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public boolean isSender() {
-        return isSender;
+    public String getServiceType() {
+        return serviceType;
     }
 
-    public void setSender(boolean sender) {
-        isSender = sender;
+    public void setServiceType(String serviceType) {
+        this.serviceType = serviceType;
+    }
+
+    public int getMsgType() {
+        return msgType;
+    }
+
+    public void setMsgType(int msgType) {
+        this.msgType = msgType;
     }
 
     public String getType() {
@@ -101,28 +123,20 @@ public class ImMsgBean extends DataSupport {
         this.content = content;
     }
 
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public String getTopic() {
         return topic;
     }
 
     public void setTopic(String topic) {
         this.topic = topic;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getMsgType() {
-        return msgType;
-    }
-
-    public void setMsgType(int msgType) {
-        this.msgType = msgType;
     }
 
     public String getPortrait() {
@@ -133,12 +147,28 @@ public class ImMsgBean extends DataSupport {
         this.portrait = portrait;
     }
 
-    public String getDmrKey() {
-        return dmrKey;
+    public String getMdrKey() {
+        return mdrKey;
     }
 
-    public void setDmrKey(String dmrKey) {
-        this.dmrKey = dmrKey;
+    public void setMdrKey(String dmrKey) {
+        this.mdrKey = dmrKey;
+    }
+
+    public boolean isSender() {
+        return isSender;
+    }
+
+    public void setSender(boolean sender) {
+        isSender = sender;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
     }
 
     public boolean isLoading() {
@@ -147,5 +177,13 @@ public class ImMsgBean extends DataSupport {
 
     public void setLoading(boolean loading) {
         isLoading = loading;
+    }
+
+    public boolean isNewMsg() {
+        return isNewMsg;
+    }
+
+    public void setNewMsg(boolean newMsg) {
+        isNewMsg = newMsg;
     }
 }

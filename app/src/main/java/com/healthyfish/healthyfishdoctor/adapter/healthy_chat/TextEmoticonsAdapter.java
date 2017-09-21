@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 
 import com.healthyfish.healthyfishdoctor.R;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 
 import sj.keyboard.adpater.EmoticonsAdapter;
 import sj.keyboard.data.EmoticonEntity;
@@ -51,7 +51,7 @@ public class TextEmoticonsAdapter extends EmoticonsAdapter<EmoticonEntity> {
             @Override
             public void onClick(View v) {
                 if (mOnEmoticonClickListener != null) {
-                    mOnEmoticonClickListener.onEmoticonClick(emoticonEntity, constants.EMOTICON_CLICK_TEXT, isDelBtn);
+                    mOnEmoticonClickListener.onEmoticonClick(emoticonEntity, Constants.EMOTICON_CLICK_TEXT, isDelBtn);
                 }
             }
         });

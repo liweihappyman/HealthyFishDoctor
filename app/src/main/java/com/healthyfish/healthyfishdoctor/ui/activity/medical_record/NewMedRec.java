@@ -32,7 +32,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.MessageToServise;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.CourseOfDiseaseAdapter;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.service.UploadImages;
 import com.healthyfish.healthyfishdoctor.ui.widget.DatePickerDialog;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
@@ -114,7 +114,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         }
         initListener();
 //判断是点击item进来的还是点击新建病历夹进来的，并执行相应的初始化操作
-        if (constants.POSITION_MED_REC == -1) {
+        if (Constants.POSITION_MED_REC == -1) {
             clinicalTime.setText(Utils1.getTime());
             SAVE_OR_UPDATE = "save";//标志位新建，直接保存
             medRec = new BeanMedRec();
@@ -152,7 +152,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         courseOfDiseaseAdapter.setOnItemClickListener(new CourseOfDiseaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                constants.POSITION_COURSE = position;
+                Constants.POSITION_COURSE = position;
                 Intent intent = new Intent(NewMedRec.this, CreateCourse.class);
                 intent.putExtra("Course", medRec);
                 startActivityForResult(intent, COURSE_OF_DISEASE);
@@ -193,7 +193,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
 
     //执行删除操作并跳转回到AllMedRed页面，新建状态则提示没有可删除的病历
     private void deleteAndGoback() {
-        if (constants.POSITION_MED_REC != -1) {
+        if (Constants.POSITION_MED_REC != -1) {
             showDelDialog();
         } else {
             Toast.makeText(this, "没有可删除的病历哦", Toast.LENGTH_SHORT).show();
@@ -247,7 +247,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
                 selectTime();
                 break;
             case R.id.create_course:
-                constants.POSITION_COURSE = -1;
+                Constants.POSITION_COURSE = -1;
                 Intent toCreateCourse = new Intent(this, CreateCourse.class);
                 startActivityForResult(toCreateCourse, COURSE_OF_DISEASE);
                 break;
@@ -259,7 +259,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
 
     //保存操作和更操作并返回AllMedRed页面
     private void saveOrUpdate() {
-        BeanMedRecUser beanMedRecUser = DataSupport.find(BeanMedRecUser.class, constants.MED_REC_USER_ID, true);
+        BeanMedRecUser beanMedRecUser = DataSupport.find(BeanMedRecUser.class, Constants.MED_REC_USER_ID, true);
         Log.i("lllllll", beanMedRecUser.getDate());
         medRec.setDiagnosis(diagnosis.getText().toString());
         medRec.setDiseaseInfo(diseaseInfo.getText().toString());
@@ -482,7 +482,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
             // 新建的病程做关联病历夹的操作的时候要依赖已经保存的病历夹对象
             medRec.save();
             //病历夹与用户进行关联
-            BeanMedRecUser beanMedRecUser = DataSupport.find(BeanMedRecUser.class, constants.MED_REC_USER_ID, true);
+            BeanMedRecUser beanMedRecUser = DataSupport.find(BeanMedRecUser.class, Constants.MED_REC_USER_ID, true);
             beanMedRecUser.getMedRecList().add(medRec);
         }
         ID = medRec.getId();//固定该次病历夹操作的id，方便之后的操作

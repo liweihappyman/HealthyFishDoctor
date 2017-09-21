@@ -20,7 +20,8 @@
         android:text="客户"
         android:textSize="10sp"
         android:layout_marginLeft="18dp"
-        android:layout_below="@id/iv_portrait"
+        android:layout_toRightOf="@id/iv_portrait"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -32,6 +33,7 @@
         android:textColor="#353535"
         android:textSize="16sp"
         android:layout_marginLeft="5dp"
+        android:layout_below="@+id/chatname"
         android:layout_toRightOf="@id/iv_portrait"
         android:background="@drawable/common_chat_left"
         android:paddingLeft="15dp"

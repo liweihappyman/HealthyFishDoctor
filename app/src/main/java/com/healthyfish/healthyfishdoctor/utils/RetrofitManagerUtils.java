@@ -26,10 +26,10 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.healthyfish.healthyfishdoctor.constant.constants.CONNECT_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.HttpHealthyFishyUrl;
-import static com.healthyfish.healthyfishdoctor.constant.constants.READ_TIMEOUT;
-import static com.healthyfish.healthyfishdoctor.constant.constants.WRITE_TIMEOUT;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.CONNECT_TIMEOUT;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.READ_TIMEOUT;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.WRITE_TIMEOUT;
 
 /**
  * 描述：Retrofit封装
@@ -107,10 +107,22 @@ public class RetrofitManagerUtils {
     /**
      * @description 使用new Subscribe<ResponseBody>实现回调方法
      * @author Wayne
-     *
      */
+    String sid = MySharedPrefUtil.getValue("sid");
     public void getHealthyInfoByRetrofit(RequestBody requestBody, Subscriber<ResponseBody> subscriber) {
-        apiService.getHealthyInfoByRetrofit(requestBody)
+        apiService.getHealthyInfoByRetrofit(requestBody, sid)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    /**
+     * @description 使用new Subscribe<ResponseBody>实现回调方法
+     * @author Wayne
+     */
+    public void getSidByRetrofit(RequestBody requestBody, Subscriber<ResponseBody> subscriber) {
+        apiService.getSidByRetrofit(requestBody)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -123,7 +135,7 @@ public class RetrofitManagerUtils {
      * @param subscriber
      */
     public void getPharmacopoeiaByRetrofit(RequestBody requestBody, Subscriber<ResponseBody> subscriber) {
-        apiService.getHealthyInfoByRetrofit(requestBody)
+        apiService.getHealthyInfoByRetrofit(requestBody, sid)
                 .subscribe(subscriber);
     }
 
@@ -137,7 +149,7 @@ public class RetrofitManagerUtils {
      * @author Wkj
      */
     public void getMedRecByRetrofit(RequestBody requestBody, Subscriber<ResponseBody> subscriber) {
-        apiService.getHealthyInfoByRetrofit(requestBody)
+        apiService.getHealthyInfoByRetrofit(requestBody, sid)
                 .subscribe(subscriber);
     }
 
@@ -160,18 +172,5 @@ public class RetrofitManagerUtils {
         apiService.uploadFiles(photos)
                 .subscribe(subscriber);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

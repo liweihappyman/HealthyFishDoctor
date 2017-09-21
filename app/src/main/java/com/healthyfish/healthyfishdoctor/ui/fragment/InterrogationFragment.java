@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,13 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanPayService;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.PayServiceGvAdapter;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.GraphicConsultation;
+import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.HealthyChat;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.SetGraphicConsultation;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.SetPrivateDoctor;
+import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
+import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.MyToast;
+import com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +113,7 @@ public class InterrogationFragment extends Fragment {
                 switch (position){
                     case 0:
                         if (isOpen1) {
-                            Intent intent1 = new Intent(getActivity(), GraphicConsultation.class);
+                            Intent intent1 = new Intent(getActivity(), SetGraphicConsultation.class);
                             startActivity(intent1);
                         } else {
                             MyToast.showToast(getActivity(),"该服务暂未开通，敬请期待");

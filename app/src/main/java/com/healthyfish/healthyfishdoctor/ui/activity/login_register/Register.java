@@ -119,8 +119,12 @@ public class Register extends AppCompatActivity implements IRegisterView{
                         try {
                             str = responseBody.string();
                             BeanUserRegisterResp beanUserRegisterResp = JSON.parseObject(str, BeanUserRegisterResp.class);
-                            if (beanUserRegisterResp.getCode() == 0) {
+                            if (beanUserRegisterResp.getCode() > 0) {
                                 Toast.makeText(Register.this, "验证码发送成功，请耐心等待", Toast.LENGTH_LONG).show();
+                            }else if (beanUserRegisterResp.getCode() == -1){
+                                Toast.makeText(Register.this, "非法手机号", Toast.LENGTH_LONG).show();
+                            } else if (beanUserRegisterResp.getCode() == -3){
+                                Toast.makeText(Register.this, "操作太频繁了...", Toast.LENGTH_LONG).show();
                             } else if (beanUserRegisterResp.getCode() == -2) {
                                 Toast.makeText(Register.this, "该号码已经注册了", Toast.LENGTH_LONG).show();
                             } else {

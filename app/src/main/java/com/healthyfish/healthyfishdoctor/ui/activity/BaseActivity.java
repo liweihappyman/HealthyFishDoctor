@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.healthyfish.healthyfishdoctor.R;
+import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
+import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
+import com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil;
 
 
 /**
@@ -23,7 +27,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("BaseActivity", getClass().getSimpleName());
+        Log.d("当前活动", getClass().getSimpleName());
     }
 
     /**
@@ -55,4 +59,14 @@ public class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String user = MySharedPrefUtil.getValue("user");
+        String sid = MySharedPrefUtil.getValue("sid");
+        if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
+            AutoLogin.autoLogin();
+            MqttUtil.startAsync();
+        }
+    }
 }

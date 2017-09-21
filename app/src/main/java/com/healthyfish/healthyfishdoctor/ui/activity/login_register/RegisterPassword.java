@@ -19,10 +19,13 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeySetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanDoctor;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
+import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdReq;
+import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserRegisterReq;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
+import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.MyToast;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
@@ -36,6 +39,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
+
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
 
 /**
  * 描述：注册填写昵称的密码页面
@@ -122,7 +127,7 @@ public class RegisterPassword extends BaseActivity {
                                     //————————————————————————————————————————
 
                                     //saveDataToNetwork(beanUserRegisterReq.getMobileNo());//保存个人信息到服务器及本地数据库
-                                    //getSidAndAutoLogin();//获取Sid后自动登录加载用户信息
+                                    getSidAndAutoLogin();//获取Sid后自动登录加载用户信息
 
                                     Intent intent = new Intent(RegisterPassword.this, RegisterSuccess.class);
                                     startActivity(intent);
@@ -200,35 +205,35 @@ public class RegisterPassword extends BaseActivity {
     /**
      * 获取Sid后自动登录加载用户信息
      */
-//    private void getSidAndAutoLogin() {
-//        RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), HttpHealthyFishyUrl)
-//                .getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(new BeanSessionIdReq()), new Subscriber<ResponseBody>() {
-//                    @Override
-//                    public void onCompleted() {
-////                        String user = MySharedPrefUtil.getValue("user");
-////                        if (!TextUtils.isEmpty(user)) {
-////                            MqttUtil.startAsync();
-////                        }
-//                        //EventBus.getDefault().post(new BeanPersonalInformation(true));
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                    }
-//
-//                    @Override
-//                    public void onNext(ResponseBody responseBody) {
-//                        try {
-//                            BeanSessionIdResp obj = new Gson().fromJson(responseBody.string(), BeanSessionIdResp.class);
-//                            Log.e("从服务器获取sid", obj.getSid());
-//                            MySharedPrefUtil.saveKeyValue("sid", obj.getSid());
-//                            AutoLogin.autoLogin();//获取到sid后自动登录
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
+    private void getSidAndAutoLogin() {
+        RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), HttpHealthyFishyUrl)
+                .getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(new BeanSessionIdReq()), new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+//                        String user = MySharedPrefUtil.getValue("user");
+//                        if (!TextUtils.isEmpty(user)) {
+//                            MqttUtil.startAsync();
 //                        }
-//                    }
-//                });
-//
-//    }
+                        //EventBus.getDefault().post(new BeanPersonalInformation(true));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            BeanSessionIdResp obj = new Gson().fromJson(responseBody.string(), BeanSessionIdResp.class);
+                            Log.e("从服务器获取sid", obj.getSid());
+                            MySharedPrefUtil.saveKeyValue("sid", obj.getSid());
+                            AutoLogin.autoLogin();//获取到sid后自动登录
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+    }
 
 }

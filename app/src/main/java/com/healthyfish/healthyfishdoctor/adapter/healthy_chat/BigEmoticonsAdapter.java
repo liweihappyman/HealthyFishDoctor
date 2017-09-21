@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 
 import com.healthyfish.healthyfishdoctor.R;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 
 import java.io.IOException;
 
@@ -82,7 +82,7 @@ public class BigEmoticonsAdapter extends EmoticonsAdapter<EmoticonEntity> {
             @Override
             public void onClick(View v) {
                 if (mOnEmoticonClickListener != null) {
-                    mOnEmoticonClickListener.onEmoticonClick(emoticonEntity, constants.EMOTICON_CLICK_BIGIMAGE, isDelBtn);
+                    mOnEmoticonClickListener.onEmoticonClick(emoticonEntity, Constants.EMOTICON_CLICK_BIGIMAGE, isDelBtn);
                 }
             }
         });

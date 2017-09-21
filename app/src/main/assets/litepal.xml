@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <!-- 数据库名 -->
-    <dbname value="MedRec" >
+    <dbname value="HealthyFishDoctor" >
     </dbname>
     <!-- 数据库版本 -->
 
@@ -21,6 +21,10 @@
         <mapping class="com.healthyfish.healthyfishdoctor.POJO.ImMsgBean" />
         <!--医生信息-->
         <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanDoctorDB" />
+        <!--个人信息表-->
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation"/>
+        <!--购买问诊服务的用户信息-->
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList" />
     </list>
 
 </litepal>

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.google.gson.Gson;
 import com.healthyfish.healthyfishdoctor.MainActivity;
 import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
@@ -22,6 +23,8 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanBaseResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanDoctor;
 import com.healthyfish.healthyfishdoctor.POJO.BeanDoctorDB;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
+import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdReq;
+import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
@@ -34,6 +37,7 @@ import com.healthyfish.healthyfishdoctor.utils.MyToast;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 import com.healthyfish.healthyfishdoctor.utils.Sha256;
+import com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -44,6 +48,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
+
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
 
 /**
  * 描述：登录Activity
@@ -123,7 +129,7 @@ public class Login extends AppCompatActivity implements ILoginView{
 
                         if (!TextUtils.isEmpty(user)) {
                             AutoLogin.autoLogin();
-                            //MqttUtil.startAsync();
+                            MqttUtil.startAsync();
                         }
                     }
 
@@ -337,4 +343,5 @@ public class Login extends AppCompatActivity implements ILoginView{
     public void showLoginFailedError() {
         MyToast.showToast(this,"登录失败");
     }
+
 }

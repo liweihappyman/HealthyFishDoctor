@@ -17,23 +17,29 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.google.gson.Gson;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanDoctor;
 import com.healthyfish.healthyfishdoctor.POJO.BeanDoctorDB;
+import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdReq;
+import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.adapter.MainVpAdapter;
 import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
 import com.healthyfish.healthyfishdoctor.eventbus.LoginEventBus;
+import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
 import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PharmacopeiaFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.TrainingFragment;
+import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.MyToast;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
+import com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil;
 import com.tbruyelle.rxpermissions.Permission;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.zhy.autolayout.AutoLinearLayout;
@@ -55,7 +61,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
+
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.fg_viewpage)
     ViewPager fgViewpage;
@@ -97,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
     private PharmacopeiaFragment pharmacopeiaFragment;
     private TrainingFragment trainingFragment;
     private PersonalCenterFragment personalCenterFragment;
+
+    private BeanSessionIdReq beanSessionIdReq = new BeanSessionIdReq();
 
     private boolean isExit = false;
     private String uid = "";
@@ -142,6 +152,8 @@ public class MainActivity extends AppCompatActivity {
     //初始化接界面
     private void init() {
         initpgAdapter();//初始化viewpage
+        // 初始化MQTT获取sid
+        initMQTT();
         setTab(0);//初始化界面设置，即指定刚进入是可见的界面
         //菜单监听
         fgViewpage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -402,6 +414,41 @@ public class MainActivity extends AppCompatActivity {
             MyToast.showToast(MyApplication.getContetxt(),"再按一次退出程序");
             mHandler.sendEmptyMessageDelayed(0, 2000);
         }
+    }
+
+    /**
+     * 初始化MQTT
+     */
+    private void initMQTT() {
+
+        RetrofitManagerUtils.getInstance(MainActivity.this, HttpHealthyFishyUrl)
+                .getSidByRetrofit(OkHttpUtils.getRequestBody(beanSessionIdReq), new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+                        String user = MySharedPrefUtil.getValue("user");
+                        String sid = MySharedPrefUtil.getValue("sid");
+                        if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
+                            AutoLogin.autoLogin();
+                            MqttUtil.startAsync();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            BeanSessionIdResp obj = new Gson().fromJson(responseBody.string(), BeanSessionIdResp.class);
+                            Log.e("MainActivity从服务器获取sid", obj.getSid());
+                            MySharedPrefUtil.saveKeyValue("sid", obj.getSid());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
     }
 
 }

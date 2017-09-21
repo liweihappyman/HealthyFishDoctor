@@ -35,7 +35,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanUserListReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.MedRecLvAdapter;
-import com.healthyfish.healthyfishdoctor.constant.constants;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.utils.ComparatorDate;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
@@ -103,7 +103,7 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
      */
     private void init() {
         listMecRec.clear();
-        beanMedRecUser = DataSupport.find(BeanMedRecUser.class,constants.MED_REC_USER_ID,true);
+        beanMedRecUser = DataSupport.find(BeanMedRecUser.class,Constants.MED_REC_USER_ID,true);
         listMecRec = beanMedRecUser.getMedRecList();
         if (listMecRec.size() == 0) {
             initNullLV();
@@ -321,7 +321,7 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.new_med_rec://新建病历
-                constants.POSITION_MED_REC = -1;
+                Constants.POSITION_MED_REC = -1;
                 Intent intent = new Intent(this, NewMedRec.class);
                 startActivityForResult(intent, TO_NEW_MED_REC);
                 startActivity(intent);
@@ -330,7 +330,7 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        constants.POSITION_MED_REC = position;
+        Constants.POSITION_MED_REC = position;
         Intent intent = new Intent(AllMedRec.this, NewMedRec.class);
         //将选中的病历的id穿到NewMedRec活动
         intent.putExtra("id", listMecRec.get(position).getId());

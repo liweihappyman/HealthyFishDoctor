@@ -64,8 +64,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 
-import static com.healthyfish.healthyfishdoctor.constant.constants.HttpHealthyFishyUrl;
-import static com.healthyfish.healthyfishdoctor.constant.constants.first;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
+import static com.healthyfish.healthyfishdoctor.constant.Constants.first;
 
 /**
  * 描述：关联挂号页面
