@@ -157,8 +157,10 @@ public class ForgetPassword extends BaseActivity {
      * @param code 相应状态码
      */
     private void judgeAndShowToast(int code) {
-        if (code == 0) {
+        if (code > 0) {
             Toast.makeText(ForgetPassword.this, "验证码已发送，请耐心等待", Toast.LENGTH_LONG).show();
+        }else if (code == -1){
+            Toast.makeText(ForgetPassword.this, "非法手机号", Toast.LENGTH_LONG).show();
         }else if (code == -2){
             Toast.makeText(ForgetPassword.this, "用户不存在，请先注册", Toast.LENGTH_LONG).show();
         } else if (code == -3){

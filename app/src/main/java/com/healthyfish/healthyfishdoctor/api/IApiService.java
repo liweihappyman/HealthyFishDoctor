@@ -12,6 +12,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -25,7 +26,10 @@ import rx.Observable;
 public interface IApiService {
 
     @POST("demo/TestServlet")
-    Observable<ResponseBody> getHealthyInfoByRetrofit(@Body RequestBody req);
+    Observable<ResponseBody> getHealthyInfoByRetrofit(@Body RequestBody requestBody, @Query("sid") String sid);
+
+    @POST("demo/TestServlet")
+    Observable<ResponseBody> getSidByRetrofit(@Body RequestBody requestBody);
 
 /*    @POST("{path}")
     Observable<ResponseBody> getHealthyInfoByDemoGetKey(@Path("path") String path);

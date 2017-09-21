@@ -104,8 +104,8 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
     private String topic;
     // 本机登录者
     private String sender;
-    // 医生头像
-    private String doctorPortrait;
+    // 客户头像
+    private String peerPortrait;
     // 服务类型
     private String serviceType;
     //private String imgUrl = null;
@@ -138,7 +138,7 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
         //topic = "d" + "13977211042";
         sender = "d" + beanUserLoginReq.getMobileNo();
         //medRECKey = "dmr" + beanDoctorChatInfo.getPhone() + beanUserLoginReq.getMobileNo();
-        doctorPortrait = beanUserChatInfo.getImgUrl();
+        peerPortrait = beanUserChatInfo.getImgUrl();
         serviceType = beanUserChatInfo.getServiceType();
 
 /*        topic = "u18077207818";
@@ -315,10 +315,10 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
         // 从总的列表中选出一一对应的聊天关系，本机用户与选中的医生
         beanList = DataSupport.where("topic = ? and name = ? or topic = ? and name = ?", topic, sender, sender, topic).find(ImMsgBean.class);
         for (ImMsgBean b : beanList) {
-            b.setPortrait(doctorPortrait);
+            b.setPortrait(peerPortrait);
             ContentValues values = new ContentValues();
             values.put("isNewMsg", "false");
-            values.put("portrait", doctorPortrait);
+            values.put("portrait", peerPortrait);
             b.updateAll(ImMsgBean.class, values, "time = ?", b.getTime() + "");
         }
         chattingListAdapter.addData(beanList);
@@ -410,7 +410,7 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
     public void onReceiveMsg(WeChatReceiveMsg msg) {
         String time = msg.getTime() + "";
         ImMsgBean newMsg = DataSupport.where("time = ?", time).find(ImMsgBean.class).get(0);
-        newMsg.setPortrait(doctorPortrait);
+        newMsg.setPortrait(peerPortrait);
         // 刷新列表状态
         chattingListAdapter.addData(newMsg, true, false);
         chattingListAdapter.notifyDataSetChanged();
@@ -620,6 +620,11 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
     }
 
     private void initMqtt() {
-
+        String user = com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil.getValue("user");
+        String sid = com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil.getValue("sid");
+        if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
+            AutoLogin.autoLogin();
+            MqttUtil.startAsync();
+        }
     }
 }

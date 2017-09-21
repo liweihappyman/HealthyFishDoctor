@@ -28,6 +28,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.adapter.MainVpAdapter;
 import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
 import com.healthyfish.healthyfishdoctor.eventbus.LoginEventBus;
+import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
 import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;
@@ -62,7 +63,7 @@ import rx.schedulers.Schedulers;
 
 import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.fg_viewpage)
     ViewPager fgViewpage;
@@ -421,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
     private void initMQTT() {
 
         RetrofitManagerUtils.getInstance(MainActivity.this, HttpHealthyFishyUrl)
-                .getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanSessionIdReq), new Subscriber<ResponseBody>() {
+                .getSidByRetrofit(OkHttpUtils.getRequestBody(beanSessionIdReq), new Subscriber<ResponseBody>() {
                     @Override
                     public void onCompleted() {
                         String user = MySharedPrefUtil.getValue("user");
@@ -440,9 +441,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onNext(ResponseBody responseBody) {
                         try {
                             BeanSessionIdResp obj = new Gson().fromJson(responseBody.string(), BeanSessionIdResp.class);
-                            //Log.e("MainActivity从服务器获取sid", obj.getSid());
+                            Log.e("MainActivity从服务器获取sid", obj.getSid());
                             MySharedPrefUtil.saveKeyValue("sid", obj.getSid());
-                            Log.e("sid", obj.getSid());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

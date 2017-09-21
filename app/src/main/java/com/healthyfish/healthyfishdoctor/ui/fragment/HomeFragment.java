@@ -121,14 +121,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         messageLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // 获取医生peer信息，
-                BeanUserChatInfo beanDoctorChatInfo = new BeanUserChatInfo();
-                beanDoctorChatInfo.setPhone((String) mList.get(position).get("peerNumber"));
-                beanDoctorChatInfo.setName((String) mList.get(position).get("name"));
-                beanDoctorChatInfo.setImgUrl((String) mList.get(position).get("portrait"));
-                beanDoctorChatInfo.setServiceType((String) mList.get(position).get("type"));
+                // 获取peer信息，
+                BeanUserChatInfo beanUserChatInfo = new BeanUserChatInfo();
+                beanUserChatInfo.setPhone((String) mList.get(position).get("peerNumber"));
+                beanUserChatInfo.setName((String) mList.get(position).get("name"));
+                beanUserChatInfo.setImgUrl((String) mList.get(position).get("portrait"));
+                beanUserChatInfo.setServiceType((String) mList.get(position).get("type"));
                 Intent intent = new Intent(getActivity(), HealthyChat.class);
-                intent.putExtra("BeanUserChatInfo", beanDoctorChatInfo);
+                intent.putExtra("BeanUserChatInfo", beanUserChatInfo);
                 startActivity(intent);
             }
         });
@@ -165,6 +165,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         break;
                     case "i":
                         msgType = "「图片消息」";
+                        break;
+                    case "m":
+                        msgType = "「病历消息」";
                         break;
                     default:
                         msgType = "「消息」";
@@ -243,7 +246,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     userList.setPeerName(beanPersonalInformation.getNickname());
                     userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
 
-                    userList.save();
+                    userList.saveOrUpdate();
 
                 }
 

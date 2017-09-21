@@ -345,7 +345,7 @@ public class ChattingListAdapter extends BaseAdapter {
     public void disPlayRightTextView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         setContent(holder.tv_content, bean.getContent());
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).placeholder(R.mipmap.logo_doctor_240).into(holder.iv_portrait);
         // 动态修改发送状态（加载、失败、成功）
         statusOfLoadingOrFailureOrSuccess(holder, bean);
 
@@ -353,7 +353,7 @@ public class ChattingListAdapter extends BaseAdapter {
 
     public void disPlayRightImageView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         try {
-            Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+            Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).placeholder(R.mipmap.logo_doctor_240).into(holder.iv_portrait);
             if (ImageBase.Scheme.FILE == ImageBase.Scheme.ofUri(bean.getImage())) {
                 String filePath = ImageBase.Scheme.FILE.crop(bean.getImage());
                 Glide.with(holder.iv_image.getContext())
@@ -375,7 +375,7 @@ public class ChattingListAdapter extends BaseAdapter {
         String mdrDetail = getMDRKey(bean.getContent().substring(5));
         setContent(holder.tv_content, "病历发送成功\n" + "病历详情: " + mdrDetail);
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).placeholder(R.mipmap.logo_doctor_240).into(holder.iv_portrait);
         // 动态修改发送状态（加载、失败、成功）
         statusOfLoadingOrFailureOrSuccess(holder, bean);
     }
@@ -385,7 +385,7 @@ public class ChattingListAdapter extends BaseAdapter {
         String mdrDetail = getMDRKey(bean.getContent().substring(5));
         setContent(holder.tv_content, "病历接收成功\n" + "病历详情: " + mdrDetail);
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        Glide.with(holder.iv_portrait.getContext()).load(getLocalUserImg()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
     }
 
     public void setContent(TextView tv_content, String content) {
@@ -406,11 +406,10 @@ public class ChattingListAdapter extends BaseAdapter {
         String key = "info_" + uid;
         List<BeanPersonalInformation> personalInformationList = DataSupport.where("key = ?", key).find(BeanPersonalInformation.class);
         if (!personalInformationList.isEmpty()) {
-
             Log.e("返回本机头像 ", personalInformationList.get(0).getImgUrl());
             return HttpHealthyFishyUrl + personalInformationList.get(0).getImgUrl();
         } else {
-            return String.valueOf(R.mipmap.logo_240);
+            return null;
         }
     }
 
