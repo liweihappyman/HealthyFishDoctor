@@ -28,6 +28,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanSessionIdResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
+import com.healthyfish.healthyfishdoctor.eventbus.InitAllMessage;
 import com.healthyfish.healthyfishdoctor.eventbus.LoginEventBus;
 import com.healthyfish.healthyfishdoctor.ui.presenter.login.LoginPresenter;
 import com.healthyfish.healthyfishdoctor.ui.view.login.ILoginView;
@@ -163,6 +164,7 @@ public class Login extends AppCompatActivity implements ILoginView{
             MySharedPrefUtil.saveKeyValue("user", user);  //登录成功由shareprefrence保存
             MyApplication.uid = getLoginUserName();
             uid = getLoginUserName();
+            EventBus.getDefault().post(new InitAllMessage());//通知首页初始化
             upDatePersonalInformation("cert_" + uid);//更新医生个人信息
             //EventBus.getDefault().post(new InitAllMessage());//通知首页初始化
             EventBus.getDefault().post(new BeanPersonalInformation(true));//通知个人中心刷新登录状态
