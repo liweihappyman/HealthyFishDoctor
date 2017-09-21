@@ -620,6 +620,11 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
     }
 
     private void initMqtt() {
-
+        String user = com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil.getValue("user");
+        String sid = com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil.getValue("sid");
+        if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
+            AutoLogin.autoLogin();
+            MqttUtil.startAsync();
+        }
     }
 }

@@ -166,6 +166,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     case "i":
                         msgType = "「图片消息」";
                         break;
+                    case "m":
+                        msgType = "「病历消息」";
+                        break;
                     default:
                         msgType = "「消息」";
                         break;
@@ -243,7 +246,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     userList.setPeerName(beanPersonalInformation.getNickname());
                     userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
 
-                    userList.save();
+                    userList.saveOrUpdate();
 
                 }
 
