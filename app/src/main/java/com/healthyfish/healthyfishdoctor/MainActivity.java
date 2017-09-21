@@ -30,7 +30,9 @@ import com.healthyfish.healthyfishdoctor.eventbus.DoctorInfo;
 import com.healthyfish.healthyfishdoctor.eventbus.InitAllMessage;
 import com.healthyfish.healthyfishdoctor.eventbus.LoginEventBus;
 import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
+
 import com.healthyfish.healthyfishdoctor.ui.activity.login_register.Login;
+
 import com.healthyfish.healthyfishdoctor.ui.fragment.HomeFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.InterrogationFragment;
 import com.healthyfish.healthyfishdoctor.ui.fragment.PersonalCenterFragment;
@@ -189,6 +191,8 @@ public class MainActivity extends BaseActivity {
     //初始化接界面
     private void init() {
         initpgAdapter();//初始化viewpage
+        // 初始化MQTT获取sid
+        initMQTT();
         setTab(0);//初始化界面设置，即指定刚进入是可见的界面
         //菜单监听
         fgViewpage.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -486,9 +490,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 }
