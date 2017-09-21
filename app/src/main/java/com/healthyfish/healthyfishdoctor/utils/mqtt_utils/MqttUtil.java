@@ -10,6 +10,7 @@ import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
+import com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
@@ -179,55 +180,60 @@ public class MqttUtil {
         }
         connectingFlag = true;
         // sid_397C5B4390424970D2DEDD490DFC2181
-        String passwd = MySharedPrefUtil.getValue("sid").substring(4);
-        // String passwd = "E7FF9D647A8FB76D0E0F00A1F48F9132";
-        try {
-            String clientId = "" + userType + user;
-            Log.i("MqttUtil", "connect: uid=" + clientId);
-            mqttAsyncClient = new MqttAsyncClient(HOST, userType + user, new MemoryPersistence());
-            // MQTT的连接设置
-            MqttConnectOptions options = new MqttConnectOptions();
-            // 设置是否清空session,这里如果设置为false表示服务器会保留客户端的连接记录，这里设置为true表示每次连接到服务器都以新的身份连接
-            options.setCleanSession(false);
-            // 设置连接的用户名
-            options.setUserName(user);
-            // 设置连接的密码
-            options.setPassword(passwd.toCharArray());
-            // 设置超时时间 单位为秒
-            options.setConnectionTimeout(10);
-            // 设置会话心跳时间 单位为秒 服务器会每隔1.5*20秒的时间向客户端发送个消息判断客户端是否在线，但这个方法并没有重连的机制
-            options.setKeepAliveInterval(keepAliveInterval);
+        if (MySharedPrefUtil.getValue("sid") != "") {
+            String passwd = MySharedPrefUtil.getValue("sid").substring(4);
+            // String passwd = "E7FF9D647A8FB76D0E0F00A1F48F9132";
+            try {
+                String clientId = "" + userType + user;
+                Log.i("MqttUtil", "connect: uid=" + clientId);
+                mqttAsyncClient = new MqttAsyncClient(HOST, userType + user, new MemoryPersistence());
+                // MQTT的连接设置
+                MqttConnectOptions options = new MqttConnectOptions();
+                // 设置是否清空session,这里如果设置为false表示服务器会保留客户端的连接记录，这里设置为true表示每次连接到服务器都以新的身份连接
+                options.setCleanSession(false);
+                // 设置连接的用户名
+                options.setUserName(user);
+                // 设置连接的密码
+                options.setPassword(passwd.toCharArray());
+                // 设置超时时间 单位为秒
+                options.setConnectionTimeout(10);
+                // 设置会话心跳时间 单位为秒 服务器会每隔1.5*20秒的时间向客户端发送个消息判断客户端是否在线，但这个方法并没有重连的机制
+                options.setKeepAliveInterval(keepAliveInterval);
 //            options.setWill();
-            mqttAsyncClient.connect(options, null, new IMqttActionListener() {
-                public void onSuccess(IMqttToken arg0) {
-                    connectingFlag = false;
-                    connFlag = true;
-                    localUser = userName;
-                    localTopic = userType + localUser;
+                mqttAsyncClient.connect(options, null, new IMqttActionListener() {
+                    public void onSuccess(IMqttToken arg0) {
+                        connectingFlag = false;
+                        connFlag = true;
+                        localUser = userName;
+                        localTopic = userType + localUser;
 
-                    Log.e("MQTT", "连接服务器成功.");
-                    listen();
+                        Log.e("MQTT", "连接服务器成功.");
+                        listen();
 
-                    // 从返回的CONNACK消息中，查看session_present标志位
-                    if (arg0.getSessionPresent()) {
-                        Log.e("MQTT", "服务器仍保持连接");
-                    } else {
-                        Log.e("MQTT", "服务器未保持连接，需要重建");
-                        subscribe(userType + user);
-                        subscribe("$news");
+                        // 从返回的CONNACK消息中，查看session_present标志位
+                        if (arg0.getSessionPresent()) {
+                            Log.e("MQTT", "服务器仍保持连接");
+                        } else {
+                            Log.e("MQTT", "服务器未保持连接，需要重建");
+                            subscribe(userType + user);
+                            subscribe("$news");
+                        }
+
                     }
 
-                }
+                    public void onFailure(IMqttToken arg0, Throwable arg1) {
+                        Log.e("MQTT", "连接服务器失败: " + arg1.getLocalizedMessage());
+                        connectingFlag = false;
+                        connFlag = false;
+                    }
+                });
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
+        } else {
 
-                public void onFailure(IMqttToken arg0, Throwable arg1) {
-                    Log.e("MQTT", "连接服务器失败: " + arg1.getLocalizedMessage());
-                    connectingFlag = false;
-                    connFlag = false;
-                }
-            });
-        } catch (MqttException e) {
-            e.printStackTrace();
         }
+
     }
 
 
@@ -635,7 +641,8 @@ class MqttMsgMdr {
         final String key = bean.getContent().substring(5);
         if (DataSupport.where("name = ?", bean.getName().substring(1)).find(BeanMedRecUser.class).isEmpty()) {
             beanMedRecUser.setName(bean.getName().substring(1));
-            beanMedRecUser.setImgUrl(bean.getPortrait());
+            beanMedRecUser.setImgUrl(DataSupport.where("peernumber = ?", bean.getName().substring(1)).find(BeanInterrogationServiceUserList.class).get(0).getPeerPortrait());
+            beanMedRecUser.setDate(bean.getTime()+"");
             beanMedRecUser.save();
         } else {
             beanMedRecUser = DataSupport.where("name = ?", bean.getName().substring(1)).find(BeanMedRecUser.class).get(0);
