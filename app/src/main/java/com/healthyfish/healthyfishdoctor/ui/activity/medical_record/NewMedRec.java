@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import com.healthyfish.healthyfishdoctor.POJO.MessageToServise;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.CourseOfDiseaseAdapter;
 import com.healthyfish.healthyfishdoctor.constant.Constants;
+import com.healthyfish.healthyfishdoctor.eventbus.NoticeMessage;
 import com.healthyfish.healthyfishdoctor.service.UploadImages;
 import com.healthyfish.healthyfishdoctor.ui.widget.DatePickerDialog;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
@@ -40,6 +42,7 @@ import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 import com.healthyfish.healthyfishdoctor.utils.Utils1;
 
+import org.greenrobot.eventbus.EventBus;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
@@ -65,7 +68,6 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
     //标志病历夹是要更新还是直接保存（默认是更新状态）  save:表示新建的直接保存
     public String SAVE_OR_UPDATE = "update";
     public static int ID = 0;//记录本次所编辑的病历夹的id
-    public static final int ALL_MED_REC_RESULT = 38;//给AllMedRec页面返回结果的标志
     public static final int COURSE_OF_DISEASE = 33;//跳转进入病程页面的标志
     public static final int INFO = 34;
     public static final int LABLE = 35;
@@ -208,17 +210,10 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //key为空，说明还没有同步到服务器，可以直接删除
-                        if (medRec.getKey() == null) {
                             medRec.delete();
                             Toast.makeText(NewMedRec.this, "删除成功", Toast.LENGTH_SHORT);
-                            Intent intent = new Intent(NewMedRec.this, AllMedRec.class);
-                            setResult(ALL_MED_REC_RESULT, intent);
+                            EventBus.getDefault().post(new NoticeMessage(11));
                             finish();
-
-                        } else {
-                            networkReqDelMedRec();
-                        }
                         dialog.dismiss();
 
                     }
@@ -252,14 +247,18 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
                 startActivityForResult(toCreateCourse, COURSE_OF_DISEASE);
                 break;
             case R.id.save:
-                saveOrUpdate();
+                if (!TextUtils.isEmpty(medRec.getName()) && !diagnosis.getText().toString().trim().equals("") && !diseaseInfo.getText().toString().trim().equals("")) {
+                    saveOrUpdate();
+                } else {
+                    Toast.makeText(NewMedRec.this, "请完善信息", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
 
     //保存操作和更操作并返回AllMedRed页面
     private void saveOrUpdate() {
-        BeanMedRecUser beanMedRecUser = DataSupport.find(BeanMedRecUser.class, constants.MED_REC_USER_ID, true);
+        BeanMedRecUser beanMedRecUser = DataSupport.find(BeanMedRecUser.class, Constants.MED_REC_USER_ID, true);
         //Log.i("lllllll", beanMedRecUser.getDate());
         medRec.setDiagnosis(diagnosis.getText().toString());
         medRec.setDiseaseInfo(diseaseInfo.getText().toString());
@@ -267,19 +266,13 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         medRec.setClinicalTime(clinicalTime.getText().toString());
         medRec.setBeanMedRecUser(beanMedRecUser);
         medRec.save();
-//测试
-//        BeanMedRecUser beanMedRecUser1 = DataSupport.find(BeanMedRecUser.class, constants.MED_REC_USER_ID, true);
-//        List<BeanMedRec> list = beanMedRecUser1.getMedRecList();
-//        Log.i("lllllll", "读取" + list.get(0).getClinicalTime());
         if (listCourseOfDiseases.size() > 0) {
             medRec = DataSupport.find(BeanMedRec.class, ID, true);
             listCourseOfDiseases = medRec.getListCourseOfDisease();
             medRec.setListCourseOfDisease(listCourseOfDiseases);
         }
         requestForAddOrUpdate();
-        Intent intent = new Intent(NewMedRec.this, AllMedRec.class);
-        NewMedRec.this.setResult(ALL_MED_REC_RESULT, intent);
-        NewMedRec.this.finish();
+        finish();
     }
 
     /**
@@ -310,15 +303,13 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         RetrofitManagerUtils.getInstance(NewMedRec.this, null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(baseKeyRemReq), new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
-                Intent intent = new Intent(NewMedRec.this, AllMedRec.class);
-                setResult(ALL_MED_REC_RESULT, intent);
+                EventBus.getDefault().post(new NoticeMessage(11));
                 finish();
             }
 
             @Override
             public void onError(Throwable e) {
-                Intent intent = new Intent(NewMedRec.this, AllMedRec.class);
-                setResult(ALL_MED_REC_RESULT, intent);
+                EventBus.getDefault().post(new NoticeMessage(11));
                 finish();
                 Toast.makeText(NewMedRec.this, "删除失败，请检查网络环境", Toast.LENGTH_SHORT).show();
             }

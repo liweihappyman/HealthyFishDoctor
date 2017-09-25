@@ -228,12 +228,6 @@ public class CreateCourse extends AppCompatActivity implements View.OnClickListe
                 startUploadImages.putExtra("messageToService", new MessageToServise(medRec.getId(), courseOfDisease.getId(), imagePaths));
                 startService(startUploadImages);
             }
-            //测试查看保存后的路径
-//            BeanMedRec beanMedRec= DataSupport.find(BeanMedRec.class, NewMedRec.ID, true);
-//            BeanCourseOfDisease courseOfDisease = beanMedRec.getListCourseOfDisease().get(constants.POSITION_COURSE);
-//            String string = courseOfDisease.getImgPaths().toString();
-//            String s= courseOfDisease.getImgUrls().toString();
-//            Log.i("保存后路径","路径"+string+"wang"+s);
             //设置intent数据，并跳转
             Intent intent = new Intent(CreateCourse.this, NewMedRec.class);
             intent.putExtra("updateCourse", courseOfDisease);

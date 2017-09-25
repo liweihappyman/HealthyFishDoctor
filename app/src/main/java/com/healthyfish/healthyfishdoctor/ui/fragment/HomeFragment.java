@@ -92,6 +92,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         unbinder = ButterKnife.bind(this, rootView);
 
         EventBus.getDefault().register(this);
+        fmMedRec.setOnClickListener(this);
 //        initAll();
         initMqtt();
         lvListener();

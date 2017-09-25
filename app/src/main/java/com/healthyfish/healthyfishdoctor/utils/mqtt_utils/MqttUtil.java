@@ -17,6 +17,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
+import com.healthyfish.healthyfishdoctor.ui.activity.login_register.Login;
 import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.AllMedRec;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
@@ -671,14 +672,12 @@ class MqttMsgMdr {
                             beanMedRec.setKey(key);
                             beanMedRec.setBeanMedRecUser(beanMedRecUser);
                             beanMedRec.save();
+                            List<BeanMedRec> list = DataSupport.findAll(BeanMedRec.class);
                             List<BeanCourseOfDisease> courseOfDiseaseList = beanMedRec.getListCourseOfDisease();
                             for (BeanCourseOfDisease courseOfDisease : courseOfDiseaseList) {
                                 courseOfDisease.setBeanMedRec(beanMedRec);
                                 courseOfDisease.save();
                             }
-                        } else {
-                            /*nullValueKey.add(key);
-                            hasNullValueKey = true;*/
                         }
                     }
                 } catch (IOException e) {
