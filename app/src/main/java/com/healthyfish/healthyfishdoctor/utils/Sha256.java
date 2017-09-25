@@ -48,10 +48,10 @@ public class Sha256 {
                 e.printStackTrace();
             }
             password = byteArrayToHexString(passwordSha256);
-            Log.i("password",password);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        Log.i("password",password.toLowerCase());
         return  password.toLowerCase();
     }
 

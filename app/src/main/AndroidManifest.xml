@@ -119,7 +119,8 @@
         <activity android:name=".ui.activity.pharmacopeia.DrugDetail"></activity>
 
         <!--问诊界面-->
-        <activity android:name=".ui.activity.interrogation.HealthyChat"></activity>
+        <activity android:name=".ui.activity.interrogation.HealthyChat"
+            android:launchMode="singleTop"></activity>
 
         <!--个人中心修改完善个人信息页面-->
         <activity

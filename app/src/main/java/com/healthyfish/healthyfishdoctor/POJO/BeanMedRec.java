@@ -1,5 +1,6 @@
 package com.healthyfish.healthyfishdoctor.POJO;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 import java.io.Serializable;
@@ -12,6 +13,8 @@ import java.util.List;
  */
 
 public class BeanMedRec extends DataSupport implements Serializable{
+
+    @Column(unique = true)
     private String key;//服务器返回的key
     private String timestamp;//服务器返回的执行操作的时间
     //------------------------------------------------------------

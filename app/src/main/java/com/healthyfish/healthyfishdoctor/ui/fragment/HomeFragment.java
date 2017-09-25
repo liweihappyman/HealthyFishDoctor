@@ -13,13 +13,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.BeanAllMessage;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
+import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
 import com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList;
+import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
+import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserChatInfo;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
@@ -58,6 +62,7 @@ import okhttp3.ResponseBody;
 import rx.Subscriber;
 
 import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
+import static com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil.beanMedRecUser;
 
 /**
  * 描述：首页fragment
@@ -140,6 +145,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      */
     private void initListView() {
         refreshDataList();
+        /*if (!mList.isEmpty()) {
+            Log.e("mlist", mList.get(0).toString());
+        } else {
+            Log.e("数据为空", "yes");
+        }*/
         mAdapter = new InterrogationServiceAdapter(getActivity(), mList);
         messageLv.setAdapter(mAdapter);
     }
@@ -159,6 +169,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             String topic = "u" + bean.getPeerNumber();
             String msgType;
             ImMsgBean lastMsg = DataSupport.where("topic = ? and name = ? or topic = ? and name = ?", topic, sender, sender, topic).findLast(ImMsgBean.class);
+
             if (lastMsg != null) {
                 switch (lastMsg.getType()) {
                     case "t":
@@ -199,6 +210,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 return 1;
             }
         });
+
     }
 
     /**
@@ -215,10 +227,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
      * 接收到信息状态
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUpdateSendingStatus(WeChatReceiveMsg msg) {
-
+    public void onUpdateReceivingStatus(WeChatReceiveMsg msg) {
+        //ImMsgBean bean = DataSupport.where("time = ?", msg.getTime() + "").find(ImMsgBean.class).get(0);
         // 判断是否保存了该用户信息，如果已经保存该信息，则无视，如果没有保存，新建一条记录
-        whetherTheUserExist();
+        // whetherTheUserExist();
         mList.clear();
         initListView();
 
@@ -226,45 +238,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     // 判断用户是否存在
     private void whetherTheUserExist() {
-        ImMsgBean user = DataSupport.findLast(ImMsgBean.class);
-        List list = DataSupport.where("peerName = ?", user.getName().substring(1)).find(BeanInterrogationServiceUserList.class);
-        if (list.size() == 0) {
-            final String key = "info_" + user.getName().substring(1);
-            BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
-            beanBaseKeyGetReq.setKey(key);
 
-            final BeanInterrogationServiceUserList userList = new BeanInterrogationServiceUserList();
-            userList.setPeerNumber(user.getName().substring(1));
 
-            RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
-                String resp = null;
-                @Override
-                public void onCompleted() {
-                    BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
-                    String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
-                    BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
-
-                    userList.setPeerName(beanPersonalInformation.getNickname());
-                    userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
-
-                    userList.saveOrUpdate();
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                }
-
-                @Override
-                public void onNext(ResponseBody responseBody) {
-                    try {
-                        resp = responseBody.string();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
     }
 
     @Override

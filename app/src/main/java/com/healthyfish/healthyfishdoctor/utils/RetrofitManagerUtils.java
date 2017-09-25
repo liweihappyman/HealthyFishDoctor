@@ -118,6 +118,15 @@ public class RetrofitManagerUtils {
     }
 
     /**
+     * @description 使用new Subscribe<ResponseBody>实现回调方法(不开线程)
+     * @author Wayne
+     */
+    public void getHealthyInfoByRetrofitWithoutThread(RequestBody requestBody, Subscriber<ResponseBody> subscriber) {
+        apiService.getHealthyInfoByRetrofit(requestBody, sid)
+                .subscribe(subscriber);
+    }
+
+    /**
      * @description 使用new Subscribe<ResponseBody>实现回调方法
      * @author Wayne
      */

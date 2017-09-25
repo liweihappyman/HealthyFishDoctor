@@ -1,6 +1,7 @@
 package com.healthyfish.healthyfishdoctor.utils;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -44,7 +45,8 @@ public class AutoLogin {
 
                         @Override
                         public void onError(Throwable e) {
-                            Toast.makeText(MyApplication.getContetxt(), "自动登录失败", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(MyApplication.getContetxt(), "自动登录失败", Toast.LENGTH_LONG).show();
+                            Log.e("自动登录", "失败");
                         }
 
                         @Override
