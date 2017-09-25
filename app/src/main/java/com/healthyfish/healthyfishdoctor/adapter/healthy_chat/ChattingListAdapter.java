@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.foamtrace.photopicker.intent.PhotoPreviewIntent;
 import com.healthyfish.healthyfishdoctor.MyApplication;
+import com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
@@ -324,11 +325,11 @@ public class ChattingListAdapter extends BaseAdapter {
     public void disPlayLeftTextView(int position, View view, ViewHolder holder, ImMsgBean bean) {
         setContent(holder.tv_content, bean.getContent());
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(getPeerUserImg(bean)).into(holder.iv_portrait);
     }
 
     public void disPlayLeftImageView(int position, View view, ViewHolder holder, ImMsgBean bean) {
-        Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(getPeerUserImg(bean)).into(holder.iv_portrait);
         if (ImageBase.Scheme.FILE == ImageBase.Scheme.ofUri(bean.getImage())) {
             String filePath = ImageBase.Scheme.FILE.crop(bean.getImage());
             Glide.with(holder.iv_image.getContext())
@@ -385,7 +386,7 @@ public class ChattingListAdapter extends BaseAdapter {
         String mdrDetail = getMDRKey(bean.getContent().substring(5));
         setContent(holder.tv_content, "病历接收成功\n" + "病历详情: " + mdrDetail);
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
-        Glide.with(holder.iv_portrait.getContext()).load(bean.getPortrait()).into(holder.iv_portrait);
+        Glide.with(holder.iv_portrait.getContext()).load(getPeerUserImg(bean)).into(holder.iv_portrait);
     }
 
     public void setContent(TextView tv_content, String content) {
@@ -408,6 +409,17 @@ public class ChattingListAdapter extends BaseAdapter {
         if (!personalInformationList.isEmpty()) {
             Log.e("返回本机头像 ", personalInformationList.get(0).getImgUrl());
             return HttpHealthyFishyUrl + personalInformationList.get(0).getImgUrl();
+        } else {
+            return null;
+        }
+    }
+
+    // 获取对方用户头像
+    public String getPeerUserImg(ImMsgBean bean) {
+        List<BeanInterrogationServiceUserList> peerUserList = DataSupport.where("PeerNumber = ?", bean.getName().substring(1)).find(BeanInterrogationServiceUserList.class);
+        Log.e("peerPortrait", peerUserList.get(0).getPeerPortrait());
+        if (!peerUserList.isEmpty()) {
+            return peerUserList.get(0).getPeerPortrait();
         } else {
             return null;
         }

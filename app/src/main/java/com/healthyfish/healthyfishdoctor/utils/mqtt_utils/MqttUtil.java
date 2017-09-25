@@ -17,7 +17,6 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
-import com.healthyfish.healthyfishdoctor.ui.activity.login_register.Login;
 import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.AllMedRec;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
@@ -631,29 +630,49 @@ class MqttMsgMdr {
         // 通过key获取病历
         keyGet(bean);
 
-        // 获取新的信息
-        EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
-
     }
 
     // 通过key获取病历
     private static void keyGet(final ImMsgBean bean) {
+        // 获取新的信息
+        EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
+
         final BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
         final String key = bean.getContent().substring(5);
         if (DataSupport.where("name = ?", bean.getName().substring(1)).find(BeanMedRecUser.class).isEmpty()) {
             beanMedRecUser.setName(bean.getName().substring(1));
             beanMedRecUser.setImgUrl(DataSupport.where("peernumber = ?", bean.getName().substring(1)).find(BeanInterrogationServiceUserList.class).get(0).getPeerPortrait());
-            beanMedRecUser.setDate(bean.getTime()+"");
+            beanMedRecUser.setDate(bean.getTime() + "");
             beanMedRecUser.save();
         } else {
             beanMedRecUser = DataSupport.where("name = ?", bean.getName().substring(1)).find(BeanMedRecUser.class).get(0);
         }
         beanBaseKeyGetReq.setKey(key);
 
+        // 通过接收到的key获取病历
         RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getMedRecByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
+            String rspv = null;
             @Override
             public void onCompleted() {
-
+                if (!TextUtils.isEmpty(rspv)) {
+                    BeanBaseKeyGetResp object = JSON.parseObject(rspv, BeanBaseKeyGetResp.class);
+                    if (object.getValue() != null) {
+                        BeanMedRec beanMedRec = JSON.parseObject(object.getValue(), BeanMedRec.class);
+                        beanMedRec.setKey(key);
+                        beanMedRec.setBeanMedRecUser(beanMedRecUser);
+                        if (DataSupport.where("key = ?", key).find(BeanMedRec.class).isEmpty()) {
+                            beanMedRec.save();
+                        }
+                        List<BeanCourseOfDisease> courseOfDiseaseList = beanMedRec.getListCourseOfDisease();
+                        for (BeanCourseOfDisease courseOfDisease : courseOfDiseaseList) {
+                            courseOfDisease.setBeanMedRec(beanMedRec);
+                            courseOfDisease.save();
+                        }
+                    } else {
+                            /*nullValueKey.add(key);
+                            hasNullValueKey = true;*/
+                    }
+                }
             }
 
             @Override
@@ -664,22 +683,7 @@ class MqttMsgMdr {
             @Override
             public void onNext(ResponseBody responseBody) {
                 try {
-                    String rspv = responseBody.string();
-                    if (!TextUtils.isEmpty(rspv)) {
-                        BeanBaseKeyGetResp object = JSON.parseObject(rspv, BeanBaseKeyGetResp.class);
-                        if (object.getValue() != null) {
-                            BeanMedRec beanMedRec = JSON.parseObject(object.getValue(), BeanMedRec.class);
-                            beanMedRec.setKey(key);
-                            beanMedRec.setBeanMedRecUser(beanMedRecUser);
-                            beanMedRec.save();
-                            List<BeanMedRec> list = DataSupport.findAll(BeanMedRec.class);
-                            List<BeanCourseOfDisease> courseOfDiseaseList = beanMedRec.getListCourseOfDisease();
-                            for (BeanCourseOfDisease courseOfDisease : courseOfDiseaseList) {
-                                courseOfDisease.setBeanMedRec(beanMedRec);
-                                courseOfDisease.save();
-                            }
-                        }
-                    }
+                    rspv = responseBody.string();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -687,6 +691,7 @@ class MqttMsgMdr {
         });
     }
 }
+
 //i|len|<src="...">|img_bytes
 class MqttMsgImage {
     public static void process(ImMsgBean bean, String peer, String url, String topic) {
