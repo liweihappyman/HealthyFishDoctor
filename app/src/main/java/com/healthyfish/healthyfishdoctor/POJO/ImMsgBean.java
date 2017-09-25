@@ -37,7 +37,7 @@ public class ImMsgBean extends DataSupport implements Serializable{
     private long time;
     // 图片内容
     private String image;
-    // 发送姓名
+    // 发送姓名(手机号码)
     private String name;
     // 发送内容
     private String content;

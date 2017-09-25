@@ -230,7 +230,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onUpdateReceivingStatus(WeChatReceiveMsg msg) {
         //ImMsgBean bean = DataSupport.where("time = ?", msg.getTime() + "").find(ImMsgBean.class).get(0);
         // 判断是否保存了该用户信息，如果已经保存该信息，则无视，如果没有保存，新建一条记录
-        whetherTheUserExist();
+        // whetherTheUserExist();
         mList.clear();
         initListView();
 
@@ -239,52 +239,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     // 判断用户是否存在
     private void whetherTheUserExist() {
 
-        // FIXME: 2017/9/24 需要刷新才能获得用户病历信息列表
-        ImMsgBean user = DataSupport.findLast(ImMsgBean.class);
-        List<BeanInterrogationServiceUserList> list = DataSupport.where("peerName = ?", user.getName().substring(1)).find(BeanInterrogationServiceUserList.class);
-        if (list.isEmpty()) {
-            final String key = "info_" + user.getName().substring(1);
-            BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
-            beanBaseKeyGetReq.setKey(key);
 
-            final BeanInterrogationServiceUserList userList = new BeanInterrogationServiceUserList();
-            userList.setPeerNumber(user.getName().substring(1));
-
-            RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
-                String resp = null;
-
-                @Override
-                public void onCompleted() {
-                    BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
-                    String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
-                    BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
-                    // FIXME: 2017/9/24 setPeerName偶尔出现空指针错误
-                    userList.setPeerName(beanPersonalInformation.getNickname());
-                    userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
-
-                    // 比对数据库，如果名字头像或者发生变化了，重新写入
-                    List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
-                    if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
-                            || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
-                        userList.saveOrUpdate();
-                    }
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                }
-
-                @Override
-                public void onNext(ResponseBody responseBody) {
-                    try {
-                        resp = responseBody.string();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
     }
 
     @Override

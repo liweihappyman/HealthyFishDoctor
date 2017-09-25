@@ -285,7 +285,7 @@ public class ChattingListAdapter extends BaseAdapter {
                 rightMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goToMedRec(bean.getMdrKey().substring(5));
+                        goToMedRec(bean.getMdrKey().substring(5), bean.getName().substring(1));
                     }
                 });
                 break;
@@ -311,7 +311,7 @@ public class ChattingListAdapter extends BaseAdapter {
                 leftMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goToMedRec(bean.getMdrKey().substring(5));
+                        goToMedRec(bean.getMdrKey().substring(5), bean.getName().substring(1));
                     }
                 });
                 break;
@@ -417,7 +417,7 @@ public class ChattingListAdapter extends BaseAdapter {
     // 获取对方用户头像
     public String getPeerUserImg(ImMsgBean bean) {
         List<BeanInterrogationServiceUserList> peerUserList = DataSupport.where("PeerNumber = ?", bean.getName().substring(1)).find(BeanInterrogationServiceUserList.class);
-        Log.e("peerPortrait", peerUserList.get(0).getPeerPortrait());
+        //Log.e("peerPortrait", peerUserList.get(0).getPeerPortrait());
         if (!peerUserList.isEmpty()) {
             return peerUserList.get(0).getPeerPortrait();
         } else {
@@ -429,15 +429,17 @@ public class ChattingListAdapter extends BaseAdapter {
     private String getMDRKey(String mdrKey) {
         List<BeanMedRec> mdeRecList = DataSupport.where("key = ?", mdrKey).find(BeanMedRec.class);
         //Log.e("返回病历信息 ", mdeRecList.get(0).getDiseaseInfo());
-        //return mdeRecList.get(0).getDiseaseInfo();
+        if (!mdeRecList.isEmpty()) {
+            return mdeRecList.get(0).getDiseaseInfo();
+        }
         return null;
     }
 
     // 点击病历内容跳转到病历
-    private void goToMedRec(String mdrKey) {
+    private void goToMedRec(String mdrKey, String phoneNumber) {
         Intent intent = new Intent(MyApplication.getContetxt(), NewMedRec.class);
         intent.putExtra("MdrKey", mdrKey);
-        intent.putExtra("Lable", "HealthyChat");
+        intent.putExtra("PhoneNumber", phoneNumber);
         this.mActivity.startActivity(intent);
     }
 
