@@ -19,6 +19,7 @@
             android:background="@color/color_divider"/>
 
         <TextView
+            android:clickable="true"
             android:id="@+id/fm_med_rec"
             style="@style/funtion_menu_tv"
             android:text="病历夹" />

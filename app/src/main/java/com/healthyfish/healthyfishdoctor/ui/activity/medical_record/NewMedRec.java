@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -246,7 +247,11 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
                 startActivityForResult(toCreateCourse, COURSE_OF_DISEASE);
                 break;
             case R.id.save:
-                saveOrUpdate();
+                if (!TextUtils.isEmpty(medRec.getName()) && !diagnosis.getText().toString().trim().equals("") && !diseaseInfo.getText().toString().trim().equals("")) {
+                    saveOrUpdate();
+                } else {
+                    Toast.makeText(NewMedRec.this, "请完善信息", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

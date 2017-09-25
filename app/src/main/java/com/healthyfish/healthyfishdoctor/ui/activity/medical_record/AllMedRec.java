@@ -1,46 +1,26 @@
 package com.healthyfish.healthyfishdoctor.ui.activity.medical_record;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.ContactsContract;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
-import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyRemReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
-import com.healthyfish.healthyfishdoctor.POJO.BeanUserListReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.MedRecLvAdapter;
 import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.eventbus.NoticeMessage;
 import com.healthyfish.healthyfishdoctor.utils.ComparatorDate;
-import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
-import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
-import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,14 +28,12 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.litepal.crud.DataSupport;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 
 
 /**
@@ -124,24 +102,36 @@ public class AllMedRec extends AppCompatActivity implements View.OnClickListener
     private void init(boolean isGobackFromNewMedRec) {
         listMecRec.clear();
         beanMedRecUser = DataSupport.find(BeanMedRecUser.class, Constants.MED_REC_USER_ID, true);
+        toolbarTitle.setText(beanMedRecUser.getName() + "的病历夹");
+
+        List<BeanMedRec> list = DataSupport.findAll(BeanMedRec.class);
+
+        Log.i("病历夹", "init: " + beanMedRecUser.getName() + list.size());
         listMecRec = beanMedRecUser.getMedRecList();
         if (listMecRec.size() == 0) {
             //initNullLV();
             //reqForNetworkData(false);//如果本地数据为空，则从网上加载，否则要刷新数据，只有下拉刷新
         } else {
-            //将日期按时间先后排序
-            ComparatorDate c = new ComparatorDate();
-            Collections.sort(listMecRec, c);
-            //遍历出日期，格式为：       2017年10月
-            List<String> listDate = new ArrayList<>();
-            for (int i = 0; i < listMecRec.size(); i++) {
-                String date = listMecRec.get(i).getClinicalTime();
-                date = date.substring(0, date.indexOf("月") + 1);
-                listDate.add(date);
+            try {
+                //将日期按时间先后排序
+                ComparatorDate c = new ComparatorDate();
+                Collections.sort(listMecRec, c);
+                //遍历出日期，格式为：       2017年10月
+                List<String> listDate = new ArrayList<>();
+                for (int i = 0; i < listMecRec.size(); i++) {
+                    String date = listMecRec.get(i).getClinicalTime();
+                    date = date.substring(0, date.indexOf("月") + 1);
+                    listDate.add(date);
+                }
+                MedRecLvAdapter medRecLvAdapter = new MedRecLvAdapter(this, listMecRec, listDate);
+                medRecAll.setAdapter(medRecLvAdapter);
+            } catch (Exception e) {
+                //异常的情况是就诊日期格式不对，或者说日期为空，这里防止程序duang掉，应该说几乎不会出现异常
+                MedRecLvAdapter medRecLvAdapter = new MedRecLvAdapter(this, listMecRec);
+                medRecAll.setAdapter(medRecLvAdapter);
             }
-            MedRecLvAdapter medRecLvAdapter = new MedRecLvAdapter(this, listMecRec, listDate);
-            medRecAll.setAdapter(medRecLvAdapter);
         }
+        swipeRefresh.setRefreshing(false);
     }
 
 //暂时没有用到的方法
