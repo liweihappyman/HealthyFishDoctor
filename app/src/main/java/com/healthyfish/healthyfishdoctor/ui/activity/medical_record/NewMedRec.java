@@ -95,6 +95,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
     EditText diseaseInfo;
     @BindView(R.id.clinical_department)
     EditText clinicalDepartment;
+    String phoneNumber;
 
     private CourseOfDiseaseAdapter courseOfDiseaseAdapter;
     private BeanMedRec medRec = new BeanMedRec();
@@ -115,21 +116,36 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
             actionBar.setHomeAsUpIndicator(R.mipmap.back_icon);
         }
         initListener();
-//判断是点击item进来的还是点击新建病历夹进来的，并执行相应的初始化操作
+        ////根据进入该活动的方式加载数据
+        judgeTypeAndInitDate();
+        initList(listCourseOfDiseases, courseOfDiseaseRecyclerView);//初始化病程列表
+    }
+    //判断是点击item进来的还是点击新建病历夹进来的，并执行相应的初始化操作
+    // （从聊天界面进来的是Constants.POSITION_MED_REC == -2)
+    private void judgeTypeAndInitDate() {
         if (Constants.POSITION_MED_REC == -1) {
             clinicalTime.setText(Utils1.getTime());
-            SAVE_OR_UPDATE = "save";//标志位新建，直接保存
+            SAVE_OR_UPDATE = "save";//标志位新建，用于判断保存的方式
             medRec = new BeanMedRec();
-
-        } else {
+        }else if (Constants.POSITION_MED_REC == -2) {//从聊天界面点击病历进来的
+            String key = getIntent().getStringExtra("MdrKey");
+            Constants.MED_REC_USER_PHONE = getIntent().getStringExtra("PhoneNumber");
+            Constants.MED_REC_USER_ID = DataSupport.where("name = ?", Constants.MED_REC_USER_PHONE).find(BeanMedRecUser.class).get(0).getId();
+            List<BeanMedRec> list = DataSupport.where("key = ?", key).find(BeanMedRec.class);
+            if (list.size()>0) {
+                ID = list.get(0).getId();
+                medRec = DataSupport.find(BeanMedRec.class, ID, true);
+                initdata();
+            }
+        } else {//点击病历列表进来的
+            ID = getIntent().getIntExtra("id", 0);
+            medRec = DataSupport.find(BeanMedRec.class, ID, true);
             initdata();
         }
-        initList(listCourseOfDiseases, courseOfDiseaseRecyclerView);
     }
 
     private void initdata() {
-        ID = getIntent().getIntExtra("id", 0);
-        medRec = DataSupport.find(BeanMedRec.class, ID, true);
+
         listCourseOfDiseases = medRec.getListCourseOfDisease();
         setLableTv(lable, medRec);
         setInfo();
@@ -271,6 +287,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
             listCourseOfDiseases = medRec.getListCourseOfDisease();
             medRec.setListCourseOfDisease(listCourseOfDiseases);
         }
+        EventBus.getDefault().post(new NoticeMessage(11));
         requestForAddOrUpdate();
         finish();
     }
@@ -295,7 +312,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
 
     /**
      * ----------------------------------------------------------------------------------------------------------------------
-     * 删除网络数据
+     * 删除网络数据  医生端不能删除网络的，只能删除本地的
      */
     private void networkReqDelMedRec() {
         BeanBaseKeyRemReq baseKeyRemReq = new BeanBaseKeyRemReq();//删除单个
@@ -340,8 +357,10 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
      * 更新病历
      */
     private void updateMedRec() {
+        Log.i("更新", "updateMedRec: ");
         BeanBaseKeySetReq beanBaseKeySetReq = new BeanBaseKeySetReq();
         beanBaseKeySetReq.setKey(medRec.getKey());
+        Log.i("更新", "updateMedRec: "+medRec.getKey());
         beanBaseKeySetReq.setValue(JSON.toJSONString(medRec));
         //Log.i("电子病历", "更新的数据" + JSON.toJSONString(medRec));
         RetrofitManagerUtils.getInstance(this, null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeySetReq), new Subscriber<ResponseBody>() {
@@ -381,8 +400,8 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         //String userStr = MySharedPrefUtil.getValue("_user");
         //BeanUserLoginReq beanUserLogin = JSON.parseObject(userStr, BeanUserLoginReq.class);
         final BeanBaseKeyAddReq beanBaseKeyAddReq = new BeanBaseKeyAddReq();
-        StringBuilder prefix = new StringBuilder("medRec_12");
-        //prefix.append(beanUserLogin.getMobileNo());//获取当前用户的手机号
+        StringBuilder prefix = new StringBuilder("medRec_");
+        prefix.append(Constants.MED_REC_USER_PHONE);//获取当前用户的手机号
         //Log.i("电子病历", "prefix:" + prefix.toString());
         beanBaseKeyAddReq.setPrefix(prefix.toString());//前缀
         beanBaseKeyAddReq.setJsonString(JSON.toJSONString(medRec));//数据string

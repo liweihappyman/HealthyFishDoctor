@@ -65,6 +65,7 @@ public class MedRecHome extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Constants.MED_REC_USER_ID = list.get(position).getId();
+                Constants.MED_REC_USER_PHONE = list.get(position).getName();
                 Intent intent = new Intent(MedRecHome.this, AllMedRec.class);
                 startActivity(intent);
             }
