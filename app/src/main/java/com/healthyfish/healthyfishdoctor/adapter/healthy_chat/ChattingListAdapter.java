@@ -21,6 +21,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.NewMedRec;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.chat_utils.ImageLoadUtils;
@@ -285,7 +286,7 @@ public class ChattingListAdapter extends BaseAdapter {
                 rightMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goToMedRec(bean.getMdrKey().substring(5), bean.getName().substring(1));
+                        goToMedRec(bean.getMdrKey(), bean.getName().substring(1));
                     }
                 });
                 break;
@@ -311,7 +312,7 @@ public class ChattingListAdapter extends BaseAdapter {
                 leftMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goToMedRec(bean.getMdrKey().substring(5), bean.getName().substring(1));
+                        goToMedRec(bean.getMdrKey(), bean.getName().substring(1));
                     }
                 });
                 break;
@@ -437,6 +438,7 @@ public class ChattingListAdapter extends BaseAdapter {
 
     // 点击病历内容跳转到病历
     private void goToMedRec(String mdrKey, String phoneNumber) {
+        Constants.POSITION_MED_REC = -2;//-2表示从非病历夹列表进入病历
         Intent intent = new Intent(MyApplication.getContetxt(), NewMedRec.class);
         intent.putExtra("MdrKey", mdrKey);
         intent.putExtra("PhoneNumber", phoneNumber);
