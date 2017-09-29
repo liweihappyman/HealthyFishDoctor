@@ -739,7 +739,7 @@ class MqttMsgMdr {
                         if (DataSupport.where("key = ?", key).find(BeanMedRec.class).isEmpty()) {
                             beanMedRec.save();
                         } else if (!DataSupport.where("key = ?", key).find(BeanMedRec.class).isEmpty()) {
-                            beanMedRec.saveOrUpdate();
+                            beanMedRec.saveOrUpdate("key = ?", key);
                         }
                         List<BeanCourseOfDisease> courseOfDiseaseList = beanMedRec.getListCourseOfDisease();
                         for (BeanCourseOfDisease courseOfDisease : courseOfDiseaseList) {

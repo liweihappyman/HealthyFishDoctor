@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 
 import com.alibaba.fastjson.JSON;
+import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyAddReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyAddResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyRemReq;
@@ -30,6 +31,7 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
+import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.POJO.MessageToServise;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.CourseOfDiseaseAdapter;
@@ -37,10 +39,12 @@ import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.eventbus.NoticeMessage;
 import com.healthyfish.healthyfishdoctor.service.UploadImages;
 import com.healthyfish.healthyfishdoctor.ui.widget.DatePickerDialog;
+import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
 import com.healthyfish.healthyfishdoctor.utils.Utils1;
+import com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.litepal.crud.DataSupport;
@@ -120,6 +124,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         judgeTypeAndInitDate();
         initList(listCourseOfDiseases, courseOfDiseaseRecyclerView);//初始化病程列表
     }
+
     //判断是点击item进来的还是点击新建病历夹进来的，并执行相应的初始化操作
     // （从聊天界面进来的是Constants.POSITION_MED_REC == -2)
     private void judgeTypeAndInitDate() {
@@ -127,12 +132,12 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
             clinicalTime.setText(Utils1.getTime());
             SAVE_OR_UPDATE = "save";//标志位新建，用于判断保存的方式
             medRec = new BeanMedRec();
-        }else if (Constants.POSITION_MED_REC == -2) {//从聊天界面点击病历进来的
+        } else if (Constants.POSITION_MED_REC == -2) {//从聊天界面点击病历进来的
             String key = getIntent().getStringExtra("MdrKey");
             Constants.MED_REC_USER_PHONE = getIntent().getStringExtra("PhoneNumber");
             Constants.MED_REC_USER_ID = DataSupport.where("name = ?", Constants.MED_REC_USER_PHONE).find(BeanMedRecUser.class).get(0).getId();
             List<BeanMedRec> list = DataSupport.where("key = ?", key).find(BeanMedRec.class);
-            if (list.size()>0) {
+            if (list.size() > 0) {
                 ID = list.get(0).getId();
                 medRec = DataSupport.find(BeanMedRec.class, ID, true);
                 initdata();
@@ -208,7 +213,6 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
     }
 
 
-
     //执行删除操作并跳转回到AllMedRed页面，新建状态则提示没有可删除的病历
     private void deleteAndGoback() {
         if (Constants.POSITION_MED_REC != -1) {
@@ -226,10 +230,10 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            medRec.delete();
-                            Toast.makeText(NewMedRec.this, "删除成功", Toast.LENGTH_SHORT);
-                            EventBus.getDefault().post(new NoticeMessage(11));
-                            finish();
+                        medRec.delete();
+                        Toast.makeText(NewMedRec.this, "删除成功", Toast.LENGTH_SHORT);
+                        EventBus.getDefault().post(new NoticeMessage(11));
+                        finish();
                         dialog.dismiss();
 
                     }
@@ -280,6 +284,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         medRec.setDiseaseInfo(diseaseInfo.getText().toString());
         medRec.setClinicalDepartement(clinicalDepartment.getText().toString());
         medRec.setClinicalTime(clinicalTime.getText().toString());
+        medRec.setState(true);
         medRec.setBeanMedRecUser(beanMedRecUser);
         medRec.save();
         if (listCourseOfDiseases.size() > 0) {
@@ -360,12 +365,13 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         Log.i("更新", "updateMedRec: ");
         BeanBaseKeySetReq beanBaseKeySetReq = new BeanBaseKeySetReq();
         beanBaseKeySetReq.setKey(medRec.getKey());
-        Log.i("更新", "updateMedRec: "+medRec.getKey());
+        Log.i("更新", "updateMedRec: " + medRec.getKey());
         beanBaseKeySetReq.setValue(JSON.toJSONString(medRec));
         //Log.i("电子病历", "更新的数据" + JSON.toJSONString(medRec));
         RetrofitManagerUtils.getInstance(this, null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeySetReq), new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
+                sendMdrSaveOrUpdateSuccessInfo();
             }
 
             @Override
@@ -393,6 +399,7 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
             }
         });
     }
+
     /**
      * 添加病历
      */
@@ -408,6 +415,8 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
         RetrofitManagerUtils.getInstance(this, null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyAddReq), new Subscriber<ResponseBody>() {
             @Override
             public void onCompleted() {
+                // 发送病历夹新建或更新成功的信息
+                sendMdrSaveOrUpdateSuccessInfo();
                 Toast.makeText(NewMedRec.this, "成功同步到服务器", Toast.LENGTH_SHORT).show();
             }
 
@@ -434,7 +443,10 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
             }
         });
     }
- /** ---------------------------------------------------------------------------------------------------------------------*/
+
+    /**
+     * ---------------------------------------------------------------------------------------------------------------------
+     */
 
     //时间选择对话框
     private void selectTime() {
@@ -541,13 +553,26 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
 
     //设置name（姓名） 、patientInfo（患者信息点击时间的控件，这里用来显示性别）控件的值
     private void setInfo() {
-        if (medRec.getName() != null&& !medRec.getName().trim().equals("null")&& !medRec.getName().equals("")) {
+        if (medRec.getName() != null && !medRec.getName().trim().equals("null") && !medRec.getName().equals("")) {
             name.setText("姓名： " + medRec.getName());
         }
-        if (medRec.getGender() != null && !medRec.getGender().trim().equals("null")&& !medRec.getGender().equals("")) {
+        if (medRec.getGender() != null && !medRec.getGender().trim().equals("null") && !medRec.getGender().equals("")) {
             patientInfo.setText(medRec.getGender());
         }
     }
 
+    // 发送病历夹新建或更新成功的信息
+    private void sendMdrSaveOrUpdateSuccessInfo() {
+        ImMsgBean bean = new ImMsgBean();
+        bean.setName("d" + MyApplication.uid);
+        bean.setSender(true);// 是否是发送者
+        bean.setTime(DateTimeUtil.getLongMs());// 发送时间
+        bean.setContent("[sys]" + medRec.getKey());
+        bean.setTopic("u" + Constants.MED_REC_USER_PHONE);
+
+        bean.setType("$");// 类型：文字
+        // MQTT发送数据
+        MqttUtil.sendTxt(bean);
+    }
 
 }

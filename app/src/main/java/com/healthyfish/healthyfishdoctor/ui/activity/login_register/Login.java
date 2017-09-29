@@ -129,7 +129,7 @@ public class Login extends AppCompatActivity implements ILoginView{
                         String user = MySharedPrefUtil.getValue("user");
 
                         if (!TextUtils.isEmpty(user)) {
-                            AutoLogin.autoLogin();
+                            //AutoLogin.autoLogin();
                             MqttUtil.startAsync();
                         }
                     }
@@ -173,7 +173,7 @@ public class Login extends AppCompatActivity implements ILoginView{
             finish();
         } else if (code == -1) {
             Toast.makeText(Login.this, "用户不存在", Toast.LENGTH_LONG).show();
-        } else if (code == -2 || code == -5 || code == -3) {
+        } else if (code == -2 || code == -5 || code == -3 || code == -4) {
             Toast.makeText(Login.this, "密码错误", Toast.LENGTH_LONG).show();
         } else if (code == -10) {
             Toast.makeText(Login.this, "操作次数过多", Toast.LENGTH_LONG).show();

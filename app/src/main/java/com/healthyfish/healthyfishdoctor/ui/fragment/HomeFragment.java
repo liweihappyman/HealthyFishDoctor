@@ -13,23 +13,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.healthyfish.healthyfishdoctor.MyApplication;
-import com.healthyfish.healthyfishdoctor.POJO.BeanAllMessage;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
-import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
-import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
 import com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList;
-import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
-import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
-import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
+import com.healthyfish.healthyfishdoctor.POJO.BeanPageReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserChatInfo;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
-import com.healthyfish.healthyfishdoctor.adapter.HomeLvAdapter;
 import com.healthyfish.healthyfishdoctor.adapter.InterrogationServiceAdapter;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.HealthyChat;
@@ -61,9 +54,6 @@ import butterknife.Unbinder;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 
-import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
-import static com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil.beanMedRecUser;
-
 /**
  * 描述：首页fragment
  * 作者：Wayne on 2017/7/11 20:50
@@ -78,6 +68,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     TextView fmMedRec;
     @BindView(R.id.message_lv)
     ListView messageLv;
+    @BindView(R.id.fm_follow_up_rec)
+    TextView fmFollowUpRec;
     private Context mContext;
     private View rootView;
     Unbinder unbinder;
@@ -98,6 +90,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         EventBus.getDefault().register(this);
         fmMedRec.setOnClickListener(this);
+        fmFollowUpRec.setOnClickListener(this);
 //        initAll();
         initMqtt();
         lvListener();
@@ -115,7 +108,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void initMqtt() {
         if (!TextUtils.isEmpty(MySharedPrefUtil.getValue("user"))) {
-            AutoLogin.autoLogin();
+            //AutoLogin.autoLogin();
             MqttUtil.startAsync();
         }
     }
@@ -263,7 +256,69 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), MedRecHome.class);
                 startActivity(intent);
                 break;
+            case R.id.fm_follow_up_rec:
+                testApi();
+                break;
         }
     }
 
+    private void testApi() {
+        BeanPageReq beanPageReq = new BeanPageReq();
+        beanPageReq.setPrefix("chan_");
+        RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanPageReq), new Subscriber<ResponseBody>() {
+
+            String resp = null;
+
+            @Override
+            public void onCompleted() {
+                testApi2();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    resp = responseBody.string();
+                    Log.e("返回数据", resp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+
+    public void testApi2() {
+        BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
+        beanBaseKeyGetReq.setKey("chan__d15877279710");
+        RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
+
+            String resp = null;
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    resp = responseBody.string();
+                    Log.e("返回数据", resp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }

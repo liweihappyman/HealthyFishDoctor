@@ -186,14 +186,14 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
                     case 1:
                         Toast.makeText(HealthyChat.this, "wifi连接", Toast.LENGTH_SHORT).show();
                         if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
-                            AutoLogin.autoLogin();
+                            //AutoLogin.autoLogin();
                             MqttUtil.startAsync();
                         }
                         break;
                     case 2:
                         Toast.makeText(HealthyChat.this, "数据流量连接", Toast.LENGTH_SHORT).show();
                         if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
-                            AutoLogin.autoLogin();
+                            //AutoLogin.autoLogin();
                             MqttUtil.startAsync();
                         }
                         break;
@@ -623,7 +623,7 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
         String user = com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil.getValue("user");
         String sid = com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil.getValue("sid");
         if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
-            AutoLogin.autoLogin();
+            //AutoLogin.autoLogin();
             MqttUtil.startAsync();
         }
     }

@@ -48,6 +48,8 @@ public class ChattingListAdapter extends BaseAdapter {
     private final int VIEW_TYPE_RIGHT_IMAGE = 3;
     private final int VIEW_TYPE_LEFT_MDR = 4;
     private final int VIEW_TYPE_RIGHT_MDR = 5;
+    private final int VIEW_TYPE_LEFT_SYS = 6;
+    private final int VIEW_TYPE_RIGHT_SYS = 7;
 
     private Activity mActivity;
     private LayoutInflater mInflater;
@@ -93,6 +95,10 @@ public class ChattingListAdapter extends BaseAdapter {
                     else if (content.indexOf("[mdr]") >= 0) {
                         bean.setMdrKey(content.replace("[mdr]", ""));
                         bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_MDR_SENDER);
+                    } // 系统消息
+                    else if (content.indexOf("[sys]") >= 0) {
+                        bean.setMdrKey(content.replace("[sys]", ""));
+                        bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_SYS_SENDER);
                     } else {
                         bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_TEXT_SENDER);
                     }
@@ -106,6 +112,11 @@ public class ChattingListAdapter extends BaseAdapter {
                     else if (content.indexOf("[mdr]") >= 0) {
                         bean.setMdrKey(content.replace("[mdr]", ""));
                         bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_MDR_RECEIVER);
+                    }
+                    // 系统消息
+                    else if (content.indexOf("[sys]") >= 0) {
+                        bean.setMdrKey(content.replace("[sys]", ""));
+                        bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_SYS_RECEIVER);
                     } else {
                         bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_TEXT_RECEIVER);
                     }
@@ -405,7 +416,7 @@ public class ChattingListAdapter extends BaseAdapter {
 
     // 获取本机用户头像
     public String getLocalUserImg() {
-        String key = "info_" + uid;
+        String key = "cert_" + uid;
         List<BeanPersonalInformation> personalInformationList = DataSupport.where("key = ?", key).find(BeanPersonalInformation.class);
         if (!personalInformationList.isEmpty()) {
             Log.e("返回本机头像 ", personalInformationList.get(0).getImgUrl());
