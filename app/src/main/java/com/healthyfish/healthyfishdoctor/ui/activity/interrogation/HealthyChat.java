@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +30,6 @@ import com.foamtrace.photopicker.PhotoPreviewActivity;
 import com.foamtrace.photopicker.SelectModel;
 import com.foamtrace.photopicker.intent.PhotoPickerIntent;
 import com.healthyfish.healthyfishdoctor.MainActivity;
-import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.AppFuncBean;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserChatInfo;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
@@ -47,7 +44,6 @@ import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
 import com.healthyfish.healthyfishdoctor.service.WeChatUploadImage;
 import com.healthyfish.healthyfishdoctor.ui.activity.BaseActivity;
 import com.healthyfish.healthyfishdoctor.ui.widget.SessionChatKeyboardBase;
-import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.chat_utils.SimpleCommonUtils;
 import com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil;
@@ -411,6 +407,12 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
         String time = msg.getTime() + "";
         ImMsgBean newMsg = DataSupport.where("time = ?", time).find(ImMsgBean.class).get(0);
         newMsg.setPortrait(peerPortrait);
+
+        // 把最后一条信息设置为旧消息
+        ContentValues values = new ContentValues();
+        values.put("isNewMsg", "false");
+        newMsg.updateAll(ImMsgBean.class, values, "time = ?", newMsg.getTime() + "");
+
         // 刷新列表状态
         chattingListAdapter.addData(newMsg, true, false);
         chattingListAdapter.notifyDataSetChanged();

@@ -631,8 +631,10 @@ class MqttMsgSystemInfo {
                     String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
                     BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
                     // FIXME: 2017/9/24 setPeerName偶尔出现空指针错误
-                    userList.setPeerName(beanPersonalInformation.getNickname());
-                    userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
+                    if (userList != null) {
+                        userList.setPeerName(beanPersonalInformation.getNickname());
+                        userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
+                    }
                     // 比对数据库，如果名字头像或者发生变化了，重新写入
                     List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
                     /*if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()

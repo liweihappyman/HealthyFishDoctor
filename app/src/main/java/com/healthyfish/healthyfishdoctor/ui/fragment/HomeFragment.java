@@ -27,7 +27,6 @@ import com.healthyfish.healthyfishdoctor.adapter.InterrogationServiceAdapter;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.HealthyChat;
 import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.MedRecHome;
-import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
@@ -229,12 +228,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    // 判断用户是否存在
-    private void whetherTheUserExist() {
-
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -262,9 +255,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+
+    // 测试接口，用来建立医生与客户关系
     private void testApi() {
         BeanPageReq beanPageReq = new BeanPageReq();
-        beanPageReq.setPrefix("chan_");
+        beanPageReq.setPrefix("chan_" + "18977280163");
+        beanPageReq.setTo(-1);
         RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanPageReq), new Subscriber<ResponseBody>() {
 
             String resp = null;
@@ -290,7 +286,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
 
 
     public void testApi2() {

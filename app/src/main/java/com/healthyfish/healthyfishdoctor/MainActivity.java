@@ -465,7 +465,7 @@ public class MainActivity extends BaseActivity {
                         String user = MySharedPrefUtil.getValue("user");
                         String sid = MySharedPrefUtil.getValue("sid");
                         if (!TextUtils.isEmpty(user) && !TextUtils.isEmpty(sid)) {
-                            //AutoLogin.autoLogin();
+                            AutoLogin.autoLogin();
                             MqttUtil.startAsync();
                         }
                     }
