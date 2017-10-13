@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.healthyfish.healthyfishdoctor.MainActivity;
 import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
@@ -22,6 +23,7 @@ import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.AllMedRec;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
+import com.healthyfish.healthyfishdoctor.utils.SendNotificationsUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -684,6 +686,9 @@ class MqttMsgText {
         bean.setTopic(topic);
         bean.setNewMsg(true);
         bean.save();
+
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条文本信息", MainActivity.class);
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
 
     }
@@ -704,6 +709,8 @@ class MqttMsgMdr {
         bean.setNewMsg(true);
         bean.save();
 
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条病历信息", MainActivity.class);
         // 获取新的信息
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
 
@@ -789,6 +796,10 @@ class MqttMsgImage {
         bean.setTopic(topic);
         bean.setNewMsg(true);
         bean.save();
+
+
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条图片信息", MainActivity.class);
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
     }
 }
