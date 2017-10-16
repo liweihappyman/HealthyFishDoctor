@@ -13,28 +13,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.healthyfish.healthyfishdoctor.MyApplication;
-import com.healthyfish.healthyfishdoctor.POJO.BeanAllMessage;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
-import com.healthyfish.healthyfishdoctor.POJO.BeanCourseOfDisease;
 import com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList;
-import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
-import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
+import com.healthyfish.healthyfishdoctor.POJO.BeanPageReq;
+import com.healthyfish.healthyfishdoctor.POJO.BeanPageResp;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserChatInfo;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
-import com.healthyfish.healthyfishdoctor.adapter.HomeLvAdapter;
 import com.healthyfish.healthyfishdoctor.adapter.InterrogationServiceAdapter;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.HealthyChat;
 import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.MedRecHome;
-import com.healthyfish.healthyfishdoctor.utils.AutoLogin;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.MySharedPrefUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
@@ -62,7 +57,6 @@ import okhttp3.ResponseBody;
 import rx.Subscriber;
 
 import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFishyUrl;
-import static com.healthyfish.healthyfishdoctor.utils.mqtt_utils.MqttUtil.beanMedRecUser;
 
 /**
  * 描述：首页fragment
@@ -78,6 +72,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     TextView fmMedRec;
     @BindView(R.id.message_lv)
     ListView messageLv;
+    @BindView(R.id.fm_follow_up_rec)
+    TextView fmFollowUpRec;
     private Context mContext;
     private View rootView;
     Unbinder unbinder;
@@ -98,9 +94,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         EventBus.getDefault().register(this);
         fmMedRec.setOnClickListener(this);
+        fmFollowUpRec.setOnClickListener(this);
 //        initAll();
         initMqtt();
         lvListener();
+        initPeerInfo();
 
         // 获取登录用户信息
         beanUserLoginReq = JSON.parseObject(MySharedPrefUtil.getValue("user"), BeanUserLoginReq.class);
@@ -115,7 +113,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private void initMqtt() {
         if (!TextUtils.isEmpty(MySharedPrefUtil.getValue("user"))) {
-            AutoLogin.autoLogin();
+            //AutoLogin.autoLogin();
             MqttUtil.startAsync();
         }
     }
@@ -236,12 +234,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    // 判断用户是否存在
-    private void whetherTheUserExist() {
-
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -263,7 +255,102 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), MedRecHome.class);
                 startActivity(intent);
                 break;
+            case R.id.fm_follow_up_rec:
+
+                break;
         }
+    }
+
+
+    // 测试接口，用来建立医生与客户关系
+    private void initPeerInfo() {
+        final BeanPageReq beanPageReq = new BeanPageReq();
+        beanPageReq.setPrefix("chan_" + "18977280163");
+        beanPageReq.setRefresh(1);
+        beanPageReq.setTo(-1);
+        RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanPageReq), new Subscriber<ResponseBody>() {
+
+            String resp = null;
+
+            @Override
+            public void onCompleted() {
+                BeanPageResp beanPageResp = JSON.parseObject(resp, BeanPageResp.class);
+                List<String> strJsonBeanPageRespList = beanPageResp.getPageList();
+                for (String s : strJsonBeanPageRespList) {
+                    // s的值是 chan_18977280163_u18077207818
+                    if (s.substring(17).indexOf("u") >= 0) {
+                        Log.e("响应值", s.substring(18));
+                        whetherTheUserExist(s.substring(18));
+                    }
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    resp = responseBody.string();
+                    Log.e("返回数据", resp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    void whetherTheUserExist(final String peerNumber) {
+        ImMsgBean user = DataSupport.findLast(ImMsgBean.class);
+        //List<BeanInterrogationServiceUserList> list = DataSupport.where("peerName = ?", user.getName().substring(1)).find(BeanInterrogationServiceUserList.class);
+        //if (list.isEmpty()) {
+            final String key = "info_" + peerNumber;
+            BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
+            beanBaseKeyGetReq.setKey(key);
+
+            final BeanInterrogationServiceUserList userList = new BeanInterrogationServiceUserList();
+            userList.setPeerNumber(peerNumber);
+
+            RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
+                String resp = null;
+
+                @Override
+                public void onCompleted() {
+                    BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
+                    String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
+                    BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
+
+                    if (beanPersonalInformation != null) {
+                        userList.setPeerName(beanPersonalInformation.getNickname());
+                        userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
+                    }
+                    // 比对数据库，如果名字头像或者发生变化了，重新写入
+                    List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
+                    if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
+                            || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
+                        userList.saveOrUpdate("PeerNumber = ?", userList.getPeerNumber());
+                    }
+                    /*else if (contrastUserList.isEmpty()) {
+                        userList.save();
+                    }*/
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                }
+
+                @Override
+                public void onNext(ResponseBody responseBody) {
+                    try {
+                        resp = responseBody.string();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        //}
     }
 
 }

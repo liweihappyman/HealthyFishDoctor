@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.healthyfish.healthyfishdoctor.MainActivity;
 import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseKeyGetResp;
@@ -22,6 +23,7 @@ import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.AllMedRec;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.OkHttpUtils;
 import com.healthyfish.healthyfishdoctor.utils.RetrofitManagerUtils;
+import com.healthyfish.healthyfishdoctor.utils.SendNotificationsUtils;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -630,18 +632,20 @@ class MqttMsgSystemInfo {
                     BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
                     String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
                     BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
-                    // FIXME: 2017/9/24 setPeerName偶尔出现空指针错误
-                    userList.setPeerName(beanPersonalInformation.getNickname());
-                    userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
+
+                    if (beanPersonalInformation != null) {
+                        userList.setPeerName(beanPersonalInformation.getNickname());
+                        userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
+                    }
                     // 比对数据库，如果名字头像或者发生变化了，重新写入
                     List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
-                    /*if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
+                    if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
                             || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
+                        userList.saveOrUpdate("PeerNumber = ?", userList.getPeerNumber());
+                    }
+                    /*if (contrastUserList.isEmpty()) {
                         userList.save();
                     }*/
-                    if (contrastUserList.isEmpty()) {
-                        userList.save();
-                    }
                 }
 
                 @Override
@@ -682,6 +686,9 @@ class MqttMsgText {
         bean.setTopic(topic);
         bean.setNewMsg(true);
         bean.save();
+
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条文本信息", MainActivity.class);
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
 
     }
@@ -702,6 +709,8 @@ class MqttMsgMdr {
         bean.setNewMsg(true);
         bean.save();
 
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条病历信息", MainActivity.class);
         // 获取新的信息
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
 
@@ -739,7 +748,7 @@ class MqttMsgMdr {
                         if (DataSupport.where("key = ?", key).find(BeanMedRec.class).isEmpty()) {
                             beanMedRec.save();
                         } else if (!DataSupport.where("key = ?", key).find(BeanMedRec.class).isEmpty()) {
-                            beanMedRec.saveOrUpdate();
+                            beanMedRec.saveOrUpdate("key = ?", key);
                         }
                         List<BeanCourseOfDisease> courseOfDiseaseList = beanMedRec.getListCourseOfDisease();
                         for (BeanCourseOfDisease courseOfDisease : courseOfDiseaseList) {
@@ -787,6 +796,10 @@ class MqttMsgImage {
         bean.setTopic(topic);
         bean.setNewMsg(true);
         bean.save();
+
+
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条图片信息", MainActivity.class);
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
     }
 }

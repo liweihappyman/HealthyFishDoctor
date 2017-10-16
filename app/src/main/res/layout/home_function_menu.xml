@@ -60,6 +60,7 @@
             android:layout_height="match_parent"
             android:background="@color/color_divider"/>
         <TextView
+            android:id="@+id/fm_follow_up_rec"
             style="@style/funtion_menu_tv"
             android:text="随访"
             />
