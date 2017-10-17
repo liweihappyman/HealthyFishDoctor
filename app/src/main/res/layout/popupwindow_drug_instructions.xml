@@ -18,9 +18,12 @@
         android:paddingLeft="30px">
 
         <TextView
+            android:id="@+id/ipres_physic_name"
             style="@style/textSize_48"
             android:layout_width="match_parent"
-            android:layout_height="100px"
+            android:layout_height="wrap_content"
+            android:paddingTop="20px"
+            android:paddingBottom="20px"
             android:gravity="center_vertical"
             android:text="瑞舒伐他汀钙片"
             android:textColor="@color/color_blue_dark" />
@@ -36,7 +39,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/usage"
                 style="@style/textSize_48"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -46,6 +48,7 @@
                 android:textColor="@color/color_auxiliary_info" />
 
             <TextView
+                android:id="@+id/usage"
                 style="@style/textSize_48"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -75,7 +78,7 @@
                 android:textColor="@color/color_auxiliary_info" />
 
             <TextView
-                android:id="@+id/frequency"
+                android:id="@+id/ipres_freq_describe"
                 style="@style/textSize_48"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -135,7 +138,7 @@
                 android:textColor="@color/color_auxiliary_info" />
 
             <TextView
-                android:id="@+id/time"
+                android:id="@+id/ipres_physic_days"
                 style="@style/textSize_48"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -165,7 +168,7 @@
                 android:textColor="@color/color_auxiliary_info" />
 
             <TextView
-                android:id="@+id/drug_number"
+                android:id="@+id/ipres_physic_quantity"
                 style="@style/textSize_48"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -195,7 +198,7 @@
                 android:textColor="@color/color_auxiliary_info" />
 
             <TextView
-                android:id="@+id/Specifications"
+                android:id="@+id/ipres_pack_spec"
                 style="@style/textSize_48"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

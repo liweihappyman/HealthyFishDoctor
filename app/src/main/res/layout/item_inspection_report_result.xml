@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="20px"
+    android:paddingLeft="55px"
+    android:paddingRight="55px"
+    android:background="@color/color_white"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/irept_sub_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textSize_48"
+        android:text="尿微量白蛋白"
+        android:textColor="@color/color_blue"
+        />
+    <com.zhy.autolayout.AutoLinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="100px">
+        <TextView
+            android:id="@+id/irept_result"
+            android:layout_width="250px"
+            android:layout_height="wrap_content"
+            style="@style/textSize_54"
+            android:text="84.51"
+            android:textColor="@color/color_general_and_title"
+            />
+        <TextView
+            android:id="@+id/irept_result_units"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            style="@style/textSize_54"
+            android:text="84.51"
+            android:textColor="@color/color_general_and_title"
+            />
+        <TextView
+            android:id="@+id/irept_refrence_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/textSize_54"
+            android:text="0.00-20.0"
+            android:textColor="@color/color_general_and_title"
+            />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_divider" />
+</com.zhy.autolayout.AutoLinearLayout>

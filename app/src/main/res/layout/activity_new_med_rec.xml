@@ -142,7 +142,7 @@
         android:background="@drawable/selector_1dp_btn_color_from_primary_to_white"
         android:clickable="true"
         android:gravity="center"
-        android:text="保存"
+        android:text="保存并通知分享者"
         android:textColor="@android:color/white"
         style="@style/textSize_54" />
 

@@ -25,6 +25,10 @@
         <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation"/>
         <!--购买问诊服务的用户信息-->
         <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList" />
+        <!--化验单-->
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanInspectionReport" />
+        <!--电子处方-->
+        <mapping class="com.healthyfish.healthyfishdoctor.POJO.BeanPrescriptiom"/>
     </list>
 
 </litepal>

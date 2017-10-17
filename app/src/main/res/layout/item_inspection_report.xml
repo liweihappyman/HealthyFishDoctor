@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20px"
+    android:layout_marginRight="20px"
+    android:layout_marginTop="20px"
+    android:background="@color/color_white"
+    app:cardCornerRadius="4dp"
+    app:elevation="8dp">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110px"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/irept_item_name"
+                style="@style/textSize_54"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="50px"
+                android:text="尿微量白蛋白测定"
+                android:textColor="@color/color_white" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/irept_patient_name"
+                    style="@style/textSize_54"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50px"
+                    android:text="名字"
+                    android:textColor="@color/color_content_title" />
+                <TextView
+                    android:id="@+id/irept_hosp_name"
+                    style="@style/textSize_54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50px"
+                    android:text="柳州市中医院"
+                    android:textColor="@color/color_content_title" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/irept_requested_date"
+                    style="@style/textSize_48"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingLeft="50px"
+                    android:text="2016-12-01T08:06:10"
+                    android:textColor="@color/color_content_title" />
+
+                <TextView
+                    android:id="@+id/irept_patient_id"
+                    style="@style/textSize_42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45px"
+                    android:layout_marginRight="45px"
+                    android:paddingLeft="5px"
+                    android:paddingRight="5px"
+                    android:layout_gravity="center_vertical"
+                    android:text="00000281122"
+                    android:textColor="@color/color_content_title" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10px"
+                android:background="@color/color_divider" />
+        </com.zhy.autolayout.AutoLinearLayout>
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/irept_rusult"
+                style="@style/textSize_54"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:paddingLeft="50px"
+                android:text="检验项名称"
+                android:textColor="@color/color_content_title" />
+            <TextView
+                android:id="@+id/iirept_refrence_range"
+                style="@style/textSize_54"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50px"
+                android:text="参考值"
+                android:textColor="@color/color_content_title" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="20px"
+            android:layout_marginTop="10px"
+            android:background="@color/color_divider" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView>
