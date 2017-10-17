@@ -343,6 +343,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                 || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
                             userList.saveOrUpdate("PeerNumber = ?", userList.getPeerNumber());
                         }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
