@@ -585,6 +585,25 @@ class PushCallback implements MqttCallback {
                         MqttMsgImage.process(bean, peer, url, topic);
                         break;
                     }
+
+                    case 'r': {//化验单
+                        int msg_len = payload.length - uid_len - 2;
+                        byte[] msg_array = new byte[msg_len];
+                        System.arraycopy(payload, 2 + uid_len, msg_array, 0, msg_len);
+                        String content = new String(msg_array, "utf-8");
+                        MqttMsgRept.process(bean, peer, content, topic);
+                        break;
+                    }
+
+                    case 'p': {//处方
+                        int msg_len = payload.length - uid_len - 2;
+                        byte[] msg_array = new byte[msg_len];
+                        System.arraycopy(payload, 2 + uid_len, msg_array, 0, msg_len);
+                        String content = new String(msg_array, "utf-8");
+                        MqttMsgPres.process(bean, peer, content, topic);
+                        break;
+                    }
+
                     case 'v': //video
                         break;
                     case 'a': //audio
@@ -778,6 +797,49 @@ class MqttMsgMdr {
                 }
             }
         });
+    }
+}
+
+class MqttMsgRept {
+
+    // 接收化验单
+    public static void process(ImMsgBean bean, String peer, String content, String topic) {
+        // 要显示的内容
+        bean.setContent(content);
+        bean.setToDefault("isSender");
+        bean.setName(peer);
+
+        bean.setTime(DateTimeUtil.getLongMs());
+        bean.setType("r");
+        bean.setTopic(topic);
+        bean.setNewMsg(true);
+        bean.save();
+
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条化验单信息", MainActivity.class);
+        // 获取新的信息
+        EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
+    }
+}
+
+class MqttMsgPres{
+    // 接收处方
+    public static void process(ImMsgBean bean, String peer, String content, String topic) {
+        // 要显示的内容
+        bean.setContent(content);
+        bean.setToDefault("isSender");
+        bean.setName(peer);
+
+        bean.setTime(DateTimeUtil.getLongMs());
+        bean.setType("p");
+        bean.setTopic(topic);
+        bean.setNewMsg(true);
+        bean.save();
+
+        // 系统通知
+        SendNotificationsUtils.sendNotifications("健鱼", "收到一条处方信息", MainActivity.class);
+        // 获取新的信息
+        EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
     }
 }
 
