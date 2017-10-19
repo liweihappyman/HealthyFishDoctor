@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20px"
+    android:layout_marginRight="20px"
+    android:layout_marginTop="20px"
+    android:background="@color/color_white"
+    app:cardCornerRadius="4dp"
+    app:elevation="8dp">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110px"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ipres_diagnosis_name"
+                style="@style/textSize_54"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingLeft="50px"
+                android:text="高血压（慢）"
+                android:textColor="@color/color_white" />
+
+            <TextView
+                android:id="@+id/ipres_write_time"
+                style="@style/textSize_48"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingRight="50px"
+                android:text="2017-12-01"
+                android:textColor="@color/color_white" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ipres_sick_name"
+                    style="@style/textSize_54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="50px"
+                    android:text="名字"
+                    android:textColor="@color/color_content_title" />
+
+                <TextView
+                    android:id="@+id/ipres_sex"
+                    style="@style/textSize_48"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20px"
+                    android:layout_weight="1"
+                    android:text="男"
+                    android:textColor="@color/color_blue_dark" />
+
+                <TextView
+                    android:id="@+id/ipres_age"
+                    style="@style/textSize_54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50px"
+                    android:text="66岁"
+                    android:textColor="@color/color_content_title" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15px"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ipres_dept_operator"
+                    style="@style/textSize_48"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingLeft="50px"
+                    android:text="柳州市中医院--心病科门诊--杨毅建"
+                    android:textColor="@color/color_content_title" />
+
+                <TextView
+                    android:id="@+id/ipres_perscribe_status"
+                    style="@style/textSize_42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60px"
+                    android:layout_marginLeft="45px"
+                    android:layout_marginRight="45px"
+                    android:paddingLeft="5px"
+                    android:paddingRight="5px"
+                    android:background="@drawable/blue_rounded_rectangle"
+                    android:gravity="center"
+                    android:text="挂号"
+                    android:textColor="@color/color_blue" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="10px"
+                android:background="@color/color_divider" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/drug_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:clickable="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/ipres_physic_name"
+                style="@style/textSize_48"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="瑞舒伐他汀钙片"
+                android:textColor="@color/color_content_title" />
+
+            <ImageView
+                android:id="@+id/ipres_right"
+                android:layout_width="40px"
+                android:layout_height="60px"
+                android:layout_gravity="center_vertical"
+                android:background="@mipmap/right" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="20px"
+            android:layout_marginTop="10px"
+            android:background="@color/color_divider" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+</com.healthyfish.healthyfishdoctor.ui.widget.AutoCardView>

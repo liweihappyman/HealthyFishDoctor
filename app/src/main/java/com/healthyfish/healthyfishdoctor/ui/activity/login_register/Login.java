@@ -129,7 +129,7 @@ public class Login extends AppCompatActivity implements ILoginView{
                         String user = MySharedPrefUtil.getValue("user");
 
                         if (!TextUtils.isEmpty(user)) {
-                            AutoLogin.autoLogin();
+                            //AutoLogin.autoLogin();
                             MqttUtil.startAsync();
                         }
                     }

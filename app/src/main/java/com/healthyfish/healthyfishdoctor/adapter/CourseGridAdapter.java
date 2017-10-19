@@ -52,7 +52,7 @@ public class CourseGridAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_image, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_image, parent,false);
             imageView = (ImageView) convertView.findViewById(R.id.image);
             convertView.setTag(imageView);
             AutoUtils.auto(convertView);
@@ -63,22 +63,26 @@ public class CourseGridAdapter extends BaseAdapter {
         //如果本地存在图片文件，直接加载本地的，否则加载网上的
 
 
-        if (new File(getItem(position)).exists()) {
-            Glide.with(mContext)
-                    .load(new File(getItem(position)))
-                    .placeholder(R.mipmap.default_error)
-                    .error(R.mipmap.default_error)
-                    .centerCrop()
-                    .crossFade()
-                    .into(imageView);
-        }else {
-            Glide.with(mContext)
-                    .load(listUrls.get(listUrls.size()-1-position))
-                    .placeholder(R.mipmap.default_error)
-                    .error(R.mipmap.default_error)
-                    .centerCrop()
-                    .crossFade()
-                    .into(imageView);
+        try {
+            if (new File(getItem(position)).exists()) {
+                Glide.with(mContext)
+                        .load(new File(getItem(position)))
+                        .placeholder(R.mipmap.default_error)
+                        .error(R.mipmap.default_error)
+                        .centerCrop()
+                        .crossFade()
+                        .into(imageView);
+            } else {
+                Glide.with(mContext)
+                        .load(listUrls.get(position))
+                        .placeholder(R.mipmap.default_error)
+                        .error(R.mipmap.default_error)
+                        .centerCrop()
+                        .crossFade()
+                        .into(imageView);
+            }
+        }catch (Exception e){
+
         }
         return convertView;
     }

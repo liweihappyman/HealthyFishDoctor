@@ -121,7 +121,7 @@ public class RegisterPassword extends BaseActivity {
                                 Log.i("LYQ", "注册响应：" + str);
                                 BeanBaseResp beanBaseResp = JSON.parseObject(str, BeanBaseResp.class);
                                 int code = beanBaseResp.getCode();
-                                if (code == 0) {
+                                if (code >= 0) {
                                     Toast.makeText(RegisterPassword.this, "注册成功", Toast.LENGTH_LONG).show();
                                     MySharedPrefUtil.saveKeyValue("user", user);
                                     //————————————————————————————————————————

@@ -318,23 +318,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                 @Override
                 public void onCompleted() {
-                    BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
-                    String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
-                    BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
 
-                    if (beanPersonalInformation != null) {
-                        userList.setPeerName(beanPersonalInformation.getNickname());
-                        userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
-                    }
-                    // 比对数据库，如果名字头像或者发生变化了，重新写入
-                    List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
-                    if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
-                            || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
-                        userList.saveOrUpdate("PeerNumber = ?", userList.getPeerNumber());
-                    }
-                    /*else if (contrastUserList.isEmpty()) {
-                        userList.save();
-                    }*/
                 }
 
                 @Override
@@ -345,6 +329,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 public void onNext(ResponseBody responseBody) {
                     try {
                         resp = responseBody.string();
+                        BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
+                        String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
+                        BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
+
+                        if (beanPersonalInformation != null) {
+                            userList.setPeerName(beanPersonalInformation.getNickname());
+                            userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
+                        }
+                        // 比对数据库，如果名字头像或者发生变化了，重新写入
+                        List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
+                        if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
+                                || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
+                            userList.saveOrUpdate("PeerNumber = ?", userList.getPeerNumber());
+                        }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
