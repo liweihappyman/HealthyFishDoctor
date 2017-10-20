@@ -541,8 +541,8 @@ public class HealthyChat extends BaseActivity implements FuncLayout.OnFuncKeyBoa
             final ArrayList<AppFuncBean> mAppFuncBeanList = new ArrayList<>();
             mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_photo, "图片", 1));
             mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_camera, "拍照", 2));
-            mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_send_medrec, "发送病历", 3));
-/*            mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_qzone, "空间", 4));
+/*            mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_send_medrec, "发送病历", 3));
+            mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_qzone, "空间", 4));
              mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_contact, "联系人", 5));
             mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_file, "文件", 6));
             mAppFuncBeanList.add(new AppFuncBean(R.mipmap.icon_loaction, "位置", 7));*/

@@ -41,7 +41,7 @@ import static com.healthyfish.healthyfishdoctor.constant.Constants.HttpHealthyFi
 // 聊天界面、对话框 -- 适配器
 public class ChattingListAdapter extends BaseAdapter {
 
-    private final int VIEW_TYPE_COUNT = 8;
+    private final int VIEW_TYPE_COUNT = 100;
     private final int VIEW_TYPE_LEFT_TEXT = 0;
     private final int VIEW_TYPE_LEFT_IMAGE = 1;
     private final int VIEW_TYPE_RIGHT_TEXT = 2;
@@ -50,6 +50,10 @@ public class ChattingListAdapter extends BaseAdapter {
     private final int VIEW_TYPE_RIGHT_MDR = 5;
     private final int VIEW_TYPE_LEFT_SYS = 6;
     private final int VIEW_TYPE_RIGHT_SYS = 7;
+    private final int VIEW_TYPE_LEFT_REPT = 8;// 化验单
+    private final int VIEW_TYPE_RIGHT_REPT = 9;// 化验单
+    private final int VIEW_TYPE_LEFT_PRES = 10;// 处方
+    private final int VIEW_TYPE_RIGHT_PRES = 11;// 处方
 
     private Activity mActivity;
     private LayoutInflater mInflater;
@@ -113,6 +117,16 @@ public class ChattingListAdapter extends BaseAdapter {
                         bean.setMdrKey(content.replace("[mdr]", ""));
                         bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_MDR_RECEIVER);
                     }
+                    // 化验单
+                    else if (content.indexOf("[rep]") >= 0) {
+                        bean.setMdrKey(content.replace("[rep]", ""));
+                        bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_REPT_RECEIVER);
+                    }
+                    // 处方
+                    else if (content.indexOf("[pre]") >= 0) {
+                        bean.setMdrKey(content.replace("[pre]", ""));
+                        bean.setMsgType(ImMsgBean.CHAT_MSGTYPE_PRES_RECEIVER);
+                    }
                     // 系统消息
                     else if (content.indexOf("[sys]") >= 0) {
                         bean.setMdrKey(content.replace("[sys]", ""));
@@ -170,6 +184,10 @@ public class ChattingListAdapter extends BaseAdapter {
                 return VIEW_TYPE_LEFT_IMAGE;
             case ImMsgBean.CHAT_MSGTYPE_MDR_RECEIVER:
                 return VIEW_TYPE_LEFT_MDR;
+            case ImMsgBean.CHAT_MSGTYPE_REPT_RECEIVER:
+                return VIEW_TYPE_LEFT_REPT;
+            case ImMsgBean.CHAT_MSGTYPE_PRES_RECEIVER:
+                return VIEW_TYPE_LEFT_PRES;
             default:
                 return -1;
         }
@@ -327,6 +345,61 @@ public class ChattingListAdapter extends BaseAdapter {
                     }
                 });
                 break;
+
+            case VIEW_TYPE_LEFT_REPT:
+                final ViewHolder leftReptHolder;
+                if (convertView == null) {
+                    leftReptHolder = new ViewHolder();
+                    holderView = mInflater.inflate(R.layout.listitem_chat_left_text, null);
+                    holderView.setFocusable(true);
+                    leftReptHolder.iv_portrait = (ImageView) holderView.findViewById(R.id.iv_portrait);
+                    leftReptHolder.tv_content = (TextView) holderView.findViewById(R.id.tv_content);
+                    leftReptHolder.sendtime = (TextView) holderView.findViewById(R.id.sendtime);
+                    leftReptHolder.iv_loading = (ImageView) holderView.findViewById(R.id.iv_loading);
+                    leftReptHolder.iv_failure_send = (ImageView) holderView.findViewById(R.id.iv_failure_send);
+                    holderView.setTag(leftReptHolder);
+                    convertView = holderView;
+                }else {
+                    leftReptHolder = (ViewHolder) convertView.getTag();
+                }
+                disPlayLeftReptView(position, convertView, leftReptHolder, bean);
+                // 点击病历内容跳转到化验单
+                leftReptHolder.tv_content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //这里的key不用截取
+                        //跳转方法写在这
+                    }
+                });
+                break;
+
+            case VIEW_TYPE_LEFT_PRES:
+                final ViewHolder leftPresHolder;
+                if (convertView == null) {
+                    leftPresHolder = new ViewHolder();
+                    holderView = mInflater.inflate(R.layout.listitem_chat_left_text, null);
+                    holderView.setFocusable(true);
+                    leftPresHolder.iv_portrait = (ImageView) holderView.findViewById(R.id.iv_portrait);
+                    leftPresHolder.tv_content = (TextView) holderView.findViewById(R.id.tv_content);
+                    leftPresHolder.sendtime = (TextView) holderView.findViewById(R.id.sendtime);
+                    leftPresHolder.iv_loading = (ImageView) holderView.findViewById(R.id.iv_loading);
+                    leftPresHolder.iv_failure_send = (ImageView) holderView.findViewById(R.id.iv_failure_send);
+                    holderView.setTag(leftPresHolder);
+                    convertView = holderView;
+                }else {
+                    leftPresHolder = (ViewHolder) convertView.getTag();
+                }
+                disPlayLeftPresView(position, convertView, leftPresHolder, bean);
+                // 点击病历内容跳转到处方
+                leftPresHolder.tv_content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //这里的key不用截取
+                        //跳转方法写在这
+                    }
+                });
+                break;
+
             default:
                 convertView = new View(mActivity);
                 break;
@@ -397,6 +470,22 @@ public class ChattingListAdapter extends BaseAdapter {
         // 查看病历详情
         String mdrDetail = getMDRKey(bean.getContent().substring(5));
         setContent(holder.tv_content, "病历接收成功\n" + "病历详情: " + mdrDetail);
+        holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
+        Glide.with(holder.iv_portrait.getContext()).load(getPeerUserImg(bean)).into(holder.iv_portrait);
+    }
+
+    private void disPlayLeftReptView(int position, View convertView, ViewHolder holder, ImMsgBean bean) {
+        // 查看病历详情
+        //String mdrDetail = getMDRKey(bean.getContent().substring(5));
+        setContent(holder.tv_content, "化验单接收成功");
+        holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
+        Glide.with(holder.iv_portrait.getContext()).load(getPeerUserImg(bean)).into(holder.iv_portrait);
+    }
+
+    private void disPlayLeftPresView(int position, View convertView, ViewHolder holder, ImMsgBean bean) {
+        // 查看病历详情
+        //String mdrDetail = getMDRKey(bean.getContent().substring(5));
+        setContent(holder.tv_content, "处方接收成功");
         holder.sendtime.setText(DateTimeUtil.getTime(bean.getTime()));
         Glide.with(holder.iv_portrait.getContext()).load(getPeerUserImg(bean)).into(holder.iv_portrait);
     }

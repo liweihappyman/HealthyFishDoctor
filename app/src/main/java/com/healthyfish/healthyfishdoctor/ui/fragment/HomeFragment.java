@@ -179,6 +179,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     case "m":
                         msgType = "「病历消息」";
                         break;
+                    case "r":
+                        msgType = "「化验单消息」";
+                        break;
+                    case "p":
+                        msgType = "「处方消息」";
+                        break;
                     default:
                         msgType = "「消息」";
                         break;
@@ -262,10 +268,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    // 测试接口，用来建立医生与客户关系
+    // 用来建立医生与客户关系
     private void initPeerInfo() {
         final BeanPageReq beanPageReq = new BeanPageReq();
-        beanPageReq.setPrefix("chan_" + "18977280163");
+        beanPageReq.setPrefix("chan_" + MyApplication.uid);
         beanPageReq.setRefresh(1);
         beanPageReq.setTo(-1);
         RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanPageReq), new Subscriber<ResponseBody>() {
@@ -302,53 +308,54 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    // 判断用户是否存在
     void whetherTheUserExist(final String peerNumber) {
-        ImMsgBean user = DataSupport.findLast(ImMsgBean.class);
+        //ImMsgBean user = DataSupport.findLast(ImMsgBean.class);
         //List<BeanInterrogationServiceUserList> list = DataSupport.where("peerName = ?", user.getName().substring(1)).find(BeanInterrogationServiceUserList.class);
         //if (list.isEmpty()) {
-            final String key = "info_" + peerNumber;
-            BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
-            beanBaseKeyGetReq.setKey(key);
+        final String key = "info_" + peerNumber;
+        BeanBaseKeyGetReq beanBaseKeyGetReq = new BeanBaseKeyGetReq();
+        beanBaseKeyGetReq.setKey(key);
 
-            final BeanInterrogationServiceUserList userList = new BeanInterrogationServiceUserList();
-            userList.setPeerNumber(peerNumber);
+        final BeanInterrogationServiceUserList userList = new BeanInterrogationServiceUserList();
+        userList.setPeerNumber(peerNumber);
 
-            RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
-                String resp = null;
+        RetrofitManagerUtils.getInstance(MyApplication.getContetxt(), null).getHealthyInfoByRetrofit(OkHttpUtils.getRequestBody(beanBaseKeyGetReq), new Subscriber<ResponseBody>() {
+            String resp = null;
 
-                @Override
-                public void onCompleted() {
+            @Override
+            public void onCompleted() {
 
-                }
+            }
 
-                @Override
-                public void onError(Throwable e) {
-                }
+            @Override
+            public void onError(Throwable e) {
+            }
 
-                @Override
-                public void onNext(ResponseBody responseBody) {
-                    try {
-                        resp = responseBody.string();
-                        BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
-                        String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
-                        BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                try {
+                    resp = responseBody.string();
+                    BeanBaseKeyGetResp beanBaseKeyGetResp = JSON.parseObject(resp, BeanBaseKeyGetResp.class);
+                    String strJsonBeanPersonalInformation = beanBaseKeyGetResp.getValue();
+                    BeanPersonalInformation beanPersonalInformation = JSON.parseObject(strJsonBeanPersonalInformation, BeanPersonalInformation.class);
 
-                        if (beanPersonalInformation != null) {
-                            userList.setPeerName(beanPersonalInformation.getNickname());
-                            userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
-                        }
-                        // 比对数据库，如果名字头像或者发生变化了，重新写入
-                        List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
-                        if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
-                                || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
-                            userList.saveOrUpdate("PeerNumber = ?", userList.getPeerNumber());
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (beanPersonalInformation != null) {
+                        userList.setPeerName(beanPersonalInformation.getNickname());
+                        userList.setPeerPortrait(HttpHealthyFishyUrl + beanPersonalInformation.getImgUrl());
                     }
+                    // 比对数据库，如果名字头像或者发生变化了，重新写入
+                    List<BeanInterrogationServiceUserList> contrastUserList = DataSupport.where("PeerNumber = ?", userList.getPeerNumber()).find(BeanInterrogationServiceUserList.class);
+                    if (contrastUserList.isEmpty() || contrastUserList.get(0).getPeerName() != userList.getPeerName()
+                            || contrastUserList.get(0).getPeerPortrait() != userList.getPeerPortrait()) {
+                        userList.saveOrUpdate("PeerNumber = ?", userList.getPeerNumber());
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
         //}
     }
 
