@@ -28,6 +28,9 @@ public class Constants {
     public static int EMOTICON_CLICK_TEXT = 1;
     public static int EMOTICON_CLICK_BIGIMAGE = 2;
 
+    //处方和化验单跳转标志
+    public static String  FOR_LIST = "forList";
+
     // 网络访问服务器主机地址
     public final static String HttpHealthyFishyUrl = "http://www.kangfish.cn";
     public final static String HttpsHealthyFishyUrl = "https://www.kangfish.cn";

@@ -27,7 +27,9 @@ import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.adapter.InterrogationServiceAdapter;
+import com.healthyfish.healthyfishdoctor.constant.Constants;
 import com.healthyfish.healthyfishdoctor.eventbus.WeChatReceiveMsg;
+import com.healthyfish.healthyfishdoctor.ui.activity.Inspection_report.InspectionReport;
 import com.healthyfish.healthyfishdoctor.ui.activity.interrogation.HealthyChat;
 import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.MedRecHome;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
@@ -74,6 +76,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     ListView messageLv;
     @BindView(R.id.fm_follow_up_rec)
     TextView fmFollowUpRec;
+    @BindView(R.id.fm_inspection_report)
+    TextView fmInspectionReport;
     private Context mContext;
     private View rootView;
     Unbinder unbinder;
@@ -95,6 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         EventBus.getDefault().register(this);
         fmMedRec.setOnClickListener(this);
         fmFollowUpRec.setOnClickListener(this);
+        fmInspectionReport.setOnClickListener(this);
 //        initAll();
         initMqtt();
         lvListener();
@@ -250,9 +255,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         EventBus.getDefault().unregister(this);
+        unbinder.unbind();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -263,6 +269,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.fm_follow_up_rec:
 
+                break;
+            case R.id.fm_inspection_report:
+                Intent toInspectionReport = new Intent(getActivity(), InspectionReport.class);
+                toInspectionReport.putExtra("key", Constants.FOR_LIST);
+                startActivity(toInspectionReport);
                 break;
         }
     }

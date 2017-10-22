@@ -133,14 +133,18 @@ public class NewMedRec extends AppCompatActivity implements View.OnClickListener
             SAVE_OR_UPDATE = "save";//标志位新建，用于判断保存的方式
             medRec = new BeanMedRec();
         } else if (Constants.POSITION_MED_REC == -2) {//从聊天界面点击病历进来的
-            String key = getIntent().getStringExtra("MdrKey");
-            Constants.MED_REC_USER_PHONE = getIntent().getStringExtra("PhoneNumber");
-            Constants.MED_REC_USER_ID = DataSupport.where("name = ?", Constants.MED_REC_USER_PHONE).find(BeanMedRecUser.class).get(0).getId();
-            List<BeanMedRec> list = DataSupport.where("key = ?", key).find(BeanMedRec.class);
-            if (list.size() > 0) {
-                ID = list.get(0).getId();
-                medRec = DataSupport.find(BeanMedRec.class, ID, true);
-                initdata();
+            try {
+                String key = getIntent().getStringExtra("MdrKey");
+                Constants.MED_REC_USER_PHONE = getIntent().getStringExtra("PhoneNumber");
+                Constants.MED_REC_USER_ID = DataSupport.where("name = ?", Constants.MED_REC_USER_PHONE).find(BeanMedRecUser.class).get(0).getId();
+                List<BeanMedRec> list = DataSupport.where("key = ?", key).find(BeanMedRec.class);
+                if (list.size() > 0) {
+                    ID = list.get(0).getId();
+                    medRec = DataSupport.find(BeanMedRec.class, ID, true);
+                    initdata();
+                }
+            }catch (Exception e){
+
             }
         } else {//点击病历列表进来的
             ID = getIntent().getIntExtra("id", 0);

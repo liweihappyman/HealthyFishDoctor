@@ -16,12 +16,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.foamtrace.photopicker.intent.PhotoPreviewIntent;
 import com.healthyfish.healthyfishdoctor.MyApplication;
+import com.healthyfish.healthyfishdoctor.POJO.BeanInspectionReport;
 import com.healthyfish.healthyfishdoctor.POJO.BeanInterrogationServiceUserList;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
+import com.healthyfish.healthyfishdoctor.POJO.BeanPrescriptiom;
 import com.healthyfish.healthyfishdoctor.POJO.ImMsgBean;
 import com.healthyfish.healthyfishdoctor.R;
 import com.healthyfish.healthyfishdoctor.constant.Constants;
+import com.healthyfish.healthyfishdoctor.ui.activity.Inspection_report.InspectionReport;
+import com.healthyfish.healthyfishdoctor.ui.activity.Inspection_report.MyPrescription;
 import com.healthyfish.healthyfishdoctor.ui.activity.medical_record.NewMedRec;
 import com.healthyfish.healthyfishdoctor.utils.DateTimeUtil;
 import com.healthyfish.healthyfishdoctor.utils.chat_utils.ImageLoadUtils;
@@ -307,7 +311,7 @@ public class ChattingListAdapter extends BaseAdapter {
                     rightMdrHolder.iv_failure_send = (ImageView) holderView.findViewById(R.id.iv_failure_send);
                     holderView.setTag(rightMdrHolder);
                     convertView = holderView;
-                }else {
+                } else {
                     rightMdrHolder = (ViewHolder) convertView.getTag();
                 }
                 disPlayRightMdrView(position, convertView, rightMdrHolder, bean);
@@ -315,7 +319,11 @@ public class ChattingListAdapter extends BaseAdapter {
                 rightMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goToMedRec(bean.getMdrKey(), bean.getName().substring(1));
+                        if (!DataSupport.where("key = ?", bean.getMdrKey()).find(BeanMedRec.class).isEmpty()) {
+                            goToMedRec(bean.getMdrKey(), bean.getName().substring(1));
+                        } else {
+                            Toast.makeText(mActivity, "该病历不存在！", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 break;
@@ -333,7 +341,7 @@ public class ChattingListAdapter extends BaseAdapter {
                     leftMdrHolder.iv_failure_send = (ImageView) holderView.findViewById(R.id.iv_failure_send);
                     holderView.setTag(leftMdrHolder);
                     convertView = holderView;
-                }else {
+                } else {
                     leftMdrHolder = (ViewHolder) convertView.getTag();
                 }
                 disPlayLeftMdrView(position, convertView, leftMdrHolder, bean);
@@ -341,7 +349,11 @@ public class ChattingListAdapter extends BaseAdapter {
                 leftMdrHolder.tv_content.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goToMedRec(bean.getMdrKey(), bean.getName().substring(1));
+                        if (!DataSupport.where("key = ?", bean.getMdrKey()).find(BeanMedRec.class).isEmpty()) {
+                            goToMedRec(bean.getMdrKey(), bean.getName().substring(1));
+                        } else {
+                            Toast.makeText(mActivity, "该病历不存在！", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 break;
@@ -359,7 +371,7 @@ public class ChattingListAdapter extends BaseAdapter {
                     leftReptHolder.iv_failure_send = (ImageView) holderView.findViewById(R.id.iv_failure_send);
                     holderView.setTag(leftReptHolder);
                     convertView = holderView;
-                }else {
+                } else {
                     leftReptHolder = (ViewHolder) convertView.getTag();
                 }
                 disPlayLeftReptView(position, convertView, leftReptHolder, bean);
@@ -369,6 +381,11 @@ public class ChattingListAdapter extends BaseAdapter {
                     public void onClick(View v) {
                         //这里的key不用截取
                         //跳转方法写在这
+                        if (!DataSupport.where("key = ?", bean.getMdrKey()).find(BeanInspectionReport.class).isEmpty()) {
+                            goToInspectionReport(bean.getMdrKey(), bean.getName().substring(1));
+                        }else {
+                            Toast.makeText(mActivity, "该化验单不存在！", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 break;
@@ -386,7 +403,7 @@ public class ChattingListAdapter extends BaseAdapter {
                     leftPresHolder.iv_failure_send = (ImageView) holderView.findViewById(R.id.iv_failure_send);
                     holderView.setTag(leftPresHolder);
                     convertView = holderView;
-                }else {
+                } else {
                     leftPresHolder = (ViewHolder) convertView.getTag();
                 }
                 disPlayLeftPresView(position, convertView, leftPresHolder, bean);
@@ -396,6 +413,12 @@ public class ChattingListAdapter extends BaseAdapter {
                     public void onClick(View v) {
                         //这里的key不用截取
                         //跳转方法写在这
+                        if (!DataSupport.where("key = ?", bean.getMdrKey()).find(BeanPrescriptiom.class).isEmpty()) {
+                            goToPrescription(bean.getMdrKey(), bean.getName().substring(1));
+                        }else {
+                            Toast.makeText(mActivity, "该处方不存在！", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 });
                 break;
@@ -542,6 +565,22 @@ public class ChattingListAdapter extends BaseAdapter {
         Intent intent = new Intent(MyApplication.getContetxt(), NewMedRec.class);
         intent.putExtra("MdrKey", mdrKey);
         intent.putExtra("PhoneNumber", phoneNumber);
+        this.mActivity.startActivity(intent);
+    }
+
+    // 点击病历内容跳转到化验单
+    private void goToInspectionReport(String key, String phoneNumber) {
+        //暂时没用到phoneNumber，可能后面会用到
+        Intent intent = new Intent(MyApplication.getContetxt(), InspectionReport.class);
+        intent.putExtra("key", key);
+        this.mActivity.startActivity(intent);
+    }
+
+    // 点击病历内容跳转到处方
+    private void goToPrescription(String key, String phoneNumber) {
+        //暂时没用到phoneNumber，可能后面会用到
+        Intent intent = new Intent(MyApplication.getContetxt(), MyPrescription.class);
+        intent.putExtra("key", key);
         this.mActivity.startActivity(intent);
     }
 

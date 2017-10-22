@@ -10,7 +10,8 @@
         android:layout_height="160px"
         android:orientation="horizontal">
         <TextView
-          style="@style/funtion_menu_tv"
+            android:clickable="true"
+            style="@style/funtion_menu_tv"
             android:text="医疗培训"
             />
         <ImageView
@@ -29,6 +30,8 @@
             android:layout_height="match_parent"
             android:background="@color/color_divider"/>
         <TextView
+            android:clickable="true"
+            android:id="@+id/fm_inspection_report"
             style="@style/funtion_menu_tv"
             android:text="检查报告"
             />
@@ -44,6 +47,7 @@
         android:layout_height="160px"
         android:orientation="horizontal">
         <TextView
+            android:clickable="true"
             style="@style/funtion_menu_tv"
             android:text="健康社区"
             />
@@ -52,6 +56,7 @@
             android:layout_height="match_parent"
             android:background="@color/color_divider"/>
         <TextView
+            android:clickable="true"
             style="@style/funtion_menu_tv"
             android:text="申请会诊"
             />
@@ -60,6 +65,7 @@
             android:layout_height="match_parent"
             android:background="@color/color_divider"/>
         <TextView
+            android:clickable="true"
             android:id="@+id/fm_follow_up_rec"
             style="@style/funtion_menu_tv"
             android:text="随访"
