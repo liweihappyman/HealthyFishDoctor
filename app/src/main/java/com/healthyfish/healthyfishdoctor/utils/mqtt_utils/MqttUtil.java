@@ -826,14 +826,12 @@ class MqttMsgRept {
         bean.setTopic(topic);
         bean.setNewMsg(true);
         bean.save();
-        Log.i("聊天列表bean","具体内容"+bean.getId()+bean.getMdrKey()+bean.getName()+
-                bean.getContent()+bean.getTopic());
 
         // 系统通知
         SendNotificationsUtils.sendNotifications("健鱼", "收到一条化验单信息", MainActivity.class);
         // 获取新的信息
         EventBus.getDefault().post(new WeChatReceiveMsg(bean.getTime()));
-
+      
         // 通过key获取化验单
         keyGetRept(bean);
     }
@@ -898,7 +896,8 @@ class MqttMsgRept {
     }
 }
 
-class MqttMsgPres {
+
+class MqttMsgPres{
     // 接收处方
     public static void process(ImMsgBean bean, String peer, String content, String topic) {
         // 要显示的内容
