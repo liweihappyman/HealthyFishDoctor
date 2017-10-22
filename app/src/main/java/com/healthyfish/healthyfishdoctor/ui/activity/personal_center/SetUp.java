@@ -16,8 +16,11 @@ import com.alibaba.fastjson.JSON;
 import com.healthyfish.healthyfishdoctor.MainActivity;
 import com.healthyfish.healthyfishdoctor.MyApplication;
 import com.healthyfish.healthyfishdoctor.POJO.BeanBaseResp;
+import com.healthyfish.healthyfishdoctor.POJO.BeanInspectionReport;
 import com.healthyfish.healthyfishdoctor.POJO.BeanMedRec;
+import com.healthyfish.healthyfishdoctor.POJO.BeanMedRecUser;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPersonalInformation;
+import com.healthyfish.healthyfishdoctor.POJO.BeanPrescriptiom;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLoginReq;
 import com.healthyfish.healthyfishdoctor.POJO.BeanUserLogoutReq;
 import com.healthyfish.healthyfishdoctor.R;
@@ -121,7 +124,10 @@ public class SetUp extends BaseActivity {
                             MySharedPrefUtil.remKey("user");     //清除用户登录信息
                             MyApplication.uid = "";
                             MyApplication.isFirstOpen = true;
+                            DataSupport.deleteAll(BeanMedRecUser.class);//清除所有病历夹用户数据
                             DataSupport.deleteAll(BeanMedRec.class);//清除所有病历
+                            DataSupport.deleteAll(BeanInspectionReport.class);//清除所有化验单
+                            DataSupport.deleteAll(BeanPrescriptiom.class);//清除所有化验单
 
                             EventBus.getDefault().post(new LoginEventBus(false));//通知个人中心退出登录，刷新状态
                             Intent intent = new Intent(SetUp.this, MainActivity.class);

@@ -1,7 +1,9 @@
 package com.healthyfish.healthyfishdoctor.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -12,11 +14,17 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
+import com.healthyfish.healthyfishdoctor.POJO.BeanInspectionReport;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPresList;
 import com.healthyfish.healthyfishdoctor.POJO.BeanPrescriptiom;
 import com.healthyfish.healthyfishdoctor.R;
+import com.healthyfish.healthyfishdoctor.eventbus.NoticeMessage;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.litepal.crud.DataSupport;
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +60,7 @@ public class PrescriptionRvAdapter extends RecyclerView.Adapter<PrescriptionRvAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         BeanPrescriptiom item = list.get(position);
         holder.ipresDiagnosisName.setText(item.getDIAGNOSIS_NAME());
         String originalWriteTime = item.getWRITE_TIME();
@@ -89,8 +97,13 @@ public class PrescriptionRvAdapter extends RecyclerView.Adapter<PrescriptionRvAd
             holder.ipresPhysicName.setText(" ");
             holder.right.setVisibility(View.GONE);
         }
-
-
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                showDelDialog(list.get(position).getKey());
+                return true;
+            }
+        });
     }
 
     @Override
@@ -99,6 +112,8 @@ public class PrescriptionRvAdapter extends RecyclerView.Adapter<PrescriptionRvAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.layout)
+        AutoLinearLayout layout;
         @BindView(R.id.ipres_diagnosis_name)
         TextView ipresDiagnosisName;
         @BindView(R.id.ipres_write_time)
@@ -187,9 +202,30 @@ public class PrescriptionRvAdapter extends RecyclerView.Adapter<PrescriptionRvAd
         ipresPhysicDays.setText(bean.getLAY_PHYSIC_DAYS()+"天");
         ipresPackSpec.setText(bean.getPACK_SPEC());
         ipresPhysicQuantity.setText(bean.getLAY_PHYSIC_QUANTITY()+bean.getPHYSIC_UNIT());
+    }
 
 
 
+
+    /**
+     * 删除提示对话框
+     */
+    private void showDelDialog(final String key) {
+        new AlertDialog.Builder(mContext).setMessage("是否要删除此处方")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DataSupport.deleteAll(BeanPrescriptiom.class,"key = ?",key);
+                        EventBus.getDefault().post(new NoticeMessage(51));
+                        dialog.dismiss();
+
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).show();
     }
 
 }
